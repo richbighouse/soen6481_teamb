@@ -14,6 +14,9 @@ Project for SOEN6481 Fall 2021
 
 1. Run `npm install express --save`
 
-### Database
+### MySQL
 
-1. To be determined ... but this will be useful `https://expressjs.com/en/guide/database-integration.html`
+1. Download MySQL 8 Community version from `https://dev.mysql.com/downloads/windows/installer/8.0.html`. 
+1. Choose your OS.
+1. There are many available products, make sure you install the Server.
+

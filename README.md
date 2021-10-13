@@ -21,3 +21,5 @@ Project for SOEN6481 Fall 2021
 1. There are many available products, make sure you install the Server.
 2. Run `npm install mysql`
 
+### Run the server
+1. At the root, run `npm start`

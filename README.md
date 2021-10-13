@@ -19,4 +19,5 @@ Project for SOEN6481 Fall 2021
 1. Download MySQL 8 Community version from `https://dev.mysql.com/downloads/windows/installer/8.0.html`. 
 1. Choose your OS.
 1. There are many available products, make sure you install the Server.
+2. Run `npm install mysql`
 

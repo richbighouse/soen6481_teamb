@@ -28,8 +28,5 @@ export class LoginComponent implements OnInit {
       .subscribe(response => {
         console.log(response);
       })
-
-    console.log('click!');
   }
-
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import { RegisterService, RegistrationRequest } from 'src/app/services/register.service';
 
 @Component({
   selector: 'app-register',
@@ -8,7 +9,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 })
 export class RegisterComponent implements OnInit {
 
-  email = new FormControl('', [Validators.required]);
+  email = new FormControl('', [Validators.email]);
   password = new FormControl('', [Validators.required]);
   address = new FormControl('', [Validators.required]);
   fullName = new FormControl('', [Validators.required]);
@@ -29,17 +30,30 @@ export class RegisterComponent implements OnInit {
     }
   );
 
-  constructor() { }
+  constructor(private registerService: RegisterService) { }
 
   ngOnInit(): void {
   }
 
   onRegisterClicked() {
-    console.log("Registered clicked!");
+    const registrationRequest = new RegistrationRequest(
+      this.email.value,
+      this.password.value,
+      this.address.value,
+      this.fullName.value,
+      this.dateOfBirth.value,
+      this.phoneNumber.value,
+      this.registrationNumber.value,
+      this.userType.value
+    )
+
+    this.registerService.register(registrationRequest)
+    .subscribe(response => {
+      console.log(response);
+    });
   }
 
   isPatient(): Boolean {
     return this.userType.value === 'patient';
   }
-
 }

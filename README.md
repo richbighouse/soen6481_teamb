@@ -1,7 +1,7 @@
 # soen6481_teamb
 Project for SOEN6481 Fall 2021
 
-## Project bootstrap
+## Project dependencies
 
 ### NodeJs
 
@@ -14,6 +14,10 @@ Project for SOEN6481 Fall 2021
 
 1. Run `npm install express --save`
 
+### Angular
+
+1. Run `npm install -g @angular/cli`
+
 ### MySQL
 
 1. Download MySQL 8 Community version from `https://dev.mysql.com/downloads/windows/installer/8.0.html`. 
@@ -21,6 +25,8 @@ Project for SOEN6481 Fall 2021
 1. There are many available products, make sure you install the Server.
 1. Install node support for MySQL `npm install mysql`
 
-
 ### Run the server
 1. At the root, run `npm start`
+
+### Run the client
+1. in `/client/`, run `ng serve`

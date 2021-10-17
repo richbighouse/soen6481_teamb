@@ -1,0 +1,73 @@
+<div class="centered">
+
+    <mat-card class="register-card">
+        <form [formGroup]="registerForm" (submit)="onRegisterClicked()">
+            <div class="register-container">
+                <mat-card-title>Registration Form</mat-card-title>
+
+            <mat-radio-group formControlName="userType">
+                <mat-radio-button value="patient" class="register-radio">Patient</mat-radio-button>
+                <mat-radio-button value="nurse" class="register-radio">Nurse</mat-radio-button>
+                <mat-radio-button value="doctor" class="register-radio">Doctor</mat-radio-button>
+            </mat-radio-group>
+
+            <mat-form-field >
+                <label>
+                    <input formControlName="fullName"
+                        matInput
+                        placeholder="Full Name">
+                </label>
+            </mat-form-field>
+            <mat-form-field >
+                <label>
+                    <input formControlName="email"
+                        type="email"
+                       matInput
+                       placeholder="Email">
+                </label>
+            </mat-form-field>
+            <mat-form-field >
+                <label>
+                    <input formControlName="address"
+                        matInput
+                        placeholder="Address">
+                </label>
+            </mat-form-field>
+            <mat-form-field >
+                <label>
+                    <input formControlName="dateOfBirth"
+                        type="date"
+                        matInput
+                        placeholder="Date of Birth">
+                </label>
+            </mat-form-field>
+            <mat-form-field >
+                <label>
+                    <input formControlName="phoneNumber"
+                        type="tel"
+                        matInput
+                        placeholder="Phone Number">
+                </label>
+            </mat-form-field>
+            <mat-form-field>
+                <input formControlName="password"
+                     type="password"
+                     matInput placeholder="Password">
+            </mat-form-field>
+
+            <mat-form-field *ngIf=!isPatient()>
+                <input formControlName="registrationNumber"
+                     matInput placeholder="Registration Number">
+            </mat-form-field>
+        
+            <button
+                style= "margin-top: 2em"
+                mat-raised-button
+                color="primary"
+                type="submit">
+                <span>Register</span>
+            </button>
+            </div>
+          </form>
+    </mat-card>
+</div>

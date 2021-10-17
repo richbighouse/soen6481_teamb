@@ -6,15 +6,19 @@
     transform: translate(-50%, -50%);
   }
   
-  .login-container {
+  .register-container {
     display: flex;
     flex-direction: column;
-  
+    width: 50vw;
   }
 
-  .login-card {
+  .register-card {
     padding-left: 5em;
     padding-right: 5em;
     padding-top: 3em;
     padding-bottom: 3em;
+  }
+
+  .register-radio {
+    padding: 1em;
   }

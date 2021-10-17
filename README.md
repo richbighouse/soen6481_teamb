@@ -27,3 +27,6 @@ Project for SOEN6481 Fall 2021
 
 ### Run the server
 1. At the root, run `npm start`
+
+### Run the client
+1. in `/client/`, run `ng serve`

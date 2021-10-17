@@ -23,11 +23,18 @@ app.post("/api/login", function (req, res) {
   console.log('Received login request ...');
 
   const body = req.body;
-  console.log('username: ', body.username);
+  console.log('email: ', body.email);
   console.log('password: ', body.password);
 
   res.status(200).json({ status: "UP" });
 });
+
+app.post("/api/register", function (req, res) {
+  console.log('Received registration request ...', req.body);
+  
+  res.status(200).json({ status: "UP" });
+});
+
 
 //module.exports = app;
 

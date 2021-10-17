@@ -30,3 +30,7 @@ Project for SOEN6481 Fall 2021
 
 ### Run the client
 1. in `/client/`, run `ng serve`
+
+## Working with Angular
+
+1. To create a new component, run `ng generate component {componentName}`

@@ -20,6 +20,14 @@ const db = mysql.createConnection({
   database: 'covid'
 })
 
+// User Types -> we should get this from the db, but we can hardcode for now
+const userTypes = {
+  "patient": 1,
+  "doctor": 2,
+  "nurse": 3,
+  "manager": 4
+};
+
 // Start
 app.listen(port, () => {
   console.log(`Covid19 Data Collection server listening at http://localhost:${port}`)
@@ -49,11 +57,67 @@ app.post("/api/login", function (req, res) {
 });
 
 app.post("/api/register", function (req, res) {
-  console.log('Received registration request ...', req.body);
+  const request = req.body.registrationRequest;
+  console.log('Received registration request ...', request);
 
-  res.status(200).json({ status: "UP" });
+  // patients are automatically approved. Doctors and Nurses require approval;
+  var approved = 0;
+  if (userTypes[request.userType] === 'patient') {
+    approved = 1;
+  }
+
+  const regNumber = null;
+  if (request.registrationNumber) {
+    regNumber = "'" + request.registrationNumber + "'";
+  }
+
+  const sql = `INSERT INTO user (
+    fullName,
+    address,
+    dateOfBirth,
+    phoneNumber,
+    email,
+    password,
+    fkUserType,
+    registrationDate,
+    lastLoginDate,
+    active,
+    approved,
+    registrationNumber) VALUES (
+     '${request.fullName}',
+     '${request.address}',
+     '${request.dateOfBirth}',
+     '${request.phoneNumber}',
+     '${request.email}',
+     '${request.password}',
+      ${userTypes[request.userType]},
+      '${getTodayDate()}',
+      null,
+      1,
+      ${approved},
+      ${regNumber}
+    )`;
+
+    console.log(sql);
+
+  db.query(sql, (err, rows) => {
+    if (err) throw err;
+    if (rows.length === 0) {
+      res.status("500");
+      res.send("Server Error during Registration.");
+    } else {
+      console.log(rows);
+      res.status(201).json(rows);
+    }    
+  });
 });
 
+  
 
-//module.exports = app;
+
+function getTodayDate() {
+  return new Date().toISOString().split('T')[0];
+}
+
+// module.exports = app;
 

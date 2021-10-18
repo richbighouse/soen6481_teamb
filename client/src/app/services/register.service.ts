@@ -37,5 +37,4 @@ export class RegistrationRequest {
     this.registrationNumber = registrationNumber;
     this.userType = userType;
   }
-
 }

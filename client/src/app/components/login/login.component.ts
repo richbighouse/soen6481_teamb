@@ -31,21 +31,16 @@ export class LoginComponent implements OnInit {
       .login(this.email.value, this.password.value)
       .subscribe(
         response => {
-          console.log('my response!', response)
+          // redirect to home
         },
         error => {
           if (error.status === 401) {
             console.error("Invalid Credentials", error);
             this.snackBar.open(
-              'Invalid credentials. Try again.', 
-              '', 
-              {
-                duration: 5000,
-                panelClass: "error-panel"
-              });
+              'Invalid credentials. Try again.', 'Dismiss', { duration: 10000 });
           } else {
             console.error("Error", error);
-            this.snackBar.open('An error prevented the login. Try again later.', '', {duration: 5000});
+            this.snackBar.open('An error prevented the login. Try again later.', 'Dismiss', {duration: 10000});
           }
           
         }

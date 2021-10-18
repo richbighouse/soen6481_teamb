@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import { RegisterService, RegistrationRequest } from 'src/app/services/register.service';
+import {MatSnackBar} from "@angular/material/snack-bar";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -30,7 +32,11 @@ export class RegisterComponent implements OnInit {
     }
   );
 
-  constructor(private registerService: RegisterService) { }
+  constructor(
+    private registerService: RegisterService,
+    private snackBar: MatSnackBar,
+    private router: Router,
+    ) { }
 
   ngOnInit(): void {
   }
@@ -49,8 +55,14 @@ export class RegisterComponent implements OnInit {
 
     this.registerService.register(registrationRequest)
     .subscribe(response => {
-      console.log(response);
-    });
+      this.snackBar.open('Registration succesful. Please login.', 'Dismiss', {duration: 10000});
+      this.router.navigate(['/login']);
+    },
+    error => {
+      console.error("Error", error);
+      this.snackBar.open('An error prevented registration. Try again later.', 'Dismiss', {duration: 10000});
+    }
+    );
   }
 
   isPatient(): Boolean {

@@ -13,12 +13,14 @@ import {MatCardModule} from '@angular/material/card';
 import {MatRadioModule} from '@angular/material/radio';
 import { RegisterComponent } from './components/register/register.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

@@ -37,6 +37,7 @@ app.get("/api/status", function (req, res) {
   res.status(200).json({ status: "UP" });
 });
 
+// Login
 app.post("/api/login", function (req, res) {
   console.log('Received login request ...');
 
@@ -62,7 +63,7 @@ app.post("/api/register", function (req, res) {
 
   // patients are automatically approved. Doctors and Nurses require approval;
   var approved = 0;
-  if (userTypes[request.userType] === 'patient') {
+  if (request.userType === 'patient') {
     approved = 1;
   }
 
@@ -98,10 +99,11 @@ app.post("/api/register", function (req, res) {
       ${regNumber}
     )`;
 
-    console.log(sql);
-
   db.query(sql, (err, rows) => {
-    if (err) throw err;
+    if (err) {
+      console.log(err.sqlMessage);
+      throw err
+    }
     if (rows.length === 0) {
       res.status("500");
       res.send("Server Error during Registration.");
@@ -111,9 +113,6 @@ app.post("/api/register", function (req, res) {
     }    
   });
 });
-
-  
-
 
 function getTodayDate() {
   return new Date().toISOString().split('T')[0];

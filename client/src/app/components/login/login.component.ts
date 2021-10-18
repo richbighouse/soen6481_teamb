@@ -27,8 +27,7 @@ export class LoginComponent implements OnInit {
   }
 
   onLoginClicked() {
-    this.loginService
-      .login(this.email.value, this.password.value)
+    this.loginService.login(this.email.value, this.password.value)
       .subscribe(
         response => {
           // redirect to home

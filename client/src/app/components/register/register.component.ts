@@ -11,13 +11,13 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent implements OnInit {
 
-  email = new FormControl('', [Validators.email]);
+  email = new FormControl('', [Validators.email, Validators.required]);
   password = new FormControl('', [Validators.required]);
   address = new FormControl('', [Validators.required]);
   fullName = new FormControl('', [Validators.required]);
   dateOfBirth = new FormControl('', [Validators.required]);
   phoneNumber = new FormControl('', [Validators.required]);
-  registrationNumber = new FormControl('');
+  registrationNumber = new FormControl(''); // Need a custom validator for this
   userType = new FormControl('patient');
 
   registerForm = new FormGroup({

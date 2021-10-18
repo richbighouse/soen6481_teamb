@@ -95,7 +95,39 @@ CREATE TABLE IF NOT EXISTS `covid`.`appointment` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
+CREATE USER 'coviddbuser' IDENTIFIED BY '$soenpm!';
+
+GRANT ALL ON `covid`.* TO 'coviddbuser';
+GRANT SELECT, INSERT, TRIGGER ON TABLE `covid`.* TO 'coviddbuser';
+GRANT SELECT, INSERT, TRIGGER, UPDATE, DELETE ON TABLE `covid`.* TO 'coviddbuser';
+GRANT EXECUTE ON ROUTINE `covid`.* TO 'coviddbuser';
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+-- -----------------------------------------------------
+-- Data for table `covid`.`userType`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `covid`;
+INSERT INTO `covid`.`userType` (`id`, `userType`) VALUES (1, 'patient');
+INSERT INTO `covid`.`userType` (`id`, `userType`) VALUES (2, 'doctor');
+INSERT INTO `covid`.`userType` (`id`, `userType`) VALUES (3, 'nurse');
+INSERT INTO `covid`.`userType` (`id`, `userType`) VALUES (4, 'manager');
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `covid`.`user`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `covid`;
+INSERT INTO `covid`.`user` (`id`, `fullName`, `address`, `dateOfBirth`, `phoneNumber`, `email`, `password`, `fkUserType`, `registrationDate`, `lastLoginDate`, `active`, `approved`, `registrationNumber`) VALUES (DEFAULT, 'Patient Test', '123 Test', '2000-01-01', '5147557112', 'patient@test.com', 'patient', 1, '2021-10-17', NULL, 1, 1, NULL);
+INSERT INTO `covid`.`user` (`id`, `fullName`, `address`, `dateOfBirth`, `phoneNumber`, `email`, `password`, `fkUserType`, `registrationDate`, `lastLoginDate`, `active`, `approved`, `registrationNumber`) VALUES (DEFAULT, 'Nurse Test', '123 Test', '2002-02-02', '5147557112', 'nurse@test.com', 'nurse', 3, '2021-10-17', NULL, 1, 1, '12345678');
+INSERT INTO `covid`.`user` (`id`, `fullName`, `address`, `dateOfBirth`, `phoneNumber`, `email`, `password`, `fkUserType`, `registrationDate`, `lastLoginDate`, `active`, `approved`, `registrationNumber`) VALUES (DEFAULT, 'Doctor Test', '123 Test', '2003-03-03', '5147557112', 'doctor@test.com', 'doctor', 2, '2021-10-17', NULL, 1, 1, '987654321');
+INSERT INTO `covid`.`user` (`id`, `fullName`, `address`, `dateOfBirth`, `phoneNumber`, `email`, `password`, `fkUserType`, `registrationDate`, `lastLoginDate`, `active`, `approved`, `registrationNumber`) VALUES (DEFAULT, 'Admin', '1234 Admin', '2004-04-04', '5147557112', 'admin@test.com', 'admin', 4, '2021-10-17', NULL, 1, 1, NULL);
+
+COMMIT;
+

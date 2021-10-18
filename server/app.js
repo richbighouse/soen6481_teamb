@@ -6,11 +6,21 @@ const port = 8080;
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+// Link with angular
 var distDir = path.join(__dirname, "../client/dist/");
 console.log("Using distDir -> ", distDir);
-
 app.use(express.static(distDir));
 
+// Database
+const mysql = require('mysql2')
+const db = mysql.createConnection({
+  host: 'localhost',
+  user: 'coviddbuser',
+  password: '$soenpm!',
+  database: 'covid'
+})
+
+// Start
 app.listen(port, () => {
   console.log(`Covid19 Data Collection server listening at http://localhost:${port}`)
 })
@@ -26,12 +36,17 @@ app.post("/api/login", function (req, res) {
   console.log('email: ', body.email);
   console.log('password: ', body.password);
 
-  res.status(200).json({ status: "UP" });
+  const sql = `SELECT * FROM user WHERE email = '${body.email}' AND password = '${body.password}'`;
+  db.query(sql, (err, rows) => {
+    console.log(rows);
+    if (err) throw err;
+    res.json(rows);
+  });
 });
 
 app.post("/api/register", function (req, res) {
   console.log('Received registration request ...', req.body);
-  
+
   res.status(200).json({ status: "UP" });
 });
 

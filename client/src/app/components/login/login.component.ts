@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import { LoginService } from 'src/app/services/login.service';
 import {MatSnackBar} from "@angular/material/snack-bar";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -21,6 +22,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private loginService: LoginService,
     private snackBar: MatSnackBar,
+    private router: Router,
     ) { }
 
   ngOnInit(): void {
@@ -30,7 +32,7 @@ export class LoginComponent implements OnInit {
     this.loginService.login(this.email.value, this.password.value)
       .subscribe(
         response => {
-          // redirect to home
+          this.router.navigate(['/home']);
         },
         error => {
           if (error.status === 401) {
@@ -40,8 +42,7 @@ export class LoginComponent implements OnInit {
           } else {
             console.error("Error", error);
             this.snackBar.open('An error prevented the login. Try again later.', 'Dismiss', {duration: 10000});
-          }
-          
+          }          
         }
       )
   }

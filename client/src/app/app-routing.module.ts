@@ -20,7 +20,7 @@ const routes: Routes = [
     component: RegisterComponent
   },
   {
-    path: 'reports',
+    path: 'home',
     component: HomeComponent
   }
 ];

@@ -23,17 +23,17 @@
 }
 
 .action-card:hover {
-    border: 1px solid blue;
+    border: 1px solid #303F9F;
 }
 
 .action-icon {
     font-size: 1000%;
-    color: blue;
+    color:#303F9F;
 }
 
 .action-label {
     position: absolute;
-    color: blue;
+    color: #303F9F;
     font-size: large;
     font-weight: 500;
     bottom: 2em;

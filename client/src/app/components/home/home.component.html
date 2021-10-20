@@ -10,15 +10,23 @@
     </button>
 </mat-toolbar>
     
-<div class="centered">
 
-    <mat-card class="action-card">
+<div class="action-card-container">
+    <!-- Self-Assessment -->
+    <mat-card class="action-card" *ngIf="isPatient()">
         <div class="action-icon">
             <mat-icon [inline]="true">fact_check</mat-icon>
         </div>
         <span class="action-label">Take a Self-Assessment Test</span>
     </mat-card>
 
+    <!-- Random Test-->
+    <mat-card class="action-card" *ngIf="isNurse()">
+        <div class="action-icon">
+            <mat-icon [inline]="true">assessment</mat-icon>
+        </div>
+        <span class="action-label">Test Card</span>
+    </mat-card>
 </div>
 
 

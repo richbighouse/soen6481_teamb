@@ -28,4 +28,21 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  // We should define these in some currentUserService
+  isPatient() {
+    return this.currentUser.fkUserType === 1;
+  }
+
+  isNurse() {
+    return this.currentUser.fkUserType === 3;
+  }
+
+  isDoctor() {
+    return this.currentUser.fkUserType === 2;
+  }
+
+  isManager() {
+    return this.currentUser.fkUserType === 4;
+  }
+
 }

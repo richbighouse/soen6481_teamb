@@ -1,3 +1,24 @@
-<p>home works!</p>
+<mat-toolbar color="primary">
+    <span>Covid19 Data Collection</span>
+    <span class="example-spacer"></span>
+    <span style="font-size: medium; padding-right: 1em;">{{ currentUser.fullName }}</span>
+    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+        <mat-icon>account_box</mat-icon>
+    </button>
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+        <mat-icon>logout</mat-icon>
+    </button>
+</mat-toolbar>
+    
+<div class="centered">
 
-this is super cool
+    <mat-card class="action-card">
+        <div class="action-icon">
+            <mat-icon [inline]="true">fact_check</mat-icon>
+        </div>
+        <span class="action-label">Take a Self-Assessment Test</span>
+    </mat-card>
+
+</div>
+
+

@@ -1,0 +1,40 @@
+.example-spacer {
+    flex: 1 1 auto;
+  }
+
+  .centered {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    /* bring your own prefixes */
+    transform: translate(-50%, -50%);
+}
+
+.action-card {
+    height: 20em;
+    width: 20em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background-color:whitesmoke;
+    border: 1px solid lightgray;
+}
+
+.action-card:hover {
+    border: 1px solid blue;
+}
+
+.action-icon {
+    font-size: 1000%;
+    color: blue;
+}
+
+.action-label {
+    position: absolute;
+    color: blue;
+    font-size: large;
+    font-weight: 500;
+    bottom: 2em;
+}

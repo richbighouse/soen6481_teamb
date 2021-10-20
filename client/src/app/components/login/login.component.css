@@ -4,17 +4,17 @@
     left: 50%;
     /* bring your own prefixes */
     transform: translate(-50%, -50%);
-  }
+}
   
-  .login-container {
+.login-container {
     display: flex;
     flex-direction: column;
   
-  }
+}
 
-  .login-card {
+.login-card {
     padding-left: 5em;
     padding-right: 5em;
     padding-top: 3em;
     padding-bottom: 3em;
-  }
+}

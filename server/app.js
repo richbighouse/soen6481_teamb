@@ -1,4 +1,5 @@
 const express = require('express')
+const sessions = require('express-session')
 const path = require('path');
 const app = express();
 const port = 8080;
@@ -10,6 +11,14 @@ app.use(express.urlencoded({ extended: false }));
 var distDir = path.join(__dirname, "../client/dist/");
 console.log("Using distDir -> ", distDir);
 app.use(express.static(distDir));
+
+// Session
+app.use(sessions({
+  secret: 'super duper secret',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false }
+}))
 
 // Database
 const mysql = require('mysql2')
@@ -28,34 +37,40 @@ const userTypes = {
   "manager": 4
 };
 
+/*
+  currentUser - will need a better solution eventually. This only supports a single user
+  look into express-session, cookie-session, passportjs, or a homemade localStorage solution
+*/ 
+var currentUser = null;
+
 // Start
 app.listen(port, () => {
   console.log(`Covid19 Data Collection server listening at http://localhost:${port}`)
 })
 
-app.get("/api/status", function (req, res) {
-  res.status(200).json({ status: "UP" });
-});
-
 // Login
 app.post("/api/login", function (req, res) {
-  console.log('Received login request ...');
-
+  console.log('Received login request ...', req.body);
   const body = req.body;
-  console.log('email: ', body.email);
-  console.log('password: ', body.password);
 
   const sql = `SELECT * FROM user WHERE email = '${body.email}' AND password = '${body.password}'`;
   db.query(sql, (err, rows) => {
     if (err) throw err;
     if (rows.length === 0) {
+      console.log("Invalid Credentials");
       res.status("401");
       res.send("Invalid Credentials");
     } else {
-      res.json(rows);
+      currentUser = rows[0];
+      var session=req.session;
+      session.userid = currentUser.id;
+      console.log("Login succesful");
+      res.json(currentUser);
     }    
   });
 });
+
+// Register
 
 app.post("/api/register", function (req, res) {
   const request = req.body.registrationRequest;
@@ -114,9 +129,26 @@ app.post("/api/register", function (req, res) {
   });
 });
 
+app.get("/api/users/current", function (req, res) {
+  const currentId = req.session.userid;
+  if (!currentId) {
+    res.status("404").send("No current user.");
+  } else {
+    const sql = `SELECT * FROM user WHERE id = ${currentId};`;
+    db.query(sql, (err, rows) => {
+      if (err) throw err;
+      if (rows.length === 0) {
+        res.status("404").send("Couldn't find user.");
+      } else {
+        const currentUser = rows[0];
+        console.log("Current User", currentUser);
+        res.json(currentUser);
+      }    
+  });}
+});
+
 function getTodayDate() {
   return new Date().toISOString().split('T')[0];
 }
 
 // module.exports = app;
-

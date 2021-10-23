@@ -100,7 +100,7 @@ CREATE USER 'coviddbuser' IDENTIFIED BY '$soenpm!';
 GRANT ALL ON `covid`.* TO 'coviddbuser';
 GRANT SELECT, INSERT, TRIGGER ON TABLE `covid`.* TO 'coviddbuser';
 GRANT SELECT, INSERT, TRIGGER, UPDATE, DELETE ON TABLE `covid`.* TO 'coviddbuser';
-GRANT EXECUTE ON ROUTINE `covid`.* TO 'coviddbuser';
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

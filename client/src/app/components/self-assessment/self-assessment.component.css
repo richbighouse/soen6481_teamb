@@ -1,0 +1,25 @@
+.test-container {
+    width: 80%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    /* bring your own prefixes */
+    transform: translate(-50%, -50%);
+}
+
+.test-card {
+    background-color:whitesmoke;
+    border: 1px solid lightgray;
+}
+
+.test-buttons {
+    padding-top: 2em;
+    display: flex;
+    gap: 1em;
+    justify-content: right;
+}
+
+.step-buttons {
+    display: flex;
+    gap: 1em;
+}

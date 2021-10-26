@@ -4,11 +4,11 @@ import { User } from 'src/app/services/login.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-top-nav',
+  templateUrl: './top-nav.component.html',
+  styleUrls: ['./top-nav.component.css']
 })
-export class HomeComponent implements OnInit {
+export class TopNavComponent implements OnInit {
 
   currentUser: User = new User;
 
@@ -28,25 +28,8 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  goToSelfAssessment() {
-    this.navigationService.goSelfAssessment();
-  }
-
-  // We should define these in some currentUserService
-  isPatient() {
-    return this.currentUser.fkUserType === 1;
-  }
-
-  isNurse() {
-    return this.currentUser.fkUserType === 3;
-  }
-
-  isDoctor() {
-    return this.currentUser.fkUserType === 2;
-  }
-
-  isManager() {
-    return this.currentUser.fkUserType === 4;
+  goHome() {
+    this.navigationService.goHome();
   }
 
 }

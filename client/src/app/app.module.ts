@@ -16,13 +16,18 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HomeComponent } from './components/home/home.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
+import { SelfAssessmentComponent } from './components/self-assessment/self-assessment.component';
+import { TopNavComponent } from './components/top-nav/top-nav.component';
+import { MatStepperModule } from '@angular/material/stepper';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    HomeComponent
+    HomeComponent,
+    SelfAssessmentComponent,
+    TopNavComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +43,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatRadioModule,
     MatSnackBarModule,
     MatToolbarModule,
-    MatIconModule
+    MatIconModule,
+    MatStepperModule
   ],
   providers: [],
   bootstrap: [AppComponent]

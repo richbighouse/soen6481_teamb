@@ -1,0 +1,100 @@
+<app-top-nav></app-top-nav>
+
+<div class="test-container">
+
+        <!-- Self-Assessment -->
+        <mat-card class="test-card">
+
+            <mat-card-header>
+                <mat-card-title>Covid19 Self-Assessment Test</mat-card-title>
+              </mat-card-header>
+ 
+            <mat-stepper orientation="vertical">
+                <!-- Breathing -->
+                <mat-step>
+                    <ng-template matStepLabel>Breathing Assessment</ng-template>
+                    <ng-template matStepContent>
+                        <p>Are you having difficulty breathing? For example, do you feel like you’re out of breath or suffocating?</p>
+                        <p><strong>OR</strong></p>
+                        <p>Do you have a lot of trouble breathing even when at rest, such as shortness of breath that makes it hard to speak?</p>
+                        <div class="step-buttons">
+                            <button 
+                                mat-raised-button color="primary" 
+                                (click)=hasBreathingProblem(true)>
+                                    Yes
+                            </button>
+                            <button
+                                mat-raised-button 
+                                color="warn" 
+                                matStepperNext
+                                (click)=hasBreathingProblem(false)>
+                                    No
+                            </button>
+                        </div>
+                    </ng-template>
+                </mat-step>
+                <!-- Age Range -->
+                <mat-step *ngIf="showAgeRange">
+                    <ng-template matStepLabel>Age Range</ng-template>
+                    <ng-template matStepContent>
+                        <p>Please select an age range</p>
+                        <div class="step-buttons">
+                            <button 
+                                mat-raised-button color="primary"
+                                matStepperNext 
+                                (click)="setAgeRange('5')">
+                                6 months - 5 years
+                            </button>
+                            <button 
+                                mat-raised-button color="primary"
+                                matStepperNext 
+                            (click)="setAgeRange('6-17')">
+                                6-17 years
+                            </button>
+                            <button 
+                                mat-raised-button color="primary"
+                                matStepperNext 
+                                (click)="setAgeRange('18')">
+                                18 years +
+                            </button>
+                        </div>
+
+                    </ng-template>
+                </mat-step>
+                <mat-step>
+                    <ng-template matStepLabel>Step 3</ng-template>
+                    <p>This content was rendered eagerly</p>
+                    <button mat-button matStepperPrevious>Back</button>
+                </mat-step>
+                <mat-step>
+                    <ng-template matStepLabel>Step 3</ng-template>
+                    <p>This content was rendered eagerly</p>
+                    <button mat-button matStepperPrevious>Back</button>
+                </mat-step>
+                <mat-step>
+                    <ng-template matStepLabel>Step 3</ng-template>
+                    <p>This content was rendered eagerly</p>
+                    <button mat-button matStepperPrevious>Back</button>
+                </mat-step>
+            </mat-stepper>
+
+            <div class="test-buttons">
+                <button
+                mat-raised-button
+                color="primary"
+                type="submit"
+                [disabled]="!canSubmit"
+                >
+                   <span>Submit</span>
+               </button>
+               <button
+                mat-raised-button
+                type="submit"
+                (click)="goHome()">
+                  <span>Cancel</span>
+              </button>
+            </div>
+
+      </mat-card>
+
+</div>

@@ -1,19 +1,8 @@
-<mat-toolbar color="primary">
-    <span>Covid19 Data Collection</span>
-    <span class="example-spacer"></span>
-    <span style="font-size: medium; padding-right: 1em;">{{ currentUser.fullName }}</span>
-    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-        <mat-icon>account_box</mat-icon>
-    </button>
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-        <mat-icon>logout</mat-icon>
-    </button>
-</mat-toolbar>
+<app-top-nav></app-top-nav>
     
-
 <div class="action-card-container">
     <!-- Self-Assessment -->
-    <mat-card class="action-card" *ngIf="isPatient()">
+    <mat-card class="action-card" *ngIf="isPatient()" (click)="goToSelfAssessment()">
         <div class="action-icon">
             <mat-icon [inline]="true">fact_check</mat-icon>
         </div>
@@ -24,7 +13,7 @@
     <mat-card class="action-card" *ngIf="isNurse()">
         <div class="action-icon">
             <mat-icon [inline]="true">assessment</mat-icon>
-        </div>
+        </div>z
         <span class="action-label">Test Card</span>
     </mat-card>
 </div>

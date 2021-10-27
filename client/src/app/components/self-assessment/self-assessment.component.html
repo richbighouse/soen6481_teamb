@@ -14,7 +14,7 @@
                 <mat-step [stepControl]="ageStepControl">
                     <ng-template matStepLabel>Breathing Assessment</ng-template>
                     <ng-template matStepContent>
-                        <p>Are you having difficulty breathing? For example, do you feel like you’re out of breath or suffocating?</p>
+                        <p style="padding-top: 1em;">Are you having difficulty breathing? For example, do you feel like you’re out of breath or suffocating?</p>
                         <p><strong>OR</strong></p>
                         <p>Do you have a lot of trouble breathing even when at rest, such as shortness of breath that makes it hard to speak?</p>
                         <div class="step-buttons">
@@ -83,10 +83,31 @@
                     </ng-template>
                 </mat-step>
                 <!-- Current Situation -->
-                <mat-step *ngIf="showFirstSymptoms" [stepControl]="symptomsStepControl">
+                <mat-step *ngIf="showFirstSymptoms" [stepControl]="secondSymptomsStepControl">
                     <ng-template matStepLabel>Current Situation</ng-template>
                     <ng-template matStepContent>
                         <p style="padding-top: 1em;"[innerHtml]="situationString"></p>
+                        <div class="step-buttons">
+                            <button 
+                                mat-raised-button 
+                                [color]="(hasSituationSelected && hasSituationData) ? 'primary' : ''"
+                                (click)=hasSituation(true)>
+                                    Yes
+                            </button>
+                            <button
+                                mat-raised-button
+                                [color]="(hasSituationSelected && !hasSituationData) ? 'primary' : ''"
+                                (click)=hasSituation(false)>
+                                    No
+                            </button>
+                        </div>
+                    </ng-template>
+                </mat-step>
+                <!-- Additional Symptoms -->
+                <mat-step *ngIf="showFirstSymptoms" [stepControl]="secondSymptomsStepControl">
+                    <ng-template matStepLabel>Additional Symptoms</ng-template>
+                    <ng-template matStepContent>
+                        <p style="padding-top: 1em;"[innerHtml]="secondSymptomsString"></p>
                         <div class="step-buttons">
                             <button 
                                 mat-raised-button 

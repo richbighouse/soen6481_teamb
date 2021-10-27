@@ -1,3 +1,4 @@
+import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
@@ -17,7 +18,7 @@ export class SelfAssessmentComponent implements OnInit {
   ageStepControl!: FormGroup;
   firstSymptomsStepControl!: FormGroup;
   situationStepControl!: FormGroup;
-  symptomsStepControl!: FormGroup;
+  secondSymptomsStepControl!: FormGroup;
   
 
   // Assessment Data ... this can be improved
@@ -25,6 +26,7 @@ export class SelfAssessmentComponent implements OnInit {
   ageRangeData: string = '';
   hasFirstSymptomsData: boolean = false;
   hasSituationData: boolean = false;
+  hasSecondSymptomsData: boolean = false;
 
   // Stepper Control
   canSubmit: boolean = false;
@@ -35,10 +37,12 @@ export class SelfAssessmentComponent implements OnInit {
   hasBreatingProblemsSelected: boolean = false;
   hasFirstSymptomsSelected: boolean = false;
   hasSituationSelected: boolean = false;
+  hasSecondSymptomsSelected: boolean = false;
 
   // Strings
   firstSymptomsString: string = '';
   situationString: string = '';
+  secondSymptomsString: string = '';
 
   constructor(
     private userService: UserService,
@@ -118,7 +122,42 @@ export class SelfAssessmentComponent implements OnInit {
     this.hasFirstSymptomsSelected = true;
 
     if (!value) {
-      this.canSubmit = true;
+      if (this.ageRangeData === '5') {
+        this.canSubmit = true;
+      } else {
+        if (this.ageRangeData === '6-17') {
+          this.secondSymptomsString = "Does your child have any 2 of the following symptoms?\n"
+          + "<ul>"
+          + "<li> Stomach aches </li>"
+          + "<li> Nausea or vomiting </li>"
+          + "<li> Diarrhea </li>"
+          + "<li> Major fatigue </li>"
+          + "<li> Significant loss of appetite </li>"
+          + "<li> Generalized muscle pain (not related to physical exertion) </li>"
+          + "<li> Headache </li>"
+          + "</ul>" 
+        } else {
+          this.secondSymptomsString = "Are you experiencing any 2 of the following symptoms?\n"
+          + "<ul>"
+          + "<li> Stomach aches </li>"
+          + "<li> Nausea or vomiting </li>"
+          + "<li> Diarrhea </li>"
+          + "<li> Major fatigue </li>"
+          + "<li> Significant loss of appetite </li>"
+          + "<li> Generalized muscle pain (not related to physical exertion) </li>"
+          + "<li> Headache </li>"
+          + "</ul>" 
+        }
+        console.log('do i get here');
+        this.situationStepControl.removeControl('situationCtrl');
+        this.situationStepControl.updateValueAndValidity();
+        this.secondSymptomsStepControl.removeControl('secondSymptomCtrl');
+        this.secondSymptomsStepControl.updateValueAndValidity();
+
+        this.myStepper.steps.get(3)!.interacted = true;
+        this.myStepper.selectedIndex = 4;
+      }
+      
     } else {
       this.situationString = "Are you or the person who is going to get tested in one of the situations below?\n"
       + "<ul>"
@@ -143,10 +182,7 @@ export class SelfAssessmentComponent implements OnInit {
     this.hasSituationSelected = true;
     this.hasSituationData = value;
 
-    // Test ends here regardless of answer for 6mon-5years
-    if (this.ageRangeData === '5') {
-      this.canSubmit = true;
-    }
+    this.canSubmit = true;
   }
 
   goHome() {
@@ -162,6 +198,9 @@ export class SelfAssessmentComponent implements OnInit {
     });
     this.situationStepControl = this._formBuilder.group({
       situationCtrl: ['', Validators.required]
+    });
+    this.secondSymptomsStepControl = this._formBuilder.group({
+      secondSymptomCtrl: ['', Validators.required]
     });
 
     this.canSubmit = false;
@@ -179,6 +218,12 @@ export class SelfAssessmentComponent implements OnInit {
     this.hasSituationData = false;
     this.situationString = '';
 
-    this.myStepper.reset();
+    this.hasSecondSymptomsData = false;
+    this.hasSecondSymptomsSelected = false;
+    this.secondSymptomsString = '';
+
+    if (this.myStepper) {
+      this.myStepper.reset();
+    }
   }
 }

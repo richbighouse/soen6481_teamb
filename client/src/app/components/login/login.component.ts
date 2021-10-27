@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  email = new FormControl('', [Validators.required]);
+  email = new FormControl('', [Validators.required, Validators.email]);
   password = new FormControl('', [Validators.required]);
   loginForm = new FormGroup({
       email: this.email,
@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
 
   onLoginClicked() {
     this.loginService.login(this.email.value, this.password.value)
-      .subscribe(
+     .subscribe(
         response => {
           this.router.navigate(['/home']);
         },
@@ -42,8 +42,9 @@ export class LoginComponent implements OnInit {
           } else {
             console.error("Error", error);
             this.snackBar.open('An error prevented the login. Try again later.', 'Dismiss', {duration: 10000});
-          }          
+          }           
         }
+
       )
   }
 }

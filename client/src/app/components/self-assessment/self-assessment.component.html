@@ -9,9 +9,9 @@
                 <mat-card-title>Covid19 Self-Assessment Test</mat-card-title>
               </mat-card-header>
  
-            <mat-stepper orientation="vertical">
+            <mat-stepper #stepper orientation="vertical" linear="true">
                 <!-- Breathing -->
-                <mat-step>
+                <mat-step [stepControl]="ageStepControl">
                     <ng-template matStepLabel>Breathing Assessment</ng-template>
                     <ng-template matStepContent>
                         <p>Are you having difficulty breathing? For example, do you feel like you’re out of breath or suffocating?</p>
@@ -19,14 +19,14 @@
                         <p>Do you have a lot of trouble breathing even when at rest, such as shortness of breath that makes it hard to speak?</p>
                         <div class="step-buttons">
                             <button 
-                                mat-raised-button color="primary" 
+                                mat-raised-button 
+                                [color]="(hasBreatingProblemsSelected && hasBreathingProblemsData) ? 'primary' : ''"
                                 (click)=hasBreathingProblem(true)>
                                     Yes
                             </button>
                             <button
-                                mat-raised-button 
-                                color="warn" 
-                                matStepperNext
+                                mat-raised-button
+                                [color]="(hasBreatingProblemsSelected && !hasBreathingProblemsData) ? 'primary' : ''"
                                 (click)=hasBreathingProblem(false)>
                                     No
                             </button>
@@ -34,26 +34,26 @@
                     </ng-template>
                 </mat-step>
                 <!-- Age Range -->
-                <mat-step *ngIf="showAgeRange">
+                <mat-step *ngIf="showAgeRange" [stepControl]="firstSymptomsStepControl">
                     <ng-template matStepLabel>Age Range</ng-template>
                     <ng-template matStepContent>
-                        <p>Please select an age range</p>
+                        <p style="padding-top: 1em;">Please select an age range.</p>
                         <div class="step-buttons">
                             <button 
-                                mat-raised-button color="primary"
-                                matStepperNext 
+                                mat-raised-button
+                                [color]="(ageRangeData === '5') ? 'primary' : ''"
                                 (click)="setAgeRange('5')">
                                 6 months - 5 years
                             </button>
                             <button 
-                                mat-raised-button color="primary"
-                                matStepperNext 
-                            (click)="setAgeRange('6-17')">
+                                mat-raised-button
+                                [color]="(ageRangeData === '6-17') ? 'primary' : ''"
+                                (click)="setAgeRange('6-17')">
                                 6-17 years
                             </button>
                             <button 
-                                mat-raised-button color="primary"
-                                matStepperNext 
+                                mat-raised-button
+                                [color]="(ageRangeData === '18') ? 'primary' : ''"
                                 (click)="setAgeRange('18')">
                                 18 years +
                             </button>
@@ -61,21 +61,50 @@
 
                     </ng-template>
                 </mat-step>
-                <mat-step>
-                    <ng-template matStepLabel>Step 3</ng-template>
-                    <p>This content was rendered eagerly</p>
-                    <button mat-button matStepperPrevious>Back</button>
+                <!-- Symptoms -->
+                <mat-step *ngIf="showFirstSymptoms" [stepControl]="situationStepControl">
+                    <ng-template matStepLabel>Symptoms</ng-template>
+                    <ng-template matStepContent>
+                        <p style="padding-top: 1em;"[innerHtml]="firstSymptomsString"></p>
+                        <div class="step-buttons">
+                            <button 
+                                mat-raised-button 
+                                [color]="(hasFirstSymptomsSelected && hasFirstSymptomsData) ? 'primary' : ''"
+                                (click)=hasFirstSymptoms(true)>
+                                    Yes
+                            </button>
+                            <button
+                                mat-raised-button
+                                [color]="(hasFirstSymptomsSelected && !hasFirstSymptomsData) ? 'primary' : ''"
+                                (click)=hasFirstSymptoms(false)>
+                                    No
+                            </button>
+                        </div>
+                    </ng-template>
                 </mat-step>
-                <mat-step>
-                    <ng-template matStepLabel>Step 3</ng-template>
-                    <p>This content was rendered eagerly</p>
-                    <button mat-button matStepperPrevious>Back</button>
+                <!-- Current Situation -->
+                <mat-step *ngIf="showFirstSymptoms" [stepControl]="symptomsStepControl">
+                    <ng-template matStepLabel>Current Situation</ng-template>
+                    <ng-template matStepContent>
+                        <p style="padding-top: 1em;"[innerHtml]="situationString"></p>
+                        <div class="step-buttons">
+                            <button 
+                                mat-raised-button 
+                                [color]="(hasSituationSelected && hasSituationData) ? 'primary' : ''"
+                                (click)=hasSituation(true)>
+                                    Yes
+                            </button>
+                            <button
+                                mat-raised-button
+                                [color]="(hasSituationSelected && !hasSituationData) ? 'primary' : ''"
+                                (click)=hasSituation(false)>
+                                    No
+                            </button>
+                        </div>
+                    </ng-template>
                 </mat-step>
-                <mat-step>
-                    <ng-template matStepLabel>Step 3</ng-template>
-                    <p>This content was rendered eagerly</p>
-                    <button mat-button matStepperPrevious>Back</button>
-                </mat-step>
+                
+            <!-- End Stepper -->
             </mat-stepper>
 
             <div class="test-buttons">
@@ -83,10 +112,16 @@
                 mat-raised-button
                 color="primary"
                 type="submit"
-                [disabled]="!canSubmit"
-                >
+                [disabled]="!canSubmit">
                    <span>Submit</span>
                </button>
+               <button
+               mat-raised-button
+               color="accent"
+               type="submit"
+               (click)="resetTest()">
+                  <span>Reset</span>
+              </button>
                <button
                 mat-raised-button
                 type="submit"

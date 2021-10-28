@@ -133,7 +133,8 @@
                 mat-raised-button
                 color="primary"
                 type="submit"
-                [disabled]="!canSubmit">
+                [disabled]="!canSubmit"
+                (click)="onSubmit()">
                    <span>Submit</span>
                </button>
                <button

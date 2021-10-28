@@ -21,13 +21,13 @@ export class SelfAssessmentComponent implements OnInit {
   secondSymptomsStepControl!: FormGroup;
   
   // Assessment Data ... this can be improved
-  hasBreathingProblemsData: boolean = false;
+  hasBreathingProblemsData!: boolean | null;
   ageRangeData: string = '';
-  hasFirstSymptomsData: boolean = false;
+  hasFirstSymptomsData!: boolean | null;
   firstDynamicData: boolean = false;
   secondDynamicData: boolean = false;
-  hasSituationData: boolean = false;
-  hasSecondSymptomsData: boolean = false;
+  hasSituationData!: boolean | null;
+  hasSecondSymptomsData!: boolean | null;
 
   // Stepper Control
   canSubmit: boolean = false;
@@ -247,20 +247,20 @@ export class SelfAssessmentComponent implements OnInit {
     this.showSecondDynamicStep = false;
 
     this.hasBreatingProblemsSelected = false;
-    this.hasBreathingProblemsData = false;
+    this.hasBreathingProblemsData = null;
     this.firstDynamicData = false;
     this.secondDynamicData = false;
 
     this.ageRangeData = '';
 
     this.hasFirstSymptomsSelected = false;
-    this.hasFirstSymptomsData = false;
+    this.hasFirstSymptomsData = null;
     this.firstSymptomsString = '';
 
-    this.hasSituationData = false;
+    this.hasSituationData = null;
     this.situationString = '';
 
-    this.hasSecondSymptomsData = false;
+    this.hasSecondSymptomsData = null;
     this.secondSymptomsString = '';
 
     this.firstDynamicStepLabel = 'Additional Information';
@@ -287,5 +287,14 @@ export class SelfAssessmentComponent implements OnInit {
     + "</ul>"
     + "<li> Is currently wheezing. </li>"
     + "</ul>"
+  }
+
+  onSubmit() {
+
+    console.log('hasBreathingProblemsData', this.hasBreathingProblemsData);
+    console.log('ageRangeData', this.ageRangeData);
+    console.log('hasFirstSymptomsData', this.hasFirstSymptomsData);
+    console.log('hasSituationData', this.hasSituationData);
+    console.log('hasSecondSymptomsData', this.hasSecondSymptomsData);
   }
 }

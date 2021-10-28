@@ -1,11 +1,8 @@
+
 .test-container {
-    width: 80%;
-    position: fixed;
-    top: 25%;
-    left: 50%;
-    /* bring your own prefixes */
-    transform: translate(-50%, -25%);
-    font-size: 14px;
+    display: flex;
+    padding-top: 3em;
+    justify-content: center;
 }
 
 .test-card {

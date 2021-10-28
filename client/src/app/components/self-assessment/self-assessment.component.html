@@ -58,9 +58,9 @@
                                 18 years +
                             </button>
                         </div>
-
                     </ng-template>
                 </mat-step>
+
                 <!-- Symptoms -->
                 <mat-step *ngIf="showFirstSymptoms" [stepControl]="situationStepControl">
                     <ng-template matStepLabel>Symptoms</ng-template>
@@ -83,7 +83,7 @@
                     </ng-template>
                 </mat-step>
                 <!-- Current Situation -->
-                <mat-step *ngIf="showFirstSymptoms" [stepControl]="secondSymptomsStepControl">
+                <mat-step *ngIf="showCurrentSituation" [stepControl]="secondSymptomsStepControl">
                     <ng-template matStepLabel>Current Situation</ng-template>
                     <ng-template matStepContent>
                         <p style="padding-top: 1em;"[innerHtml]="situationString"></p>
@@ -104,7 +104,7 @@
                     </ng-template>
                 </mat-step>
                 <!-- Additional Symptoms -->
-                <mat-step *ngIf="showFirstSymptoms" [stepControl]="secondSymptomsStepControl">
+                <mat-step *ngIf= "showAdditionalSymptoms" [stepControl]="secondSymptomsStepControl">
                     <ng-template matStepLabel>Additional Symptoms</ng-template>
                     <ng-template matStepContent>
                         <p style="padding-top: 1em;"[innerHtml]="secondSymptomsString"></p>

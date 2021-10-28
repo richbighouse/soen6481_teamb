@@ -24,8 +24,3 @@
     display: flex;
     gap: 1em;
 }
-
-
-.hide {
-    display: none;
-}

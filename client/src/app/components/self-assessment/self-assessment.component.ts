@@ -31,7 +31,9 @@ export class SelfAssessmentComponent implements OnInit {
   // Stepper Control
   canSubmit: boolean = false;
   showAgeRange: boolean = true;
-  showFirstSymptoms: boolean = true;
+  showFirstSymptoms: boolean = false;
+  showCurrentSituation: boolean = false;
+  showAdditionalSymptoms: boolean = false;
 
   // Button Color Control
   hasBreatingProblemsSelected: boolean = false;
@@ -69,10 +71,12 @@ export class SelfAssessmentComponent implements OnInit {
     this.canSubmit = value;
 
     if (!value) {
+      this.showFirstSymptoms = true;
       this.ageStepControl.removeControl('ageCtrl');
       this.ageStepControl.updateValueAndValidity();
       this.myStepper.next();
     } else {
+      this.showAgeRange = false;
       this.ageStepControl.addControl('ageCtrl', this._formBuilder.control('', [Validators.required]));
       this.ageStepControl.updateValueAndValidity();
       this.myStepper.next();
@@ -204,6 +208,10 @@ export class SelfAssessmentComponent implements OnInit {
     });
 
     this.canSubmit = false;
+    this.showAgeRange = true;
+    this.showFirstSymptoms = false;
+    this.showCurrentSituation = false;
+    this.showAdditionalSymptoms = false;
 
     this.hasBreatingProblemsSelected = false;
     this.hasBreathingProblemsData = false;

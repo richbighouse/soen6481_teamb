@@ -82,43 +82,43 @@
                         </div>
                     </ng-template>
                 </mat-step>
-                <!-- Current Situation -->
-                <mat-step *ngIf="showCurrentSituation" [stepControl]="secondSymptomsStepControl">
-                    <ng-template matStepLabel>Current Situation</ng-template>
+                <!-- First Dynamic Step -->
+                <mat-step *ngIf="showFirstDynamicStep"[stepControl]="secondSymptomsStepControl">
+                    <ng-template matStepLabel>{{ firstDynamicStepLabel}}</ng-template>
                     <ng-template matStepContent>
-                        <p style="padding-top: 1em;"[innerHtml]="situationString"></p>
+                        <p style="padding-top: 1em;"[innerHtml]="firstDynamicSring"></p>
                         <div class="step-buttons">
                             <button 
                                 mat-raised-button 
-                                [color]="(hasSituationSelected && hasSituationData) ? 'primary' : ''"
-                                (click)=hasSituation(true)>
+                                [color]="(hasFirstDynamicSelected && firstDynamicData) ? 'primary' : ''"
+                                (click)=firstDynamicClick(true)>
                                     Yes
                             </button>
                             <button
                                 mat-raised-button
-                                [color]="(hasSituationSelected && !hasSituationData) ? 'primary' : ''"
-                                (click)=hasSituation(false)>
+                                [color]="(hasFirstDynamicSelected && !firstDynamicData) ? 'primary' : ''"
+                                (click)=firstDynamicClick(false)>
                                     No
                             </button>
                         </div>
                     </ng-template>
                 </mat-step>
-                <!-- Additional Symptoms -->
-                <mat-step *ngIf= "showAdditionalSymptoms" [stepControl]="secondSymptomsStepControl">
-                    <ng-template matStepLabel>Additional Symptoms</ng-template>
+                <!-- Second Dynamic Step -->
+                <mat-step *ngIf="showSecondDynamicStep" [stepControl]="secondSymptomsStepControl">
+                    <ng-template matStepLabel>{{ secondDynamicStepLabel}}</ng-template>
                     <ng-template matStepContent>
-                        <p style="padding-top: 1em;"[innerHtml]="secondSymptomsString"></p>
+                        <p style="padding-top: 1em;"[innerHtml]="secondDynamicString"></p>
                         <div class="step-buttons">
                             <button 
                                 mat-raised-button 
-                                [color]="(hasSituationSelected && hasSituationData) ? 'primary' : ''"
-                                (click)=hasSituation(true)>
+                                [color]="(hasSecondDynamicSelected && secondDynamicData) ? 'primary' : ''"
+                                (click)=secondDynamicClick(true)>
                                     Yes
                             </button>
                             <button
                                 mat-raised-button
-                                [color]="(hasSituationSelected && !hasSituationData) ? 'primary' : ''"
-                                (click)=hasSituation(false)>
+                                [color]="(hasSecondDynamicSelected && !secondDynamicData) ? 'primary' : ''"
+                                (click)=secondDynamicClick(false)>
                                     No
                             </button>
                         </div>
@@ -138,7 +138,6 @@
                </button>
                <button
                mat-raised-button
-               color="accent"
                type="submit"
                (click)="resetTest()">
                   <span>Reset</span>

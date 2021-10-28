@@ -20,11 +20,12 @@ export class SelfAssessmentComponent implements OnInit {
   situationStepControl!: FormGroup;
   secondSymptomsStepControl!: FormGroup;
   
-
   // Assessment Data ... this can be improved
   hasBreathingProblemsData: boolean = false;
   ageRangeData: string = '';
   hasFirstSymptomsData: boolean = false;
+  firstDynamicData: boolean = false;
+  secondDynamicData: boolean = false;
   hasSituationData: boolean = false;
   hasSecondSymptomsData: boolean = false;
 
@@ -32,19 +33,48 @@ export class SelfAssessmentComponent implements OnInit {
   canSubmit: boolean = false;
   showAgeRange: boolean = true;
   showFirstSymptoms: boolean = false;
-  showCurrentSituation: boolean = false;
-  showAdditionalSymptoms: boolean = false;
+  showFirstDynamicStep: boolean = false;
+  showSecondDynamicStep: boolean = false;
 
   // Button Color Control
   hasBreatingProblemsSelected: boolean = false;
   hasFirstSymptomsSelected: boolean = false;
-  hasSituationSelected: boolean = false;
-  hasSecondSymptomsSelected: boolean = false;
+  hasFirstDynamicSelected: boolean = false;
+  hasSecondDynamicSelected: boolean = false;
 
   // Strings
   firstSymptomsString: string = '';
   situationString: string = '';
   secondSymptomsString: string = '';
+
+  // Dynamic Strings
+  firstDynamicStepLabel: string = 'Additional Information';
+  firstDynamicSring: string = '';
+  secondDynamicStepLabel: string = 'Additional Information';
+  secondDynamicString: string = '';
+
+  // Dynamic methods
+  firstDynamicMethod: any;
+  secondDynamicMethod: any;
+
+  dynamicMethods = {
+    currentSituation: (value: boolean) => {
+      this.hasSituationData = value;
+      this.canSubmit = true;
+    },
+    additionalSymptoms: (value: boolean) => {
+      this.hasSecondSymptomsData = value;
+
+      if (!value) {
+        this.canSubmit = true;
+        this.showSecondDynamicStep = false;
+      } else {
+        this.secondDynamicString = this.getCurrentSituationString();
+        this.secondDynamicMethod = this.dynamicMethods.currentSituation;
+        this.myStepper.next();
+      }
+    }
+  }
 
   constructor(
     private userService: UserService,
@@ -56,7 +86,6 @@ export class SelfAssessmentComponent implements OnInit {
     this.userService.getCurrentUser().subscribe
     (res => {
       this.currentUser = res;
-      console.log(this.currentUser);
     },
     err => {
       this.navigationService.goLogin();
@@ -85,6 +114,7 @@ export class SelfAssessmentComponent implements OnInit {
 
   setAgeRange(value: string) {
     this.ageRangeData = value;
+    this.showFirstDynamicStep = true;
 
     this.firstSymptomsStepControl.removeControl('firstSymptomsCtrl');
     this.firstSymptomsStepControl.updateValueAndValidity();
@@ -124,13 +154,23 @@ export class SelfAssessmentComponent implements OnInit {
   hasFirstSymptoms(value: boolean) {
     this.hasFirstSymptomsData = value;
     this.hasFirstSymptomsSelected = true;
+    this.hasFirstDynamicSelected = false;
 
     if (!value) {
       if (this.ageRangeData === '5') {
         this.canSubmit = true;
+        this.showFirstDynamicStep = false;
+        this.firstDynamicMethod = this.dynamicMethods.currentSituation;
       } else {
+        this.firstDynamicMethod = this.dynamicMethods.additionalSymptoms;
+
+        this.firstDynamicStepLabel = "Additional Symptoms";
+        this.showSecondDynamicStep = true;
+        this.secondDynamicStepLabel = "Current Situation";
+        this.secondDynamicString = this.getCurrentSituationString();
+
         if (this.ageRangeData === '6-17') {
-          this.secondSymptomsString = "Does your child have any 2 of the following symptoms?\n"
+          this.firstDynamicSring = "Does your child have any 2 of the following symptoms?\n"
           + "<ul>"
           + "<li> Stomach aches </li>"
           + "<li> Nausea or vomiting </li>"
@@ -141,7 +181,7 @@ export class SelfAssessmentComponent implements OnInit {
           + "<li> Headache </li>"
           + "</ul>" 
         } else {
-          this.secondSymptomsString = "Are you experiencing any 2 of the following symptoms?\n"
+          this.firstDynamicSring = "Are you experiencing any 2 of the following symptoms?\n"
           + "<ul>"
           + "<li> Stomach aches </li>"
           + "<li> Nausea or vomiting </li>"
@@ -152,41 +192,34 @@ export class SelfAssessmentComponent implements OnInit {
           + "<li> Headache </li>"
           + "</ul>" 
         }
-        console.log('do i get here');
         this.situationStepControl.removeControl('situationCtrl');
         this.situationStepControl.updateValueAndValidity();
         this.secondSymptomsStepControl.removeControl('secondSymptomCtrl');
         this.secondSymptomsStepControl.updateValueAndValidity();
 
-        this.myStepper.steps.get(3)!.interacted = true;
-        this.myStepper.selectedIndex = 4;
+        this.myStepper.next();
       }
       
     } else {
-      this.situationString = "Are you or the person who is going to get tested in one of the situations below?\n"
-      + "<ul>"
-      + "<li> Is 0 to 3 months old </li>"
-      + "<li> Is experiencing an obstruction of nasal passages other than normal congestion </li>"
-      + "<li> Is currently having a nosebleed episode </li>"
-      + "<li> Has had a nosebleed episode in the past week </li>"
-      + "<li> Has undergone any of the following types of surgery: </li>"
-      + "<ul>"
-      + "<li> Mouth surgery in the past week? </li>"
-      + "<li> Nose surgery in the past month (adult) <strong>OR</strong> Nose surgery in the past 3 weeks (child)</li>"
-      + "</ul>"
-      + "<li> Is currently wheezing. </li>"
-      + "</ul>"
+      this.firstDynamicStepLabel = "Current Situation"
+      this.firstDynamicSring = this.getCurrentSituationString();
+      this.firstDynamicMethod = this.dynamicMethods.currentSituation;
 
       this.situationStepControl.removeControl('situationCtrl');
       this.myStepper.next();
     }
   }
 
-  hasSituation(value: boolean) {
-    this.hasSituationSelected = true;
-    this.hasSituationData = value;
+  firstDynamicClick(value: boolean) {
+    this.hasFirstDynamicSelected = true;
+    this.firstDynamicData = value;
+    this.firstDynamicMethod(value);
+  }
 
-    this.canSubmit = true;
+  secondDynamicClick(value: boolean) {
+    this.hasSecondDynamicSelected = true;
+    this.secondDynamicData = value;
+    this.secondDynamicMethod(value);
   }
 
   goHome() {
@@ -210,11 +243,13 @@ export class SelfAssessmentComponent implements OnInit {
     this.canSubmit = false;
     this.showAgeRange = true;
     this.showFirstSymptoms = false;
-    this.showCurrentSituation = false;
-    this.showAdditionalSymptoms = false;
+    this.showFirstDynamicStep = false;
+    this.showSecondDynamicStep = false;
 
     this.hasBreatingProblemsSelected = false;
     this.hasBreathingProblemsData = false;
+    this.firstDynamicData = false;
+    this.secondDynamicData = false;
 
     this.ageRangeData = '';
 
@@ -222,16 +257,35 @@ export class SelfAssessmentComponent implements OnInit {
     this.hasFirstSymptomsData = false;
     this.firstSymptomsString = '';
 
-    this.hasSituationSelected = false;
     this.hasSituationData = false;
     this.situationString = '';
 
     this.hasSecondSymptomsData = false;
-    this.hasSecondSymptomsSelected = false;
     this.secondSymptomsString = '';
+
+    this.firstDynamicStepLabel = 'Additional Information';
+    this.firstDynamicSring = '';
+    this.secondDynamicStepLabel = 'Additional Information';
+    this.secondDynamicString = '';
 
     if (this.myStepper) {
       this.myStepper.reset();
     }
+  }
+
+  getCurrentSituationString(): string {
+    return "Are you or the person who is going to get tested in one of the situations below?\n"
+    + "<ul>"
+    + "<li> Is 0 to 3 months old </li>"
+    + "<li> Is experiencing an obstruction of nasal passages other than normal congestion </li>"
+    + "<li> Is currently having a nosebleed episode </li>"
+    + "<li> Has had a nosebleed episode in the past week </li>"
+    + "<li> Has undergone any of the following types of surgery: </li>"
+    + "<ul>"
+    + "<li> Mouth surgery in the past week? </li>"
+    + "<li> Nose surgery in the past month (adult) <strong>OR</strong> Nose surgery in the past 3 weeks (child)</li>"
+    + "</ul>"
+    + "<li> Is currently wheezing. </li>"
+    + "</ul>"
   }
 }

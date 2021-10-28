@@ -105,7 +105,6 @@ export class SelfAssessmentComponent implements OnInit {
       this.ageStepControl.updateValueAndValidity();
       this.myStepper.next();
     } else {
-      this.showAgeRange = false;
       this.ageStepControl.addControl('ageCtrl', this._formBuilder.control('', [Validators.required]));
       this.ageStepControl.updateValueAndValidity();
       this.myStepper.next();
@@ -296,5 +295,24 @@ export class SelfAssessmentComponent implements OnInit {
     console.log('hasFirstSymptomsData', this.hasFirstSymptomsData);
     console.log('hasSituationData', this.hasSituationData);
     console.log('hasSecondSymptomsData', this.hasSecondSymptomsData);
+
+  }
+
+  backClickedFromAge(event: any) {
+    this.myStepper.previous();
+    this.showFirstDynamicStep = false;
+  }
+
+  backClickedFromFirstSymptomsStep(event: any) {
+    this.myStepper.previous();
+    this.showSecondDynamicStep = false;
+  }
+
+  backClickedFromFirstDynamicStep(event: any) {
+    this.myStepper.previous();
+  }
+
+  backClickedFromSecondDynamicStep(event: any) {
+    this.myStepper.previous();
   }
 }

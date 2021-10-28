@@ -1,8 +1,16 @@
 
+::ng-deep .mat-horizontal-stepper-header{
+    pointer-events: none !important;
+}
+
 .test-container {
     display: flex;
     padding-top: 3em;
     justify-content: center;
+}
+
+.test-step-description {
+    font-size: 14px;
 }
 
 .test-card {
@@ -20,4 +28,10 @@
 .step-buttons {
     display: flex;
     gap: 1em;
+}
+
+.back-button {
+    display: flex;
+    gap: 1em;
+    padding-top: 2em;
 }

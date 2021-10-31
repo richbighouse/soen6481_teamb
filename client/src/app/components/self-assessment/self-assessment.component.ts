@@ -1,9 +1,11 @@
-import { ThrowStmt } from '@angular/compiler';
+
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatStepper } from '@angular/material/stepper';
+import { SelfAssessmentTest, User } from 'shared/models/models';
 import { NavigationService } from 'src/app/navigation.service';
-import { User } from 'src/app/services/login.service';
+import { SelfAssessmentTestService } from 'src/app/services/self-assessment-test.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -21,13 +23,13 @@ export class SelfAssessmentComponent implements OnInit {
   secondSymptomsStepControl!: FormGroup;
   
   // Assessment Data ... this can be improved
-  hasBreathingProblemsData!: boolean | null;
-  ageRangeData: string = '';
-  hasFirstSymptomsData!: boolean | null;
+  q_difficultyBreathing!: boolean | null;
+  q_ageRange: string = '';
+  q_firstSymptoms!: boolean | null;
+  q_situation!: boolean | null;
+  q_secondSymptoms!: boolean | null;
   firstDynamicData: boolean = false;
   secondDynamicData: boolean = false;
-  hasSituationData!: boolean | null;
-  hasSecondSymptomsData!: boolean | null;
 
   // Stepper Control
   canSubmit: boolean = false;
@@ -37,7 +39,7 @@ export class SelfAssessmentComponent implements OnInit {
   showSecondDynamicStep: boolean = false;
 
   // Button Color Control
-  hasBreatingProblemsSelected: boolean = false;
+  difficultyBreathingSelected: boolean = false;
   hasFirstSymptomsSelected: boolean = false;
   hasFirstDynamicSelected: boolean = false;
   hasSecondDynamicSelected: boolean = false;
@@ -59,11 +61,11 @@ export class SelfAssessmentComponent implements OnInit {
 
   dynamicMethods = {
     currentSituation: (value: boolean) => {
-      this.hasSituationData = value;
+      this.q_situation = value;
       this.canSubmit = true;
     },
     additionalSymptoms: (value: boolean) => {
-      this.hasSecondSymptomsData = value;
+      this.q_secondSymptoms = value;
 
       if (!value) {
         this.canSubmit = true;
@@ -79,7 +81,9 @@ export class SelfAssessmentComponent implements OnInit {
   constructor(
     private userService: UserService,
     private navigationService: NavigationService,
-    private _formBuilder: FormBuilder
+    private _formBuilder: FormBuilder,
+    private selfAssessmentTestService: SelfAssessmentTestService,
+    private snackBar: MatSnackBar,
   ) { }
 
   ngOnInit(): void {
@@ -95,8 +99,8 @@ export class SelfAssessmentComponent implements OnInit {
   }
 
   hasBreathingProblem(value: boolean) {
-    this.hasBreathingProblemsData = value;
-    this.hasBreatingProblemsSelected = true;
+    this.q_difficultyBreathing = value;
+    this.difficultyBreathingSelected = true;
     this.canSubmit = value;
 
     if (!value) {
@@ -112,7 +116,7 @@ export class SelfAssessmentComponent implements OnInit {
   }
 
   setAgeRange(value: string) {
-    this.ageRangeData = value;
+    this.q_ageRange = value;
     this.showFirstDynamicStep = true;
 
     this.firstSymptomsStepControl.removeControl('firstSymptomsCtrl');
@@ -151,12 +155,12 @@ export class SelfAssessmentComponent implements OnInit {
   }
 
   hasFirstSymptoms(value: boolean) {
-    this.hasFirstSymptomsData = value;
+    this.q_firstSymptoms = value;
     this.hasFirstSymptomsSelected = true;
     this.hasFirstDynamicSelected = false;
 
     if (!value) {
-      if (this.ageRangeData === '5') {
+      if (this.q_ageRange === '5') {
         this.canSubmit = true;
         this.showFirstDynamicStep = false;
         this.firstDynamicMethod = this.dynamicMethods.currentSituation;
@@ -168,7 +172,7 @@ export class SelfAssessmentComponent implements OnInit {
         this.secondDynamicStepLabel = "Current Situation";
         this.secondDynamicString = this.getCurrentSituationString();
 
-        if (this.ageRangeData === '6-17') {
+        if (this.q_ageRange === '6-17') {
           this.firstDynamicSring = "Does your child have any 2 of the following symptoms?\n"
           + "<ul>"
           + "<li> Stomach aches </li>"
@@ -245,21 +249,21 @@ export class SelfAssessmentComponent implements OnInit {
     this.showFirstDynamicStep = false;
     this.showSecondDynamicStep = false;
 
-    this.hasBreatingProblemsSelected = false;
-    this.hasBreathingProblemsData = null;
+    this.difficultyBreathingSelected = false;
+    this.q_difficultyBreathing = null;
     this.firstDynamicData = false;
     this.secondDynamicData = false;
 
-    this.ageRangeData = '';
+    this.q_ageRange = '';
 
     this.hasFirstSymptomsSelected = false;
-    this.hasFirstSymptomsData = null;
+    this.q_firstSymptoms = null;
     this.firstSymptomsString = '';
 
-    this.hasSituationData = null;
+    this.q_situation = null;
     this.situationString = '';
 
-    this.hasSecondSymptomsData = null;
+    this.q_secondSymptoms = null;
     this.secondSymptomsString = '';
 
     this.firstDynamicStepLabel = 'Additional Information';
@@ -289,13 +293,32 @@ export class SelfAssessmentComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log('q_difficultyBreathing', this.q_difficultyBreathing);
+    console.log('q_ageRange', this.q_ageRange);
+    console.log('q_firstSymptoms', this.q_firstSymptoms);
+    console.log('q_situation', this.q_situation);
+    console.log('q_secondSymptoms', this.q_secondSymptoms);
 
-    console.log('hasBreathingProblemsData', this.hasBreathingProblemsData);
-    console.log('ageRangeData', this.ageRangeData);
-    console.log('hasFirstSymptomsData', this.hasFirstSymptomsData);
-    console.log('hasSituationData', this.hasSituationData);
-    console.log('hasSecondSymptomsData', this.hasSecondSymptomsData);
+    const selfAssessementTest = new SelfAssessmentTest();
+    selfAssessementTest.q_difficultyBreathing = this.q_difficultyBreathing;
+    selfAssessementTest.q_ageRange =  this.q_ageRange;
+    selfAssessementTest.q_firstSymptoms =  this.q_firstSymptoms;
+    selfAssessementTest.q_situation =  this.q_situation;
+    selfAssessementTest.q_secondSymptoms =  this.q_secondSymptoms;
 
+    this.selfAssessmentTestService.postSelfAssessmentTest(selfAssessementTest)
+    .subscribe(
+      response => {
+        this.snackBar.open(
+          'Self-Assessment Test saved.', 'Dismiss', { duration: 10000, panelClass: ['snackbar-success']});
+          this.navigationService.goHome();
+      },
+      error => {
+        this.snackBar.open(
+          'Failed to save Self-Assessment Test', 'Dismiss', { duration: 10000, panelClass: ['snackbar-error']});
+          this.navigationService.goHome();
+      }
+    )
   }
 
   backClickedFromAge(event: any) {

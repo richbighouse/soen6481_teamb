@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { RegisterService, RegistrationRequest } from 'src/app/services/register.service';
+import { RegisterService } from 'src/app/services/register.service';
 import { MatSnackBar} from "@angular/material/snack-bar";
 import { Router } from '@angular/router';
+import { RegistrationRequest } from 'shared/models/models';
 
 @Component({
   selector: 'app-register',

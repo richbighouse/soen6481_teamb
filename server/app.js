@@ -143,8 +143,32 @@ app.get("/api/users/current", function (req, res) {
         res.status("404").send("Couldn't find user.");
       } else {
         const currentUser = rows[0];
-        console.log("Current User", currentUser);
         res.json(currentUser);
+      }    
+  });}
+});
+
+app.post("/api/self-assessment-test", function (req, res) {
+  const currentId = req.session.userid;
+  if (!currentId) {
+    res.status("400").send("No current user. Bad Request");
+  } else {
+    const body = req.body;
+    console.log('/api/self-assessment-test body', body);
+
+    const sql = `INSERT INTO assessment (date, viewedByNurse, fkPatientId, q_difficultyBreathing, q_ageRange, q_firstSymptoms, q_situation, q_secondSymptoms) VALUES 
+    ('${getTodayDate()}', 0, ${currentId}, ${body.q_difficultyBreathing}, '${body.q_ageRange}',${body.q_firstSymptoms},${body.q_situation},${body. q_secondSymptoms})`
+
+     console.log(sql);
+
+    db.query(sql, (err, rows) => {
+      if (err) throw err;
+      if (rows.length === 0) {
+        res.status("500").send("Error while inserting self-assessment test.");
+      } else {
+        const assessment = rows[0];
+        console.log("Self-Assessment Test", assessment);
+        res.json(assessment);
       }    
   });}
 });

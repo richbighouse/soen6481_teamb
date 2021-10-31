@@ -19,13 +19,13 @@
                         <div class="step-buttons">
                             <button 
                                 mat-raised-button 
-                                [color]="(hasBreatingProblemsSelected && hasBreathingProblemsData) ? 'primary' : ''"
+                                [color]="(difficultyBreathingSelected && q_difficultyBreathing) ? 'primary' : ''"
                                 (click)=hasBreathingProblem(true)>
                                     Yes
                             </button>
                             <button
                                 mat-raised-button
-                                [color]="(hasBreatingProblemsSelected && !hasBreathingProblemsData) ? 'primary' : ''"
+                                [color]="(difficultyBreathingSelected && !q_difficultyBreathing) ? 'primary' : ''"
                                 (click)=hasBreathingProblem(false)>
                                     No
                             </button>
@@ -40,20 +40,20 @@
                         <div class="step-buttons">
                             <button 
                                 mat-raised-button
-                                [color]="(ageRangeData === '5') ? 'primary' : ''"
+                                [color]="(q_ageRange === '5') ? 'primary' : ''"
                                 (click)="setAgeRange('5')">
                                 6 months - 5 years
                             </button>
                             <button 
                                 mat-raised-button
-                                [color]="(ageRangeData === '6-17') ? 'primary' : ''"
+                                [color]="(q_ageRange === '6-17') ? 'primary' : ''"
                                 (click)="setAgeRange('6-17')">
                                 6-17 years
                             </button>
                             <button 
                                 mat-raised-button
-                                [color]="(ageRangeData === '18') ? 'primary' : ''"
-                                (click)="setAgeRange('18')">
+                                [color]="(q_ageRange === '18+') ? 'primary' : ''"
+                                (click)="setAgeRange('18+')">
                                 18 years +
                             </button>
                         </div>
@@ -75,13 +75,13 @@
                         <div class="step-buttons">
                             <button 
                                 mat-raised-button 
-                                [color]="(hasFirstSymptomsSelected && hasFirstSymptomsData) ? 'primary' : ''"
+                                [color]="(hasFirstSymptomsSelected && q_firstSymptoms) ? 'primary' : ''"
                                 (click)=hasFirstSymptoms(true)>
                                     Yes
                             </button>
                             <button
                                 mat-raised-button
-                                [color]="(hasFirstSymptomsSelected && !hasFirstSymptomsData) ? 'primary' : ''"
+                                [color]="(hasFirstSymptomsSelected && !q_firstSymptoms) ? 'primary' : ''"
                                 (click)=hasFirstSymptoms(false)>
                                     No
                             </button>
@@ -133,13 +133,13 @@
                         <div class="step-buttons">
                             <button 
                                 mat-raised-button 
-                                [color]="(hasSecondDynamicSelected && secondDynamicData) ? 'primary' : ''"
+                                [color]="(hasSecondDynamicSelected && q_secondSymptoms) ? 'primary' : ''"
                                 (click)=secondDynamicClick(true)>
                                     Yes
                             </button>
                             <button
                                 mat-raised-button
-                                [color]="(hasSecondDynamicSelected && !secondDynamicData) ? 'primary' : ''"
+                                [color]="(hasSecondDynamicSelected && !q_secondSymptoms) ? 'primary' : ''"
                                 (click)=secondDynamicClick(false)>
                                     No
                             </button>

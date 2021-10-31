@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from 'shared/models/models';
 import { NavigationService } from 'src/app/navigation.service';
-import { User } from 'src/app/services/login.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -24,6 +24,7 @@ export class TopNavComponent implements OnInit {
       console.log(this.currentUser);
     },
     err => {
+      console.log(err);
       this.navigationService.goLogin();
     });
   }

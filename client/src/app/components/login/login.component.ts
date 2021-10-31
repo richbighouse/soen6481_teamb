@@ -38,10 +38,10 @@ export class LoginComponent implements OnInit {
           if (error.status === 401) {
             console.error("Invalid Credentials", error);
             this.snackBar.open(
-              'Invalid credentials. Try again.', 'Dismiss', { duration: 10000 });
+              'Invalid credentials. Try again.', 'Dismiss', { duration: 10000, panelClass: ['snackbar-error']});
           } else {
             console.error("Error", error);
-            this.snackBar.open('An error prevented the login. Try again later.', 'Dismiss', {duration: 10000});
+            this.snackBar.open('An error prevented the login. Try again later.', 'Dismiss', {duration: 10000, panelClass: ['snackbar-error']});
           }           
         }
 

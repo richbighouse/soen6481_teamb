@@ -13,20 +13,3 @@ export class LoginService {
     return this.http.post('/api/login', {email, password});
   }
 }
-
-export class User {
-  fullName!: string;
-  address!: string;
-  dateOfBirth!: string;
-  phoneNumber!: string;
-  email!: string;
-  password!: string;
-  fkUserType!: number;
-  registrationDate!: Date;
-  lastLoginDate!: Date;
-  active!: number;
-  approved!: number;
-  registrationNumber!: string;
-}
-
-

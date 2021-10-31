@@ -68,10 +68,10 @@ CREATE TABLE IF NOT EXISTS `covid`.`assessment` (
   `viewedByNurse` TINYINT NOT NULL,
   `fkPatientId` INT NOT NULL,
   `q_difficultyBreathing` VARCHAR(45) NOT NULL,
-  `q_ageRange` ENUM('5', '6-17', '18+') NULL,
-  `q_anySymptoms` TINYINT NULL,
+  `q_ageRange` ENUM('', '5', '6-17', '18+') NULL,
+  `q_firstSymptoms` TINYINT NULL,
   `q_situation` TINYINT NULL,
-  `q_anyTwoSymptoms` TINYINT NULL,
+  `q_secondSymptoms` TINYINT NULL,
   PRIMARY KEY (`id`),
   INDEX `fkPatientId_idx` (`fkPatientId` ASC) VISIBLE,
   CONSTRAINT `fk_assessment_patient`
@@ -108,7 +108,7 @@ CREATE TABLE IF NOT EXISTS `covid`.`appointment` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
--- GRANT ALL ON `covid`.* TO 'coviddbuser';
+GRANT ALL ON `covid`.* TO 'coviddbuser';
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

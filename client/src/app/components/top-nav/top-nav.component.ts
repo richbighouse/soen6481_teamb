@@ -3,6 +3,7 @@ import { User } from 'shared/models/models';
 import { NavigationService } from 'src/app/navigation.service';
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-top-nav',
@@ -17,6 +18,7 @@ export class TopNavComponent implements OnInit {
     private userService: UserService,
     private navigationService: NavigationService,
     private router: Router,
+    private loginService: LoginService
   ) { }
 
   ngOnInit(): void {
@@ -38,6 +40,15 @@ export class TopNavComponent implements OnInit {
   onProfileClicked() {
     console.log("Routing to profile.");
     this.router.navigate(['/profile']);
+  }
+
+  onLogoutClicked() {
+    console.log("Logout clicked");
+    this.loginService.logout()
+    .subscribe(res => {
+      console.log('Redirecting to Login page...')
+      this.navigationService.goLogin()
+    })
   }
 
 }

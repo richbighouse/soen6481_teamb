@@ -9,11 +9,11 @@ export class NavigationService {
   constructor(private router: Router) { }
 
   goLogin() {
-    this.router.navigate(['login']);
+    this.router.navigate(['/']);
   }
 
   goHome() {
-    this.router.navigate(['home']);
+    this.router.navigate(['/home']);
   }
 
   goSelfAssessment() {

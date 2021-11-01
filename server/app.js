@@ -73,8 +73,18 @@ app.post("/api/login", function (req, res) {
   });
 });
 
-// Register
+// Logout
+app.get("/api/logout", function (req, res) {
+  const currentId = req.session.userid;
+  console.log(`Received logout request for userid ${currentId} ...`);
 
+  req.session.destroy(() => {
+    console.log('User logged out.')
+    res.status(200).send();
+  })
+});
+
+// Register
 app.post("/api/register", function (req, res) {
   const request = req.body.registrationRequest;
   console.log('Received registration request ...', request);

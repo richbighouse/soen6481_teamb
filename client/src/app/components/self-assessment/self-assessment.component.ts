@@ -92,6 +92,7 @@ export class SelfAssessmentComponent implements OnInit {
       this.currentUser = res;
     },
     err => {
+      console.log(err);
       this.navigationService.goLogin();
     });
 

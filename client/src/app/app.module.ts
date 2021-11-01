@@ -19,6 +19,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { SelfAssessmentComponent } from './components/self-assessment/self-assessment.component';
 import { TopNavComponent } from './components/top-nav/top-nav.component';
 import { MatStepperModule } from '@angular/material/stepper';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { MatStepperModule } from '@angular/material/stepper';
     RegisterComponent,
     HomeComponent,
     SelfAssessmentComponent,
-    TopNavComponent
+    TopNavComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

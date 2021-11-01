@@ -159,8 +159,6 @@ export class SelfAssessmentComponent implements OnInit {
     this.hasFirstSymptomsSelected = true;
     this.hasFirstDynamicSelected = false;
 
-    console.log("I am here", value)
-
     if (!value) {
       if (this.q_ageRange === '5') {
         this.canSubmit = true;

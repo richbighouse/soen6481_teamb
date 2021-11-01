@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from 'shared/models/models';
 import { NavigationService } from 'src/app/navigation.service';
 import { UserService } from 'src/app/services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-top-nav',
@@ -14,7 +15,8 @@ export class TopNavComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private navigationService: NavigationService
+    private navigationService: NavigationService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -31,6 +33,11 @@ export class TopNavComponent implements OnInit {
 
   goHome() {
     this.navigationService.goHome();
+  }
+
+  onProfileClicked() {
+    console.log("Routing to profile.");
+    this.router.navigate(['/profile']);
   }
 
 }

@@ -84,7 +84,7 @@ app.post("/api/register", function (req, res) {
     approved = 1;
   }
 
-  const regNumber = null;
+  let regNumber = null;
   if (request.registrationNumber) {
     regNumber = "'" + request.registrationNumber + "'";
   }

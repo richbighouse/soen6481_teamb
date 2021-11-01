@@ -119,9 +119,8 @@ app.post("/api/register", function (req, res) {
   db.query(sql, (err, rows) => {
     if (err) {
       console.log(err.sqlMessage);
-      throw err
-    }
-    if (rows.length === 0) {
+      res.status(400).send(err.sqlMessage);
+    } else if (rows.length === 0) {
       res.status("500");
       res.send("Server Error during Registration.");
     } else {

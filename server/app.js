@@ -56,9 +56,10 @@ app.post("/api/login", function (req, res) {
   const sql = `SELECT * FROM user WHERE email = '${body.email}' AND password = '${body.password}'`;
 
   db.query(sql, (err, rows) => {
-    if (err) throw err;
-
-    if (rows.length === 0) {
+    if (err) {
+      console.log(err.sqlMessage);
+      res.status(400).send(err.sqlMessage);
+    } else if (rows.length === 0) {
       console.log("Invalid Credentials");
       res.status("401");
       res.send("Invalid Credentials");

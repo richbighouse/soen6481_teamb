@@ -12,3 +12,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     border: #3aee0d 2px solid;
     color: #3aee0d;
 }
+
+.mat-step-header {
+    pointer-events: none !important;
+}

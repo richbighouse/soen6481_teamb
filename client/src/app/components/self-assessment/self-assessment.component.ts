@@ -159,10 +159,11 @@ export class SelfAssessmentComponent implements OnInit {
     this.hasFirstSymptomsSelected = true;
     this.hasFirstDynamicSelected = false;
 
+    console.log("I am here", value)
+
     if (!value) {
       if (this.q_ageRange === '5') {
         this.canSubmit = true;
-        this.showFirstDynamicStep = false;
         this.firstDynamicMethod = this.dynamicMethods.currentSituation;
       } else {
         this.firstDynamicMethod = this.dynamicMethods.additionalSymptoms;
@@ -209,6 +210,9 @@ export class SelfAssessmentComponent implements OnInit {
       this.firstDynamicMethod = this.dynamicMethods.currentSituation;
 
       this.situationStepControl.removeControl('situationCtrl');
+      this.situationStepControl.updateValueAndValidity();
+      this.secondSymptomsStepControl.removeControl('secondSymptomCtrl');
+      this.secondSymptomsStepControl.updateValueAndValidity();
       this.myStepper.next();
     }
   }
@@ -323,19 +327,31 @@ export class SelfAssessmentComponent implements OnInit {
 
   backClickedFromAge(event: any) {
     this.myStepper.previous();
+    this.q_ageRange = '';
     this.showFirstDynamicStep = false;
+    this.canSubmit = false;
   }
 
   backClickedFromFirstSymptomsStep(event: any) {
     this.myStepper.previous();
+    this.q_firstSymptoms = null;
+    this.hasFirstSymptomsSelected = false;
     this.showSecondDynamicStep = false;
+    this.canSubmit = false;
   }
 
   backClickedFromFirstDynamicStep(event: any) {
     this.myStepper.previous();
+    this.hasFirstSymptomsSelected = false;
+    this.q_situation = null;
+    this.q_secondSymptoms = null;
+    this.canSubmit = false;
   }
 
   backClickedFromSecondDynamicStep(event: any) {
     this.myStepper.previous();
+    this.hasSecondDynamicSelected = false;
+    this.q_secondSymptoms = null;
+    this.canSubmit = false;
   }
 }

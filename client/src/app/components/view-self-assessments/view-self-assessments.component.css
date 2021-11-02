@@ -6,4 +6,26 @@
 
 table {
     width: 80%;
-  }
+}
+
+.th-center{
+    text-align: center;
+}
+.th-left{
+    text-align: left;
+}
+.th-right{
+    text-align: right;
+}
+
+.w-15 {
+    width: 15%;
+}
+
+.w-20 {
+    width: 20%;
+}
+
+.w-30 {
+    width: 30%;
+}

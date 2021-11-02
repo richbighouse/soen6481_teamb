@@ -166,21 +166,50 @@ app.post("/api/self-assessment-test", function (req, res) {
     const body = req.body;
     console.log('/api/self-assessment-test body', body);
 
-    const sql = `INSERT INTO assessment (date, viewedByNurse, fkPatientId, q_difficultyBreathing, q_ageRange, q_firstSymptoms, q_situation, q_secondSymptoms) VALUES 
+    // Set existing self-assessment for user to viewedByNurse ... we might want to have active flag instead.
+    const updateSql = `UPDATE assessment SET viewedByNurse=1 WHERE fkPatientId=${currentId}`;
+    db.query(updateSql, (err, rows) => {
+      if (err) {
+        console.log(err);
+        res.status("500").send("Error while inserting self-assessment test.");
+      } else {
+        console.log('Update succesful');
+      }
+    })
+
+    const insertSql = `INSERT INTO assessment (date, viewedByNurse, fkPatientId, q_difficultyBreathing, q_ageRange, q_firstSymptoms, q_situation, q_secondSymptoms) VALUES 
     ('${getTodayDate()}', 0, ${currentId}, ${body.q_difficultyBreathing}, '${body.q_ageRange}',${body.q_firstSymptoms},${body.q_situation},${body. q_secondSymptoms})`
-
-     console.log(sql);
-
-    db.query(sql, (err, rows) => {
-      if (err) throw err;
+    db.query(insertSql, (err, rows) => {
+      if (err) {
+        console.log(err);
+        res.status("500").send("Error while inserting self-assessment test.");
+      }
       if (rows.length === 0) {
         res.status("500").send("Error while inserting self-assessment test.");
       } else {
         const assessment = rows[0];
         console.log("Self-Assessment Test", assessment);
-        res.json(assessment);
+        res.status(201).json(assessment);
       }    
   });}
+});
+
+app.get('/api/self-assessment-test/unviewed', function (req, res) {
+  const sql = `SELECT a.fkPatientId AS userId, user.fullName, a.id AS testId, a.date, a.q_difficultyBreathing, a.q_ageRange, a.q_firstSymptoms, a.q_situation, a.q_secondSymptoms
+  FROM assessment a
+  JOIN user ON user.id = a.fkPatientId
+  WHERE viewedByNurse = 0 AND user.fkUserType = 1 AND user.active = 1
+  ORDER BY a.date ASC;`
+
+  db.query(sql, (err, rows) => {
+    if (err) {
+      console.log(err);
+      res.status("500").send("Error while getting unviewed self-assessment tests.");
+    } else {
+      console.log(rows);
+      res.status(200).json(rows);
+    }
+  })
 });
 
 function getTodayDate() {

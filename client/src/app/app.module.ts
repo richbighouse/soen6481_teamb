@@ -22,6 +22,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ViewSelfAssessmentsComponent } from './components/view-self-assessments/view-self-assessments.component';
 import { MatTableModule } from '@angular/material/table';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { MatTableModule } from '@angular/material/table';
     MatToolbarModule,
     MatIconModule,
     MatStepperModule,
-    MatTableModule
+    MatTableModule,
+    MatTooltipModule
   ],
   providers: [],
   bootstrap: [AppComponent]

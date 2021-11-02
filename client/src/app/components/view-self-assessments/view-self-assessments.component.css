@@ -1,0 +1,9 @@
+.container {
+    display: flex;
+    padding-top: 3em;
+    justify-content: center;
+}
+
+table {
+    width: 80%;
+  }

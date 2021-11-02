@@ -20,6 +20,8 @@ import { SelfAssessmentComponent } from './components/self-assessment/self-asses
 import { TopNavComponent } from './components/top-nav/top-nav.component';
 import { MatStepperModule } from '@angular/material/stepper';
 import { ProfileComponent } from './components/profile/profile.component';
+import { ViewSelfAssessmentsComponent } from './components/view-self-assessments/view-self-assessments.component';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,8 @@ import { ProfileComponent } from './components/profile/profile.component';
     HomeComponent,
     SelfAssessmentComponent,
     TopNavComponent,
-    ProfileComponent
+    ProfileComponent,
+    ViewSelfAssessmentsComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +49,8 @@ import { ProfileComponent } from './components/profile/profile.component';
     MatSnackBarModule,
     MatToolbarModule,
     MatIconModule,
-    MatStepperModule
+    MatStepperModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

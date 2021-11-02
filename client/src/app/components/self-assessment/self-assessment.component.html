@@ -33,7 +33,7 @@
                     </ng-template>
                 </mat-step>
                 <!-- Age Range -->
-                <mat-step *ngIf="showAgeRange" [stepControl]="firstSymptomsStepControl">
+                <mat-step *ngIf="showAgeRange">
                     <ng-template matStepLabel>Age Range</ng-template>
                     <ng-template matStepContent>
                         <p style="padding-top: 1em;">Please select an age range.</p>
@@ -68,7 +68,7 @@
                     </ng-template>
                 </mat-step>
                 <!-- Symptoms -->
-                <mat-step *ngIf="showFirstSymptoms" [stepControl]="situationStepControl">
+                <mat-step *ngIf="showFirstSymptoms">
                     <ng-template matStepLabel>Symptoms</ng-template>
                     <ng-template matStepContent>
                         <p style="padding-top: 1em;"[innerHtml]="firstSymptomsString"></p>
@@ -97,7 +97,7 @@
                     </ng-template>
                 </mat-step>
                 <!-- First Dynamic Step -->
-                <mat-step *ngIf="showFirstDynamicStep"[stepControl]="secondSymptomsStepControl">
+                <mat-step *ngIf="showFirstDynamicStep">
                     <ng-template matStepLabel>{{ firstDynamicStepLabel}}</ng-template>
                     <ng-template matStepContent>
                         <p style="padding-top: 1em;"[innerHtml]="firstDynamicSring"></p>
@@ -126,7 +126,7 @@
                     </ng-template>
                 </mat-step>
                 <!-- Second Dynamic Step -->
-                <mat-step *ngIf="showSecondDynamicStep" [stepControl]="secondSymptomsStepControl">
+                <mat-step *ngIf="showSecondDynamicStep">
                     <ng-template matStepLabel>{{ secondDynamicStepLabel}}</ng-template>
                     <ng-template matStepContent>
                         <p style="padding-top: 1em;"[innerHtml]="secondDynamicString"></p>

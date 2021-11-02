@@ -42,3 +42,15 @@ export class SelfAssessmentTest {
     approved!: number;
     registrationNumber!: string;
   }
+
+  export class SelfAssessmentForTable {
+    userId!: number; 
+    fullName!: string; 
+    testId!: number; 
+    date!: Date;
+    q_difficultyBreathing: boolean | null = false;
+    q_ageRange: string = '';
+    q_firstSymptoms: boolean | null = null;
+    q_situation: boolean | null = null;
+    q_secondSymptoms: boolean | null = null;
+  }

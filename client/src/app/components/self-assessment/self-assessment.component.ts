@@ -112,7 +112,6 @@ export class SelfAssessmentComponent implements OnInit {
     } else {
       this.ageStepControl.addControl('ageCtrl', this._formBuilder.control('', [Validators.required]));
       this.ageStepControl.updateValueAndValidity();
-      this.myStepper.next();
     }
   }
 

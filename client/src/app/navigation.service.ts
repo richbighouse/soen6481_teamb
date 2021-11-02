@@ -19,4 +19,8 @@ export class NavigationService {
   goSelfAssessment() {
     this.router.navigate(['/self-assessment']);
   }
+
+  goViewSelfAssessments() {
+    this.router.navigate(['/view-self-assessments']);
+  }
 }

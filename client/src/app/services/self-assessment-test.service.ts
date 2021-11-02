@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
-import { SelfAssessmentTest } from 'shared/models/models';
+import { SelfAssessmentTest, SelfAssessmentForTable } from 'shared/models/models';
 
 @Injectable({
   providedIn: 'root'
@@ -13,4 +13,8 @@ export class SelfAssessmentTestService {
   postSelfAssessmentTest(selfAssessmentTest: SelfAssessmentTest): Observable<SelfAssessmentTest> {
     return this.http.post<SelfAssessmentTest>('/api/self-assessment-test', selfAssessmentTest);
   }
-}
+
+  getUnviewedTests(): Observable<SelfAssessmentForTable[]> {
+    return this.http.get<SelfAssessmentForTable[]>('/api/self-assessment-test/unviewed')
+  }
+ }

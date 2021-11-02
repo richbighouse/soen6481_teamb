@@ -1,8 +1,4 @@
 
-::ng-deep .mat-horizontal-stepper-header{
-    pointer-events: none !important;
-}
-
 .test-container {
     display: flex;
     padding-top: 3em;

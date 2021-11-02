@@ -1,7 +1,7 @@
 <app-top-nav></app-top-nav>
     
 <div class="action-card-container">
-    <!-- Self-Assessment -->
+    <!-- Patient: Take Self-Assessment -->
     <mat-card class="action-card" *ngIf="isPatient()" (click)="goToSelfAssessment()">
         <div class="action-icon">
             <mat-icon [inline]="true">fact_check</mat-icon>
@@ -9,12 +9,12 @@
         <span class="action-label">Take a Self-Assessment Test</span>
     </mat-card>
 
-    <!-- Random Test-->
-    <mat-card class="action-card" *ngIf="isNurse()">
+    <!-- Nurse: View Tests-->
+    <mat-card class="action-card" *ngIf="isNurse()"(click)="goToViewSelfAssessments()">
         <div class="action-icon">
             <mat-icon [inline]="true">assessment</mat-icon>
-        </div>z
-        <span class="action-label">Test Card</span>
+        </div>
+        <span class="action-label">View Self-Assessment Tests</span>
     </mat-card>
 </div>
 

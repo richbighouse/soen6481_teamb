@@ -1,7 +1,8 @@
 .container {
     display: flex;
+    flex-direction: column;
     padding-top: 3em;
-    justify-content: center;
+    align-items: center;
 }
 
 table {
@@ -72,4 +73,12 @@ tr.example-detail-row {
   
   .example-element-description-attribution {
     opacity: 0.5;
+  }
+
+  .test-details-container {
+    width: 60%;
+  }
+
+  .test-details-answer {
+    font-weight: bolder;
   }

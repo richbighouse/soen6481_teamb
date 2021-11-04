@@ -19,6 +19,9 @@ export class ViewSelfAssessmentsComponent implements OnInit {
 
   displayedColumns: string[] = ['id', 'patient-name', 'patient-id', 'date', 'actions'];
   dataSource!: SelfAssessmentForTable[];
+
+  dataSourceInner!: SelfAssessmentForTable;
+  displayedColumnsInner: string[] = ['question', 'answer'];
   expandedElement!: SelfAssessmentForTable | null;
 
   constructor(
@@ -35,4 +38,24 @@ export class ViewSelfAssessmentsComponent implements OnInit {
     })
   }
 
+  yesOrNo(value: boolean): string {
+    if (value === null) {
+      return 'N/A';
+    }
+    return value === true ? 'Yes' : 'No';
+  }
+
+  ageRange(value: string): string {
+    if (value === '5') {
+      return '6 months - 5 years';
+    }
+    if (value === '6-17') {
+      return '6-17 years';
+    }
+    if (value === '18+') {
+      return '18 years+'
+    } else {
+      return 'N/A'
+    }
+  }
 }

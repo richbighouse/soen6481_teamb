@@ -2,6 +2,9 @@
 
 <div class="container">
 
+    <h1>Covid-19 Self-Assessment Tests</h1>
+    <h4>Click on a row to view test details.</h4>
+
     <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
         <!-- ID Column -->
         <ng-container matColumnDef="id">
@@ -51,18 +54,29 @@
         <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
             <div class="example-element-detail"
                 [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-            <div>
-                yo
+            <div class="test-details-container">
+                <ol>
+                    <li>
+                        <span class="test-details-question">
+                            Does the patient have difficulty breathing? 
+                        </span>
+                        <span class="test-details-answer"> {{ yesOrNo(element.q_difficultyBreathing)}}</span></li>
+                    <li><span class="test-details-question">Age range of the patient.</span> <span class="test-details-answer"> {{ ageRange(element.q_ageRange)}}</span></li>
+                    <li><span class="test-details-question">Does the patient have any of the first symptoms?</span> <span class="test-details-answer"> {{ yesOrNo(element.q_firstSymptoms)}}</span></li>
+                    <li><span class="test-details-question">Is the person in one the these situations?</span> <span class="test-details-answer"> {{ yesOrNo(element.q_situation)}}</span></li>
+                    <li><span class="test-details-question">Does the patient have any of the second symptoms?</span> <span class="test-details-answer"> {{ yesOrNo(element.q_secondSymptoms)}}</span></li>
+                </ol>
+                
             </div>
          </div>
      </td>
-        </ng-container>
+    </ng-container>
         
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let element; columns: displayedColumns;"
-            class="example-element-row"
-            [class.example-expanded-row]="expandedElement === element"
-            (click)="expandedElement = expandedElement === element ? null : element">
+        class="example-element-row"
+        [class.example-expanded-row]="expandedElement === element"
+        (click)="expandedElement = expandedElement === element ? null : element">
         </tr>
         <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
     </table>

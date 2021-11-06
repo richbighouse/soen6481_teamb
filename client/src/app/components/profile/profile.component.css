@@ -1,0 +1,28 @@
+.centered {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    height: 80%;
+    /* bring your own prefixes */
+    transform: translate(-50%, -50%);
+  }
+
+  .user-info-container {
+    display: flex;
+    flex-direction: column;
+    width: 40vw;
+  }
+
+  .user-info-card {
+    padding-left: 5em;
+    padding-right: 5em;
+    padding-top: 3em;
+    padding-bottom: 3em;
+    background-color: lightgrey;
+    border: blue;
+  }
+
+  .user-info-title {
+    font-size: 14px;
+    color:royalblue;
+}

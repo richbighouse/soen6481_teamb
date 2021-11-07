@@ -44,7 +44,7 @@
                             <input formControlName="dateOfBirth"
                                 matInput
                                 placeholder="Date of Birth"
-                                value="{{currentUser.dateOfBirth}}" readonly>
+                                value="{{currentUser.dateOfBirth | date:'yyyy-MM-dd'}}" readonly>
                         </label>
                     </mat-form-field>
                 </p>

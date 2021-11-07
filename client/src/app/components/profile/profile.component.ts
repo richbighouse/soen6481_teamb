@@ -30,6 +30,7 @@ export class ProfileComponent implements OnInit {
   }
 
   isPatient() {
+    console.log(this.currentUser.fkUserType);
     return this.currentUser.fkUserType === 1;
   }
 
@@ -56,4 +57,6 @@ export class ProfileComponent implements OnInit {
 
 
 }
+
+
 

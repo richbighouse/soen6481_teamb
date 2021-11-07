@@ -56,7 +56,13 @@ export class RegisterComponent implements OnInit {
 
     this.registerService.register(registrationRequest)
     .subscribe(response => {
-      this.snackBar.open('Registration succesful. Please login.', 'Dismiss', {duration: 10000});
+      var msg;
+      if (response === 'Patient') {
+        msg = 'Registration succesful. Please login.'
+      } else {
+        msg = 'Your registration is pending approval. Thank you!'
+      }
+      this.snackBar.open(msg, 'Dismiss', {duration: 10000});
       this.router.navigate(['/login']);
     },
     error => {

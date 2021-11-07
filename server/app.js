@@ -135,8 +135,8 @@ app.post("/api/register", function (req, res) {
       res.status("500");
       res.send("Server Error during Registration.");
     } else {
-      console.log(rows);
-      res.status(201).json(rows);
+      console.log(request.userType);
+      res.status(201).json(request.userType);
     }    
   });
 });

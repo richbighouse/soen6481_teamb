@@ -23,4 +23,8 @@ export class NavigationService {
   goViewSelfAssessments() {
     this.router.navigate(['/view-self-assessments']);
   }
+
+  goToPendingApprovals() {
+    this.router.navigate(['/pending-approvals']);
+  }
 }

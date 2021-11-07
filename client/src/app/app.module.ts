@@ -23,6 +23,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { ViewSelfAssessmentsComponent } from './components/view-self-assessments/view-self-assessments.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { ApprovalsComponent } from './components/approvals/approvals.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     SelfAssessmentComponent,
     TopNavComponent,
     ProfileComponent,
-    ViewSelfAssessmentsComponent
+    ViewSelfAssessmentsComponent,
+    ApprovalsComponent
   ],
   imports: [
     BrowserModule,

@@ -1,1 +1,81 @@
-<p>profile works!</p>
+<app-top-nav></app-top-nav>
+
+<div class="centered">
+    <mat-card class="user-info-card" layout-align="center center">
+        <form class="example-form">
+            
+            <mat-card-header>
+                <mat-card-title class=" .user-info-title">User Registation Information</mat-card-title>
+            </mat-card-header>    
+            
+            <mat-form-field >
+                <label>
+                    <input formControlName="fullName"
+                        matInput
+                        placeholder="Full Name"
+                        value="{{currentUser.fullName}}" readonly>
+                </label>
+            </mat-form-field>
+            <p>
+            <mat-form-field >
+                <label>
+                    <input formControlName="email"
+                        matInput
+                        placeholder="Email"
+                        value="{{currentUser.email}}" readonly>
+                </label>
+            </mat-form-field>
+            </p>
+
+            <p>
+                <mat-form-field >
+                    <label>
+                        <input formControlName="address"
+                            matInput
+                            placeholder="Address"
+                            value="{{currentUser.address}}" readonly>
+                    </label>
+                </mat-form-field>
+                </p>
+
+                <p>
+                    <mat-form-field >
+                        <label>
+                            <input formControlName="dateOfBirth"
+                                matInput
+                                placeholder="Date of Birth"
+                                value="{{currentUser.dateOfBirth}}" readonly>
+                        </label>
+                    </mat-form-field>
+                </p>
+
+                <p>
+                    <mat-form-field >
+                        <label>
+                            <input formControlName="phoneNumber"
+                                matInput
+                                placeholder="Phone Number"
+                                value="{{currentUser.phoneNumber}}" readonly>
+                        </label>
+                    </mat-form-field>
+                </p>
+
+                <p>
+                    <mat-form-field *ngIf="!isPatient()">
+                        <label>
+                            <input formControlName="registrationNumber"
+                                matInput
+                                placeholder="Registration Number"
+                                value="{{currentUser.registrationNumber}}" readonly>
+                        </label>
+                    </mat-form-field>
+                </p>
+            
+            <button mat-raised-button color="primary" type="edit">
+                <span>Edit</span>
+            </button>
+
+        </form>
+        </mat-card>
+</div>
+

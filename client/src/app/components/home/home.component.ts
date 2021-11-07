@@ -36,6 +36,9 @@ export class HomeComponent implements OnInit {
     this.navigationService.goViewSelfAssessments();
   }
 
+  goToApprovals() {
+    this.navigationService.goToPendingApprovals();
+  }
   // We should define these in some currentUserService
   isPatient() {
     return this.currentUser.fkUserType === 1;

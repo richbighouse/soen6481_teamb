@@ -90,7 +90,7 @@ app.post("/api/register", function (req, res) {
   console.log('Received registration request ...', request);
 
   // patients are automatically approved. Doctors and Nurses require approval;
-  var approved = 0;
+  var approved = null;
   if (request.userType === 'patient') {
     approved = 1;
   }
@@ -141,6 +141,21 @@ app.post("/api/register", function (req, res) {
   });
 });
 
+app.post("/api/users/approve", function (req, res) {
+  const body = req.body.user;
+  console.log('Received approval request ...', req.body);
+  const updateSql = `UPDATE user SET approved=1 WHERE email= '${body.email}'`;
+
+  db.query(updateSql, (err, rows) => {
+    if (err) {
+      console.log(err);
+      res.status("500").send("Error while updating approval status.");
+    } else {
+      console.log('Update successful');
+    }
+  })
+});
+
 app.get("/api/users/current", function (req, res) {
   const currentId = req.session.userid;
   if (!currentId) {
@@ -157,6 +172,36 @@ app.get("/api/users/current", function (req, res) {
       }    
   });}
 });
+
+
+app.post("/api/users/reject", function (req, res) {
+  const body = req.body.user;
+  console.log('Received Rejection request ...', req.body);
+  const updateSql = `UPDATE user SET approved=0 WHERE email= '${body.email}'`;
+
+  db.query(updateSql, (err, rows) => {
+    if (err) {
+      console.log(err);
+      res.status("500").send("Error while updating approval rejection status.");
+    } else {
+      console.log('Update successful');
+    }
+  })
+});
+
+app.get("/api/users/unapproved", function (req, res) {
+  const sql = `SELECT * FROM user WHERE approved is NULL;`;
+  db.query(sql, (err, rows) => {
+    if (err) throw err;
+    if (rows.length === 0) {
+      res.status("404").send("Error while getting unApproved Users.");
+    } else {
+      res.json(rows);
+    }    
+});
+});
+
+
 
 app.post("/api/self-assessment-test", function (req, res) {
   const currentId = req.session.userid;

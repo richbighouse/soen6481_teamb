@@ -6,6 +6,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { SelfAssessmentComponent } from './components/self-assessment/self-assessment.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ViewSelfAssessmentsComponent } from './components/view-self-assessments/view-self-assessments.component';
+import { ApprovalsComponent } from './components/approvals/approvals.component';
 
 
 const routes: Routes = [
@@ -37,6 +38,10 @@ const routes: Routes = [
   {
     path: 'view-self-assessments',
     component: ViewSelfAssessmentsComponent
+  },
+  {
+    path: 'pending-approvals',
+    component: ApprovalsComponent
   }
 ];
 

@@ -57,7 +57,7 @@ export class RegisterComponent implements OnInit {
     this.registerService.register(registrationRequest)
     .subscribe(response => {
       var msg;
-      if (response === 'Patient') {
+      if (response === 'patient') {
         msg = 'Registration succesful. Please login.'
       } else {
         msg = 'Your registration is pending approval. Thank you!'

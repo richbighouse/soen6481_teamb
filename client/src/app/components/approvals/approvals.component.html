@@ -2,49 +2,50 @@
 
 <div class="container">
 
-    <h1>Approve Users</h1>
+    <h1>Pending Registrations</h1>
+
+    <h3>Approve or Reject the pending registration for Nurses and Doctors.</h3>
 
     <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
         <!-- ID Column -->
-
         <ng-container matColumnDef="user-id">
-            <th mat-header-cell *matHeaderCellDef class="w-15"> ID </th>
+            <th mat-header-cell *matHeaderCellDef class="w-10">ID</th>
             <td mat-cell *matCellDef="let element"> {{element.id}} </td>
         </ng-container>
 
         <!-- User Name Column -->
         <ng-container matColumnDef="user-name">
-            <th mat-header-cell *matHeaderCellDef class="w-30"> Name </th>
+            <th mat-header-cell *matHeaderCellDef class="w-20">Name</th>
             <td mat-cell *matCellDef="let element"> {{element.fullName}} </td>
         </ng-container>
-
+        <!-- User Type Column -->   
         <ng-container matColumnDef="user-type">
-            <th mat-header-cell *matHeaderCellDef class="w-30"> User Type </th>
+            <th mat-header-cell *matHeaderCellDef class="w-15">User Type</th>
             <td mat-cell *matCellDef="let element"> {{ getUserType(element.fkUserType)}} </td>
         </ng-container>
 
         <!-- Test Date Column -->
         <ng-container matColumnDef="email">
-            <th mat-header-cell *matHeaderCellDef class="w-20"> Email </th>
+            <th mat-header-cell *matHeaderCellDef class="w-20">Email</th>
             <td mat-cell *matCellDef="let element"> {{element.email}} </td>
         </ng-container> 
 
         <ng-container matColumnDef="registrationnumber">
-            <th mat-header-cell *matHeaderCellDef class="w-20"> Registration Number </th>
+            <th mat-header-cell *matHeaderCellDef class="w-15"> Registration Number </th>
             <td mat-cell *matCellDef="let element"> {{element.registrationNumber}} </td>
         </ng-container> 
 
         <!-- Action Column -->
         <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef class="w-20"> Actions </th>
+            <th mat-header-cell *matHeaderCellDef class="w-20">Actions</th>
             <td mat-cell *matCellDef="let element">
                 <button mat-icon-button
-                matTooltip="Approve the User"
+                matTooltip="Approve the user."
                 (click)="onApproval(element)">
                 <mat-icon style="color:green">check_circle</mat-icon>
             </button>                
                 <button mat-icon-button
-                    matTooltip="Reject the User"
+                    matTooltip="Reject the user."
                     (click)="onRejection(element)">
                     <mat-icon style="color:red">cancel</mat-icon>
                 </button> 

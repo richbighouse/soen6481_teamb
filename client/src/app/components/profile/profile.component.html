@@ -5,7 +5,7 @@
         <form class="example-form">
             
             <mat-card-header>
-                <mat-card-title class=" .user-info-title">User Registation Information</mat-card-title>
+                <mat-card-title class=".user-info-title">Your Profile</mat-card-title>
             </mat-card-header>    
             
             
@@ -13,7 +13,7 @@
             <p>
             <mat-form-field >
                 <label>
-                    <input formControlName="fullName"
+                    <input
                         matInput
                         placeholder="Full Name"
                         value="{{currentUser.fullName}}" readonly>
@@ -23,7 +23,7 @@
             <p>
             <mat-form-field >
                 <label>
-                    <input formControlName="email"
+                    <input
                         matInput
                         placeholder="Email"
                         value="{{currentUser.email}}" readonly>
@@ -34,7 +34,7 @@
             <p>
                 <mat-form-field >
                     <label>
-                        <input formControlName="address"
+                        <input 
                             matInput
                             placeholder="Address"
                             value="{{currentUser.address}}" readonly>
@@ -45,7 +45,7 @@
                 <p>
                     <mat-form-field >
                         <label>
-                            <input formControlName="dateOfBirth"
+                            <input
                                 matInput
                                 placeholder="Date of Birth"
                                 value="{{currentUser.dateOfBirth | date:'yyyy-MM-dd'}}" readonly>
@@ -56,7 +56,7 @@
                 <p>
                     <mat-form-field >
                         <label>
-                            <input formControlName="phoneNumber"
+                            <input
                                 matInput
                                 placeholder="Phone Number"
                                 value="{{currentUser.phoneNumber}}" readonly>
@@ -67,7 +67,7 @@
                 <p>
                     <mat-form-field *ngIf="!isPatient()">
                         <label>
-                            <input formControlName="registrationNumber"
+                            <input 
                                 matInput
                                 placeholder="Registration Number"
                                 value="{{currentUser.registrationNumber}}" readonly>
@@ -76,7 +76,7 @@
                 </p>
             
             <button mat-raised-button color="primary" type="edit">
-                <span>Edit</span>
+                <span>Save</span>
             </button>
 
         </form>

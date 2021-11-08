@@ -17,12 +17,12 @@
         <span class="action-label">View Self-Assessment Tests</span>
     </mat-card>
 
-
+    <!-- Manager: Approve Nurses and Doctors-->
     <mat-card class="action-card" *ngIf="isManager()"(click)="goToApprovals()">
         <div class="action-icon">
-            <mat-icon [inline]="true">approvals</mat-icon>
+            <mat-icon [inline]="true">manage_accounts</mat-icon>
         </div>
-        <span class="action-label">View Approvals</span>
+        <span class="action-label">Review Pending Registrations</span>
     </mat-card>
 </div>
 

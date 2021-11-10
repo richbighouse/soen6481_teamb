@@ -11,7 +11,7 @@
             <mat-stepper #stepper orientation="vertical" linear="true">
                 <!-- Breathing -->
                 <mat-step>
-                    <ng-template matStepLabel>Breathing Assessment</ng-template>
+                    <ng-template matStepLabel>Initial Questions</ng-template>
                     <ng-template matStepContent>
                         <p style="padding-top: 1em;">Are you having difficulty breathing? For example, do you feel like you’re out of breath or suffocating?</p>
                         <p><strong>OR</strong></p>
@@ -28,6 +28,60 @@
                                 [color]="(difficultyBreathingSelected && !q_difficultyBreathing) ? 'primary' : ''"
                                 (click)=hasBreathingProblem(false)>
                                     No
+                            </button>
+                        </div>
+                        <p style="padding-top: 1em;">Have you been in close contact with a confirmed or probable case of COVID-19?</p>
+                        <div class="step-buttons">
+                            <button 
+                                mat-raised-button 
+                                [color]="(hasBeenCloseContactSelected && q_hasBeenCloseContact) ? 'primary' : ''"
+                                (click)=hasBeenCloseContact(true)>
+                                    Yes
+                            </button>
+                            <button
+                                mat-raised-button
+                                [color]="(hasBeenCloseContactSelected && !q_hasBeenCloseContact) ? 'primary' : ''"
+                                (click)=hasBeenCloseContact(false)>
+                                    No
+                            </button>
+                        </div>
+                        <p style="padding-top: 1em;">Have you been tested for COVID-19?</p>
+                        <div class="step-buttons">
+                            <button 
+                                mat-raised-button 
+                                [color]="(hasBeenTestedSelected && q_hasBeenTested) ? 'primary' : ''"
+                                (click)=hasBeenTested(true)>
+                                    Yes
+                            </button>
+                            <button
+                                mat-raised-button
+                                [color]="(hasBeenTestedSelected && !q_hasBeenTested) ? 'primary' : ''"
+                                (click)=hasBeenTested(false)>
+                                    No
+                            </button>
+                        </div>
+                        <p style="padding-top: 1em;">Have you or someone close to you traveled outside of Canada within the last 14 days?</p>
+                        <div class="step-buttons">
+                            <button 
+                                mat-raised-button 
+                                [color]="(hasTraveledSelected && q_hasTraveled) ? 'primary' : ''"
+                                (click)=hasTraveled(true)>
+                                    Yes
+                            </button>
+                            <button
+                                mat-raised-button
+                                [color]="(hasTraveledSelected && !q_hasTraveled) ? 'primary' : ''"
+                                (click)=hasTraveled(false)>
+                                    No
+                            </button>
+                        </div>
+                        <div class="back-button">
+                            <button 
+                                mat-raised-button
+                                color='accent'
+                                [disabled]="!(firstFourQuestionsSelected() && !q_difficultyBreathing)"
+                                (click)="nextClickedFromInitialQuestions($event)">
+                                Next
                             </button>
                         </div>
                     </ng-template>
@@ -154,7 +208,6 @@
                         </div>
                     </ng-template>
                 </mat-step>
-                
             <!-- End Stepper -->
             </mat-stepper>
 

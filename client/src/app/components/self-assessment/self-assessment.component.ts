@@ -28,6 +28,9 @@ export class SelfAssessmentComponent implements OnInit {
   q_firstSymptoms!: boolean | null;
   q_situation!: boolean | null;
   q_secondSymptoms!: boolean | null;
+  q_hasBeenCloseContact!: boolean | null;
+  q_hasBeenTested!: boolean | null;
+  q_hasTraveled!: boolean | null;
   firstDynamicData: boolean = false;
   secondDynamicData: boolean = false;
 
@@ -43,6 +46,9 @@ export class SelfAssessmentComponent implements OnInit {
   hasFirstSymptomsSelected: boolean = false;
   hasFirstDynamicSelected: boolean = false;
   hasSecondDynamicSelected: boolean = false;
+  hasBeenCloseContactSelected: boolean = false;
+  hasBeenTestedSelected: boolean = false;
+  hasTraveledSelected: boolean = false;
 
   // Strings
   firstSymptomsString: string = '';
@@ -99,20 +105,83 @@ export class SelfAssessmentComponent implements OnInit {
     this.resetTest();
   }
 
+  firstFourQuestionsSelected() {
+    return this.difficultyBreathingSelected 
+    && this.hasBeenCloseContactSelected
+    && this.hasBeenTestedSelected
+    && this.hasTraveledSelected
+  }
+
+  shouldDisplayNextButton() {
+    return this.firstFourQuestionsSelected() 
+  }
+
   hasBreathingProblem(value: boolean) {
     this.q_difficultyBreathing = value;
     this.difficultyBreathingSelected = true;
-    this.canSubmit = value;
 
-    if (!value) {
+    this.canSubmit = this.firstFourQuestionsSelected() && this.q_difficultyBreathing == true;
+
+    if (!this.q_difficultyBreathing) {
       this.showFirstSymptoms = true;
       this.ageStepControl.removeControl('ageCtrl');
       this.ageStepControl.updateValueAndValidity();
-      this.myStepper.next();
     } else {
       this.ageStepControl.addControl('ageCtrl', this._formBuilder.control('', [Validators.required]));
       this.ageStepControl.updateValueAndValidity();
     }
+  }
+
+  hasBeenCloseContact(value: boolean) {
+    this.q_hasBeenCloseContact = value;
+    this.hasBeenCloseContactSelected = true;
+
+    this.canSubmit = this.firstFourQuestionsSelected() && this.q_difficultyBreathing == true;
+
+    if (!this.q_difficultyBreathing) {
+      this.showFirstSymptoms = true;
+      this.ageStepControl.removeControl('ageCtrl');
+      this.ageStepControl.updateValueAndValidity();
+    } else {
+      this.ageStepControl.addControl('ageCtrl', this._formBuilder.control('', [Validators.required]));
+      this.ageStepControl.updateValueAndValidity();
+    }
+  }
+
+  hasBeenTested(value: boolean) {
+    this.q_hasBeenTested = value;
+    this.hasBeenTestedSelected = true;
+
+    this.canSubmit = this.firstFourQuestionsSelected() && this.q_difficultyBreathing == true;
+
+    if (!this.q_difficultyBreathing) {
+      this.showFirstSymptoms = true;
+      this.ageStepControl.removeControl('ageCtrl');
+      this.ageStepControl.updateValueAndValidity();
+    } else {
+      this.ageStepControl.addControl('ageCtrl', this._formBuilder.control('', [Validators.required]));
+      this.ageStepControl.updateValueAndValidity();
+    }
+  }
+
+  hasTraveled(value: boolean) {
+    this.q_hasTraveled = value;
+    this.hasTraveledSelected = true;
+
+    this.canSubmit = this.firstFourQuestionsSelected() && this.q_difficultyBreathing == true;
+
+    if (!this.q_difficultyBreathing) {
+      this.showFirstSymptoms = true;
+      this.ageStepControl.removeControl('ageCtrl');
+      this.ageStepControl.updateValueAndValidity();
+    } else {
+      this.ageStepControl.addControl('ageCtrl', this._formBuilder.control('', [Validators.required]));
+      this.ageStepControl.updateValueAndValidity();
+    }
+  }
+
+  nextClickedFromInitialQuestions(event: any) {
+    this.myStepper.next();
   }
 
   setAgeRange(value: string) {
@@ -272,6 +341,14 @@ export class SelfAssessmentComponent implements OnInit {
     this.firstDynamicSring = '';
     this.secondDynamicStepLabel = 'Additional Information';
     this.secondDynamicString = '';
+
+    this.q_hasBeenCloseContact = null;
+    this.q_hasBeenTested = null;
+    this.q_hasTraveled = null;
+
+    this.hasBeenCloseContactSelected = false;
+    this.hasBeenTestedSelected = false;
+    this.hasTraveledSelected  = false;
 
     if (this.myStepper) {
       this.myStepper.reset();

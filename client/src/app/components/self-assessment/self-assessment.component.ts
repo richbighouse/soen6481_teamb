@@ -372,18 +372,15 @@ export class SelfAssessmentComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('q_difficultyBreathing', this.q_difficultyBreathing);
-    console.log('q_ageRange', this.q_ageRange);
-    console.log('q_firstSymptoms', this.q_firstSymptoms);
-    console.log('q_situation', this.q_situation);
-    console.log('q_secondSymptoms', this.q_secondSymptoms);
-
     const selfAssessementTest = new SelfAssessmentTest();
     selfAssessementTest.q_difficultyBreathing = this.q_difficultyBreathing;
     selfAssessementTest.q_ageRange =  this.q_ageRange;
     selfAssessementTest.q_firstSymptoms =  this.q_firstSymptoms;
     selfAssessementTest.q_situation =  this.q_situation;
     selfAssessementTest.q_secondSymptoms =  this.q_secondSymptoms;
+    selfAssessementTest.q_hasBeenCloseContact = this.q_hasBeenCloseContact;
+    selfAssessementTest.q_hasBeenTested = this.q_hasBeenTested;
+    selfAssessementTest.q_hasTraveled = this.q_hasTraveled;
 
     this.selfAssessmentTestService.postSelfAssessmentTest(selfAssessementTest)
     .subscribe(

@@ -4,6 +4,9 @@ export class SelfAssessmentTest {
     q_firstSymptoms: boolean | null = null;
     q_situation: boolean | null = null;
     q_secondSymptoms: boolean | null = null;
+    q_hasBeenCloseContact: boolean | null = null;
+    q_hasBeenTested: boolean | null = null;
+    q_hasTraveled: boolean | null = null;
   }
 
   export class RegistrationRequest {

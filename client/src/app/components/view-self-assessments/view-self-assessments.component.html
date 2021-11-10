@@ -56,11 +56,10 @@
                 [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
             <div class="test-details-container">
                 <ol>
-                    <li>
-                        <span class="test-details-question">
-                            Does the patient have difficulty breathing? 
-                        </span>
-                        <span class="test-details-answer"> {{ yesOrNo(element.q_difficultyBreathing)}}</span></li>
+                    <li><span class="test-details-question">Does the patient have difficulty breathing?</span><span class="test-details-answer"> {{ yesOrNo(element.q_difficultyBreathing)}}</span></li>
+                    <li><span class="test-details-question">Has the patient been in close contact with case of COVID-19?</span><span class="test-details-answer"> {{ yesOrNo(element.q_hasBeenCloseContact)}}</span></li>
+                    <li><span class="test-details-question">Has the patient been tested for COVID-19?</span><span class="test-details-answer"> {{ yesOrNo(element.q_hasBeenTested)}}</span></li>
+                    <li><span class="test-details-question">Has the patient traveled in the last 14 days?</span><span class="test-details-answer"> {{ yesOrNo(element.q_hasTraveled)}}</span></li>
                     <li><span class="test-details-question">Age range of the patient.</span> <span class="test-details-answer"> {{ ageRange(element.q_ageRange)}}</span></li>
                     <li><span class="test-details-question">Does the patient have any of the first symptoms?</span> <span class="test-details-answer"> {{ yesOrNo(element.q_firstSymptoms)}}</span></li>
                     <li><span class="test-details-question">Is the person in one the these situations?</span> <span class="test-details-answer"> {{ yesOrNo(element.q_situation)}}</span></li>

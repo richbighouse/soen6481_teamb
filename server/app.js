@@ -222,8 +222,9 @@ app.post("/api/self-assessment-test", function (req, res) {
       }
     })
 
-    const insertSql = `INSERT INTO assessment (date, viewedByNurse, fkPatientId, q_difficultyBreathing, q_ageRange, q_firstSymptoms, q_situation, q_secondSymptoms) VALUES 
-    ('${getTodayDate()}', 0, ${currentId}, ${body.q_difficultyBreathing}, '${body.q_ageRange}',${body.q_firstSymptoms},${body.q_situation},${body. q_secondSymptoms})`
+    const insertSql = `INSERT INTO assessment (date, viewedByNurse, fkPatientId, q_difficultyBreathing, q_ageRange, q_firstSymptoms, q_situation, q_secondSymptoms, q_hasBeenCloseContact,
+    q_hasBeenTested, q_hasTraveled) VALUES ('${getTodayDate()}', 0, ${currentId}, ${body.q_difficultyBreathing}, 
+    '${body.q_ageRange}',${body.q_firstSymptoms},${body.q_situation},${body.q_secondSymptoms}, ${body.q_hasBeenCloseContact}, ${body.q_hasBeenTested}, ${body.q_hasTraveled})`
     db.query(insertSql, (err, rows) => {
       if (err) {
         console.log(err);
@@ -240,7 +241,8 @@ app.post("/api/self-assessment-test", function (req, res) {
 });
 
 app.get('/api/self-assessment-test/unviewed', function (req, res) {
-  const sql = `SELECT a.fkPatientId AS userId, user.fullName, a.id AS testId, a.date, a.q_difficultyBreathing, a.q_ageRange, a.q_firstSymptoms, a.q_situation, a.q_secondSymptoms
+  const sql = `SELECT a.fkPatientId AS userId, user.fullName, a.id AS testId, a.date, a.q_difficultyBreathing, a.q_ageRange, a.q_firstSymptoms, a.q_situation, a.q_secondSymptoms, 
+  a.q_hasBeenCloseContact, a.q_hasBeenTested, a.q_hasTraveled
   FROM assessment a
   JOIN user ON user.id = a.fkPatientId
   WHERE viewedByNurse = 0 AND user.fkUserType = 1 AND user.active = 1

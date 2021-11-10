@@ -259,6 +259,20 @@ app.get('/api/self-assessment-test/unviewed', function (req, res) {
   })
 });
 
+app.get('/api/doctors', function (req, res) {
+  const sql = `SELECT * FROM user WHERE fkUserType = 2`;
+
+  db.query(sql, (err, rows) => {
+    if (err) {
+      console.log(err);
+      res.status("500").send("Error while fetching doctors.");
+    } else {
+      console.log(rows);
+      res.status(200).json(rows);
+    }
+  })
+})
+
 function getTodayDate() {
   return new Date().toISOString().split('T')[0];
 }

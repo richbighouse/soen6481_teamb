@@ -7,6 +7,7 @@ import { SelfAssessmentComponent } from '../self-assessment/self-assessment.comp
 import { MatDialog } from '@angular/material/dialog';
 import { DialogChooseDoctorComponent } from './dialog-choose-doctor/dialog-choose-doctor.component';
 import { MatTable } from '@angular/material/table';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-view-self-assessments',
@@ -35,7 +36,8 @@ export class ViewSelfAssessmentsComponent implements OnInit {
   constructor(
     private selfAssessmentTestService: SelfAssessmentTestService,
     private userService: UserService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar,
   ) { }
 
   ngOnInit(): void {
@@ -88,6 +90,10 @@ export class ViewSelfAssessmentsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(res => {
       this.selfAssessmentTestService.assignToDoctor(test, res.doctor)
       .subscribe(res => {
+
+        this.snackBar.open(
+          'Patient succesfully assigned to Doctor.', 'Dismiss', { duration: 10000});
+
         for (let i = 0; i < this.dataSource.length; i++) {
           if(this.dataSource[i].testId === test.testId) {
             this.dataSource.splice(i, 1);    

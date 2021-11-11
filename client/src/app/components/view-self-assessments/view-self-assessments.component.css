@@ -6,7 +6,7 @@
 }
 
 table {
-    width: 80%;
+    width: 60%;
 }
 
 .th-center{
@@ -76,9 +76,33 @@ tr.example-detail-row {
   }
 
   .test-details-container {
-    width: 60%;
+    display: flex;
   }
+
+  .test-answers {
+    display: flex;
+    flex-direction: column;
+    padding-left: 5em;
+  }
+
+  .test-actions {
+    display: flex;
+    flex-direction: column;
+    padding-left: 12em;
+  }
+
+  .test-actions-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 1.5em;
+    padding-top: 3em;
+  }
+
+  .mat-icon {
+    transform: scale(1.3);
+}
 
   .test-details-answer {
     font-weight: bolder;
+    padding-left: 1em;
   }

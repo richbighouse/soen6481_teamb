@@ -1,0 +1,12 @@
+.container {
+    width: 50vh;
+}
+
+.card {
+    background-color:whitesmoke;
+}
+
+.buttons {
+    display: flex;
+    gap: 1em;
+}

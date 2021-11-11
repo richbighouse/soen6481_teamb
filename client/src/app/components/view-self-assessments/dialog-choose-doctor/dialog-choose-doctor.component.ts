@@ -18,6 +18,6 @@ export class DialogChooseDoctorComponent implements OnInit {
   }
 
   refer(doctor: User) {
-    this.dialogRef.close({data: doctor})
+    this.dialogRef.close({doctor})
   }
 }

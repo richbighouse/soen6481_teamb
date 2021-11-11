@@ -33,13 +33,13 @@ export class ViewSelfAssessmentsComponent implements OnInit {
   doctors: User[] = [];
 
   constructor(
-    private selfAssessmentTestSerive: SelfAssessmentTestService,
+    private selfAssessmentTestService: SelfAssessmentTestService,
     private userService: UserService,
     public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
-    this.selfAssessmentTestSerive.getUnviewedTests()
+    this.selfAssessmentTestService.getUnviewedTests()
     .subscribe(res => {
       this.dataSource = res;
     },
@@ -86,11 +86,13 @@ export class ViewSelfAssessmentsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(res => {
-      for (let i = 0; i < this.dataSource.length; i++) {
-        if(this.dataSource[i].testId === test.testId) {
-          this.dataSource.splice(i, 1);    
-      }
-      this.table.renderRows();
-    }});
+      this.selfAssessmentTestService.assignToDoctor(test, res.doctor)
+      .subscribe(res => {
+        for (let i = 0; i < this.dataSource.length; i++) {
+          if(this.dataSource[i].testId === test.testId) {
+            this.dataSource.splice(i, 1);    
+        }
+        this.table.renderRows();
+      }})});
   }
 }

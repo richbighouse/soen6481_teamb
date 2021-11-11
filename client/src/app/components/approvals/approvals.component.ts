@@ -42,13 +42,10 @@ export class ApprovalsComponent implements OnInit {
   }
 
   onApproval(user:User) {
-
     this.approvalService.postApproveStatus(user).subscribe(
       response => {
-        console.log("done")
-        
-      }
-     
+        console.log("done")    
+      }  
     )
     this.refreshRows(user);
   }
@@ -66,6 +63,7 @@ export class ApprovalsComponent implements OnInit {
     }
     this.table.renderRows();
   }
+
   onRejection(user:User) {
     this.approvalService.postRejectStatus(user).subscribe(
       response => {
@@ -74,7 +72,6 @@ export class ApprovalsComponent implements OnInit {
     )
     this.refreshRows(user);
   }
-
 
   getUserType(userType: number)
   {

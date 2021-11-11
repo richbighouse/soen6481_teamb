@@ -24,6 +24,9 @@ import { ViewSelfAssessmentsComponent } from './components/view-self-assessments
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ApprovalsComponent } from './components/approvals/approvals.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { DialogChooseDoctorComponent } from './components/view-self-assessments/dialog-choose-doctor/dialog-choose-doctor.component';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -35,7 +38,8 @@ import { ApprovalsComponent } from './components/approvals/approvals.component';
     TopNavComponent,
     ProfileComponent,
     ViewSelfAssessmentsComponent,
-    ApprovalsComponent
+    ApprovalsComponent,
+    DialogChooseDoctorComponent
   ],
   imports: [
     BrowserModule,
@@ -54,7 +58,9 @@ import { ApprovalsComponent } from './components/approvals/approvals.component';
     MatIconModule,
     MatStepperModule,
     MatTableModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatDialogModule,
+    MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent]

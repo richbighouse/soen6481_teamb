@@ -1,0 +1,27 @@
+<div class=container>
+    <div class=doctor-list>
+        <mat-card class="card">
+            <mat-card-title>Doctors</mat-card-title>
+            <mat-card-subtitle>Choose a doctor to assign the patient to.</mat-card-subtitle>
+            <mat-selection-list #doctors [multiple]="false">
+                <mat-list-option *ngFor="let doctor of data.doctors" [value]="doctor">
+                  {{doctor.fullName}} #{{doctor.registrationNumber}}
+            </mat-list-option>
+            </mat-selection-list>   
+        </mat-card>
+    </div>
+      
+      <p style="padding-top: 2em;">
+        Refer to: {{doctors.selectedOptions.selected[0]?.value.fullName}}
+      </p>
+
+    <div class=buttons>
+        <button mat-raised-button 
+        color="primary"
+        [disabled]="doctors.selectedOptions.selected.length === 0"
+        (click)="refer(doctors.selectedOptions.selected[0].value)">Refer</button>
+        <button mat-raised-button mat-dialog-close>Cancel</button>
+    </div>
+
+    
+</div>

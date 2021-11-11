@@ -212,7 +212,7 @@ app.post("/api/self-assessment-test", function (req, res) {
     console.log('/api/self-assessment-test body', body);
 
     // Set existing self-assessment for user to viewedByNurse ... we might want to have active flag instead.
-    const updateSql = `UPDATE assessment SET viewedByNurse=1 WHERE fkPatientId=${currentId}`;
+    const updateSql = `UPDATE assessment SET viewedByNurse=1, assignedDoctorId=null WHERE fkPatientId=${currentId}`;
     db.query(updateSql, (err, rows) => {
       if (err) {
         console.log(err);
@@ -258,6 +258,34 @@ app.get('/api/self-assessment-test/unviewed', function (req, res) {
     }
   })
 });
+
+app.get('/api/users/doctors', function (req, res) {
+  const sql = `SELECT * FROM user WHERE fkUserType = 2 AND active=1 AND approved=1`;
+  db.query(sql, (err, rows) => {
+    if (err) {
+      console.log(err);
+      res.status("500").send("Error while fetching doctors.");
+    } else {
+      console.log(rows);
+      res.status(200).json(rows);
+    }
+  })
+})
+
+app.post('/api/self-assessment-test/assign', function (req, res) {
+  console.log(`Received request to assign test ${req.body.assessment.testId} to doctor ${req.body.doctor.id} ...`);
+  const sql = `UPDATE assessment SET assignedDoctorId = ${req.body.doctor.id} WHERE id = ${req.body.assessment.testId}`;
+  db.query(sql, (err, rows) => {
+    if (err) {
+      console.log(err);
+      res.status("500").send("Error while assigning test to doctor.");
+    } else {
+      console.log(rows);
+      res.status(200).json(rows);
+    }
+  })
+  
+})
 
 function getTodayDate() {
   return new Date().toISOString().split('T')[0];

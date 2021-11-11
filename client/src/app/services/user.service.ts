@@ -13,4 +13,8 @@ export class UserService {
   getCurrentUser(): Observable<User> {
     return this.http.get<User>('/api/users/current');
   }
+
+  getDoctors(): Observable<User[]> {
+    return this.http.get<User[]>('api/users/doctors');
+  }
 }

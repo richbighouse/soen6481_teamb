@@ -24,6 +24,14 @@
         </div>
         <span class="action-label">Review Pending Registrations</span>
     </mat-card>
+
+        <!-- Doctor and Nurses: Schedule-->
+        <mat-card class="action-card" *ngIf="isNurse() || isDoctor()"(click)="goToSchedule()">
+            <div class="action-icon">
+                <mat-icon [inline]="true">event</mat-icon>
+            </div>
+            <span class="action-label">View Appointment Schedule</span>
+        </mat-card>
 </div>
 
 

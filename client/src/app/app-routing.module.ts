@@ -7,6 +7,7 @@ import { SelfAssessmentComponent } from './components/self-assessment/self-asses
 import { ProfileComponent } from './components/profile/profile.component';
 import { ViewSelfAssessmentsComponent } from './components/view-self-assessments/view-self-assessments.component';
 import { ApprovalsComponent } from './components/approvals/approvals.component';
+import { ScheduleComponent } from './components/schedule/schedule.component';
 
 
 const routes: Routes = [
@@ -42,6 +43,10 @@ const routes: Routes = [
   {
     path: 'pending-approvals',
     component: ApprovalsComponent
+  },
+  {
+    path: 'schedule',
+    component: ScheduleComponent
   }
 ];
 

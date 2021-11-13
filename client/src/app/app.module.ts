@@ -27,6 +27,15 @@ import { ApprovalsComponent } from './components/approvals/approvals.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DialogChooseDoctorComponent } from './components/view-self-assessments/dialog-choose-doctor/dialog-choose-doctor.component';
 import { MatListModule } from '@angular/material/list';
+import { FullCalendarModule } from '@fullcalendar/angular'; // must go before plugins
+import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
+import interactionPlugin from '@fullcalendar/interaction';
+import { ScheduleComponent } from './components/schedule/schedule.component'; // a plugin!
+
+FullCalendarModule.registerPlugins([ // register FullCalendar plugins
+  dayGridPlugin,
+  interactionPlugin
+]);
 
 @NgModule({
   declarations: [
@@ -39,7 +48,8 @@ import { MatListModule } from '@angular/material/list';
     ProfileComponent,
     ViewSelfAssessmentsComponent,
     ApprovalsComponent,
-    DialogChooseDoctorComponent
+    DialogChooseDoctorComponent,
+    ScheduleComponent
   ],
   imports: [
     BrowserModule,
@@ -60,7 +70,8 @@ import { MatListModule } from '@angular/material/list';
     MatTableModule,
     MatTooltipModule,
     MatDialogModule,
-    MatListModule
+    MatListModule,
+    FullCalendarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

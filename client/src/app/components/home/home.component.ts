@@ -41,7 +41,7 @@ export class HomeComponent implements OnInit {
   }
 
   goToSchedule() {
-    this.navigationService.goToSchedule();
+    this.navigationService.goToSchedule(this.currentUser.id);
   }
 
   // We should define these in some currentUserService

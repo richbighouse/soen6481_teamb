@@ -45,7 +45,7 @@ const routes: Routes = [
     component: ApprovalsComponent
   },
   {
-    path: 'schedule',
+    path: 'schedule/:userId',
     component: ScheduleComponent
   }
 ];

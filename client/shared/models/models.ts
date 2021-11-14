@@ -32,6 +32,7 @@ export class SelfAssessmentTest {
   }
 
   export class User {
+    id!: number;
     fullName!: string;
     address!: string;
     dateOfBirth!: string;
@@ -56,4 +57,13 @@ export class SelfAssessmentTest {
     q_firstSymptoms: boolean | null = null;
     q_situation: boolean | null = null;
     q_secondSymptoms: boolean | null = null;
+  }
+
+  export class ScheduleEvent {
+    scheduleId!: number;
+    location!: string;
+    dateTime!: Date;
+    professioanlId!: number;
+    patientId!: number;
+    patientFullName!: string;
   }

@@ -28,7 +28,7 @@ export class NavigationService {
     this.router.navigate(['/pending-approvals']);
   }
 
-  goToSchedule() {
-    this.router.navigate(['/schedule']);
+  goToSchedule(userId: number) {
+    this.router.navigate(['/schedule/', userId]);
   }
 }

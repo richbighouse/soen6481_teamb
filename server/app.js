@@ -280,7 +280,6 @@ app.post('/api/self-assessment-test/assign', function (req, res) {
       console.log(err);
       res.status("500").send("Error while assigning test to doctor.");
     } else {
-      console.log(rows);
       res.status(200).json(rows);
     }
   })
@@ -288,7 +287,7 @@ app.post('/api/self-assessment-test/assign', function (req, res) {
 
 app.get('/api/schedule/:userId', function (req, res) {
   console.log('path param', req.params.userId);
-  const sql = `SELECT a.id, a.location, a.dateTime, a.fkProfessionalId, u.id, u.fullName FROM appointment a JOIN user u ON u.id = a.fkPatientId WHERE a.fkProfessionalId = ${req.params.userId};`
+  const sql = `SELECT a.id as scheduleId, a.location, a.dateTime, a.fkProfessionalId as professioanlId, u.id as patientId, u.fullName as patientFullName FROM appointment a JOIN user u ON u.id = a.fkPatientId WHERE a.fkProfessionalId = ${req.params.userId};`
   db.query(sql, (err, rows) => {
     if (err) {
       console.log(err);

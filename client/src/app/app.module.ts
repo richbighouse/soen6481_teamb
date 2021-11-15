@@ -30,7 +30,9 @@ import { MatListModule } from '@angular/material/list';
 import { FullCalendarModule } from '@fullcalendar/angular'; // must go before plugins
 import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
 import interactionPlugin from '@fullcalendar/interaction';
-import { ScheduleComponent } from './components/schedule/schedule.component'; // a plugin!
+import { ScheduleComponent } from './components/schedule/schedule.component';
+import { AssessmentListComponent } from './components/assessment-list/assessment-list.component';
+import { ViewAssignedPatientsComponent } from './components/view-assigned-patients/view-assigned-patients.component'; // a plugin!
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -49,7 +51,9 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     ViewSelfAssessmentsComponent,
     ApprovalsComponent,
     DialogChooseDoctorComponent,
-    ScheduleComponent
+    ScheduleComponent,
+    AssessmentListComponent,
+    ViewAssignedPatientsComponent
   ],
   imports: [
     BrowserModule,

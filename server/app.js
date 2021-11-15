@@ -241,12 +241,34 @@ app.post("/api/self-assessment-test", function (req, res) {
 });
 
 app.get('/api/self-assessment-test/unviewed', function (req, res) {
+  console.log("Request Tests for Nurses")
   const sql = `SELECT a.fkPatientId AS userId, user.fullName, a.id AS testId, a.date, a.q_difficultyBreathing, a.q_ageRange, a.q_firstSymptoms, a.q_situation, a.q_secondSymptoms, 
   a.q_hasBeenCloseContact, a.q_hasBeenTested, a.q_hasTraveled
   FROM assessment a
   JOIN user ON user.id = a.fkPatientId
-  WHERE viewedByNurse = 0 AND user.fkUserType = 1 AND user.active = 1
+  WHERE viewedByNurse = 0 AND user.fkUserType = 1 AND user.active = 1 AND rejected = 0
   ORDER BY a.date ASC;`
+
+  db.query(sql, (err, rows) => {
+    if (err) {
+      console.log(err);
+      res.status("500").send("Error while getting unviewed self-assessment tests.");
+    } else {
+      console.log(rows);
+      res.status(200).json(rows);
+    }
+  })
+});
+
+app.get('/api/self-assessment-test/doctor/:doctorId',  function (req, res) {
+  const sql = `SELECT a.fkPatientId AS userId, user.fullName, a.id AS testId, a.date, a.q_difficultyBreathing, a.q_ageRange, a.q_firstSymptoms, a.q_situation, a.q_secondSymptoms, 
+  a.q_hasBeenCloseContact, a.q_hasBeenTested, a.q_hasTraveled
+  FROM assessment a
+  JOIN user ON user.id = a.fkPatientId
+  WHERE assignedDoctorId = ${req.params.doctorId} AND user.fkUserType = 1 AND user.active = 1 AND rejected = 0
+  ORDER BY a.date ASC;`
+
+  console.log(sql);
 
   db.query(sql, (err, rows) => {
     if (err) {
@@ -286,7 +308,6 @@ app.post('/api/self-assessment-test/assign', function (req, res) {
 });
 
 app.get('/api/schedule/:userId', function (req, res) {
-  console.log('path param', req.params.userId);
   const sql = `SELECT a.id as scheduleId, a.location, a.dateTime, a.fkProfessionalId as professioanlId, u.id as patientId, u.fullName as patientFullName FROM appointment a JOIN user u ON u.id = a.fkPatientId WHERE a.fkProfessionalId = ${req.params.userId};`
   db.query(sql, (err, rows) => {
     if (err) {

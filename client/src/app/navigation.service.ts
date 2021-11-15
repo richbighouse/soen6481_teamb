@@ -31,4 +31,8 @@ export class NavigationService {
   goToSchedule(userId: number) {
     this.router.navigate(['/schedule/', userId]);
   }
+
+  goViewAssignedPatients() {
+    this.router.navigate((['/view-assigned-patients']))
+  }
 }

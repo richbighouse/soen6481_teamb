@@ -8,6 +8,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { ViewSelfAssessmentsComponent } from './components/view-self-assessments/view-self-assessments.component';
 import { ApprovalsComponent } from './components/approvals/approvals.component';
 import { ScheduleComponent } from './components/schedule/schedule.component';
+import { ViewAssignedPatientsComponent } from './components/view-assigned-patients/view-assigned-patients.component';
 
 
 const routes: Routes = [
@@ -47,6 +48,10 @@ const routes: Routes = [
   {
     path: 'schedule/:userId',
     component: ScheduleComponent
+  },
+  {
+    path: 'view-assigned-patients',
+    component: ViewAssignedPatientsComponent
   }
 ];
 

@@ -36,6 +36,10 @@ export class HomeComponent implements OnInit {
     this.navigationService.goViewSelfAssessments();
   }
 
+  goViewAssignedPatients() {
+    this.navigationService.goViewAssignedPatients();
+  }
+
   goToApprovals() {
     this.navigationService.goToPendingApprovals();
   }

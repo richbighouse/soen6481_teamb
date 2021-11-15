@@ -18,6 +18,11 @@ export class SelfAssessmentTestService {
     return this.http.get<SelfAssessmentForTable[]>('/api/self-assessment-test/unviewed')
   }
 
+  getTestsForDoctor(doctorId: number): Observable<SelfAssessmentForTable[]> {
+    console.log(`getTestsForDoctor ${doctorId}`)
+    return this.http.get<SelfAssessmentForTable[]>(`/api/self-assessment-test/doctor/${doctorId}`)
+  }
+
   assignToDoctor(assessment: SelfAssessmentForTable, doctor: User): Observable<any> {
     return this.http.post('/api/self-assessment-test/assign', {assessment, doctor})
   }

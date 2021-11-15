@@ -1,3 +1,6 @@
+<div *ngIf=isLoading style="padding-top: 10em;">
+    <mat-spinner></mat-spinner>
+</div>
 <div *ngIf="!isLoading">
     <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
         <!-- ID Column -->

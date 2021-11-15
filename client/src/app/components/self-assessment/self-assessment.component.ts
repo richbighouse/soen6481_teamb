@@ -8,6 +8,8 @@ import { NavigationService } from 'src/app/navigation.service';
 import { SelfAssessmentTestService } from 'src/app/services/self-assessment-test.service';
 import { UserService } from 'src/app/services/user.service';
 
+
+
 @Component({
   selector: 'app-self-assessment',
   templateUrl: './self-assessment.component.html',
@@ -426,4 +428,6 @@ export class SelfAssessmentComponent implements OnInit {
     this.q_secondSymptoms = null;
     this.canSubmit = false;
   }
+
+  
 }

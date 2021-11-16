@@ -67,3 +67,14 @@ export class SelfAssessmentTest {
     patientId!: number;
     patientFullName!: string;
   }
+
+  export class AssessmentStatus {
+    patientId!: number;
+    assessmentId!: number;
+    assessmentDate!: Date;
+    viewedByNurse!: number;
+    assignedDoctorId!: number;
+    doctorFullName!: string;
+    location!: string;
+    appointmentTime!: Date;
+  }

@@ -35,6 +35,7 @@ import { AssessmentListComponent } from './components/assessment-list/assessment
 import { ViewAssignedPatientsComponent } from './components/view-assigned-patients/view-assigned-patients.component'; 
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { ViewTestStatusComponent } from './components/view-test-status/view-test-status.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -55,7 +56,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     DialogChooseDoctorComponent,
     ScheduleComponent,
     AssessmentListComponent,
-    ViewAssignedPatientsComponent
+    ViewAssignedPatientsComponent,
+    ViewTestStatusComponent
   ],
   imports: [
     BrowserModule,

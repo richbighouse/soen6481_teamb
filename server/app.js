@@ -201,7 +201,20 @@ app.get("/api/users/unapproved", function (req, res) {
 });
 });
 
+app.post("/api/patients/reject", function (req, res) {
+  const body = req.body.selfAssessmentForTable;
+  console.log('Received assement rejection request ...', req.body);
+  const updateSql = `UPDATE assessment SET rejected=1 WHERE fkPatientId= '${body.userId}'`;
 
+  db.query(updateSql, (err, rows) => {
+    if (err) {
+      console.log(err);
+      res.status("500").send("Error while updating assessment status.");
+    } else {
+      console.log('Update successful');
+    }
+  })
+});
 
 app.post("/api/self-assessment-test", function (req, res) {
   const currentId = req.session.userid;

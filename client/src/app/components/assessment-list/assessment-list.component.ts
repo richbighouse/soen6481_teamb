@@ -8,6 +8,7 @@ import { NavigationService } from 'src/app/navigation.service';
 import { SelfAssessmentTestService } from 'src/app/services/self-assessment-test.service';
 import { UserService } from 'src/app/services/user.service';
 import { DialogChooseDoctorComponent } from '../view-self-assessments/dialog-choose-doctor/dialog-choose-doctor.component';
+import { RejectionService } from 'src/app/services/rejection.service';
 
 @Component({
   selector: 'app-assessment-list',
@@ -38,6 +39,7 @@ export class AssessmentListComponent implements OnInit {
   constructor(
     private selfAssessmentTestService: SelfAssessmentTestService,
     private userService: UserService,
+    private rejectionService: RejectionService,    
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
     private navigationService: NavigationService
@@ -103,8 +105,15 @@ export class AssessmentListComponent implements OnInit {
     }
   }
 
-  rejectClicked(test: SelfAssessmentTest) {
+  rejectClicked(test: SelfAssessmentForTable) {
     console.log('clicked!');
+    console.log(test)  
+	this.rejectionService.postRejectStatus(test).subscribe(
+      response => {
+        console.log("done")     
+      }
+    )
+    this.refreshRows(test);
   }
 
   referToDoctorClicked(test: SelfAssessmentForTable) {
@@ -135,5 +144,19 @@ export class AssessmentListComponent implements OnInit {
 
   isDoctor() {
     return this.currentUser !== null ? this.currentUser.fkUserType === 2 : false;
+  }
+
+  refreshRows(selfAssessmentForTable:SelfAssessmentForTable)
+  {
+    for (let i = 0; i < this.dataSource.length; i++) 
+    {
+
+             if(this.dataSource[i].userId == selfAssessmentForTable.userId)
+             {
+               //console.log(this.dataSource[i].email)
+               this.dataSource.splice(i, 1);
+             }
+    }
+    this.table.renderRows();
   }
 }

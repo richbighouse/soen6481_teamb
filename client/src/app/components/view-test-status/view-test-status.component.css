@@ -1,0 +1,10 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    padding-top: 3em;
+    align-items: center;
+}
+
+table {
+    width: 60vw;
+}

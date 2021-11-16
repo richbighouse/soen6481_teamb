@@ -35,4 +35,8 @@ export class NavigationService {
   goViewAssignedPatients() {
     this.router.navigate((['/view-assigned-patients']))
   }
+
+  goViewTestStatus(patientId: number) {
+    this.router.navigate(['/view-appointment-status', patientId]);
+  }
 }

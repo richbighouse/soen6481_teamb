@@ -32,6 +32,10 @@ export class HomeComponent implements OnInit {
     this.navigationService.goSelfAssessment();
   }
 
+  goToViewTestStatus() {
+    this.navigationService.goViewTestStatus(this.currentUser.id);
+  }
+
   goToViewSelfAssessments() {
     this.navigationService.goViewSelfAssessments();
   }

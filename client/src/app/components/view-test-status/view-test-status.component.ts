@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { AssessmentStatus, User } from 'shared/models/models';
 import { SelfAssessmentTestService } from 'src/app/services/self-assessment-test.service';
 import { UserService } from 'src/app/services/user.service';
@@ -9,26 +10,31 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./view-test-status.component.css']
 })
 export class ViewTestStatusComponent implements OnInit {
-
-  currentUser!: User;
-  assessmentStatus!: AssessmentStatus;
+  displayedColumns: string[] = ['assessmentId', 'assessmentDate', 'status', 'professional', 'date', 'location'];
+  patientId!: number;
+  assessmentStatus!: AssessmentStatus[];
+  isLoading: boolean = true;
 
   constructor(
      private selfAssessmentService: SelfAssessmentTestService,
-     private userService: UserService,) { }
+     private activatedRoute: ActivatedRoute,) { }
 
   ngOnInit(): void {
-    this.userService.getCurrentUser().subscribe
-    (res => {
-      this.currentUser = res;
-      this.selfAssessmentService.getTestStatus(this.currentUser.id)
-      .subscribe(
-        res => this.assessmentStatus = res
-      )
-    },
-    err => {
-      console.log(err);
-    })
+    this.activatedRoute.paramMap.subscribe(
+      params => {
+        console.log(params.get('patientId'))
+        this.patientId = parseInt(params.get('patientId')!);
+        this.selfAssessmentService.getTestStatus(this.patientId)
+        .subscribe(
+          res => {
+            this.assessmentStatus = res
+            this.isLoading = false;
+          })
+        },
+        err => {
+        console.log(err);
+       })
   }
-
 }
+
+

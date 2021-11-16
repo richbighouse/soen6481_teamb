@@ -26,7 +26,7 @@ export class SelfAssessmentTestService {
     return this.http.post('/api/self-assessment-test/assign', {assessment, doctor});
   }
 
-  getTestStatus(patientId: number): Observable<AssessmentStatus> {
-    return this.http.get<AssessmentStatus>(`/api/self-assessment-test/status/${patientId}`);
+  getTestStatus(patientId: number): Observable<AssessmentStatus[]> {
+    return this.http.get<AssessmentStatus[]>(`/api/self-assessment-test/status/${patientId}`);
   }
  }

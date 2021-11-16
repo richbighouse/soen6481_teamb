@@ -334,7 +334,7 @@ app.get('/api/schedule/:userId', function (req, res) {
 });
 
 app.get('/api/self-assessment-test/status/:patientId', function (req, res) {
-  const sql = `SELECT patient.id AS patientId, ass.id AS assessmentId, ass.date AS assessmentDate, ass.viewedByNurse, ass.assignedDoctorId, doctor.fullName AS doctorFullName, app.location, app.dateTime AS appointmentTime
+  const sql = `SELECT patient.id AS patientId, ass.id AS assessmentId, ass.date AS assessmentDate, ass.viewedByNurse, ass.assignedDoctorId, doctor.fullName AS doctorFullName, app.location, app.dateTime AS appointmentTime, ass.rejected
   FROM assessment ass
   JOIN user patient ON patient.id = ass.fkPatientId
   LEFT JOIN user doctor ON ass.assignedDoctorId = doctor.id

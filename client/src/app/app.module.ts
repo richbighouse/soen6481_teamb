@@ -36,6 +36,8 @@ import { ViewAssignedPatientsComponent } from './components/view-assigned-patien
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ViewTestStatusComponent } from './components/view-test-status/view-test-status.component';
+import {MatBadgeModule} from '@angular/material/badge';
+import {MatChipsModule} from '@angular/material/chips';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -81,7 +83,9 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     MatListModule,
     FullCalendarModule,
     MatProgressSpinnerModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatBadgeModule,
+    MatChipsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

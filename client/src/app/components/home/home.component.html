@@ -9,6 +9,14 @@
         <span class="action-label">Take a Self-Assessment Test</span>
     </mat-card>
 
+        <!-- Patient: Take Self-Assessment -->
+        <mat-card class="action-card" *ngIf="isPatient()" (click)="goToViewTestStatus()">
+            <div class="action-icon">
+                <mat-icon [inline]="true">event</mat-icon>
+            </div>
+            <span class="action-label">View Appointment Status</span>
+        </mat-card>
+
     <!-- Nurse: View Tests-->
     <mat-card class="action-card" *ngIf="isNurse()"(click)="goToViewSelfAssessments()">
         <div class="action-icon">

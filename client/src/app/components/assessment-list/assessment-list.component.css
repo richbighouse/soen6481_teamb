@@ -82,14 +82,15 @@ tr.example-detail-row {
   .test-actions {
     display: flex;
     flex-direction: column;
-    padding-left: 12em;
+    padding-top: 5em;
+    padding-left: 14em;
   }
 
   .test-actions-buttons {
     display: flex;
     flex-direction: row;
-    gap: 1.5em;
-    padding-top: 3em;
+    gap: 1.25em;
+    padding-top: 2em;
   }
 
   .mat-icon {
@@ -100,3 +101,12 @@ tr.example-detail-row {
     font-weight: bolder;
     padding-left: 1em;
   }
+
+  .test-details-question {
+    display: inline-block;
+    min-width: 30em;
+  }
+
+  li { 
+    margin-bottom: 0.75em;  
+ }

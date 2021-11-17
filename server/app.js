@@ -235,6 +235,17 @@ app.post("/api/self-assessment-test", function (req, res) {
       }
     })
 
+    // Delete any existing appointments.
+    const deleteExistingAppointments = `DELETE FROM appointment WHERE fkPatientId = ${currentId}`;
+    db.query(deleteExistingAppointments, (err, rows) => {
+      if (err) {
+        console.log(err);
+        res.status("500").send("Error while deleting existing appointments.");
+      } else {
+        console.log('Update succesful');
+      }
+    })
+
     const insertSql = `INSERT INTO assessment (date, viewedByNurse, fkPatientId, q_difficultyBreathing, q_ageRange, q_firstSymptoms, q_situation, q_secondSymptoms, q_hasBeenCloseContact,
     q_hasBeenTested, q_hasTraveled) VALUES ('${getTodayDate()}', 0, ${currentId}, ${body.q_difficultyBreathing}, 
     '${body.q_ageRange}',${body.q_firstSymptoms},${body.q_situation},${body.q_secondSymptoms}, ${body.q_hasBeenCloseContact}, ${body.q_hasBeenTested}, ${body.q_hasTraveled})`

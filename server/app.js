@@ -368,3 +368,31 @@ function getTodayDate() {
 }
 
 // module.exports = app;
+
+
+//Edit User Profile 
+app.put("/api/users/editprofile", function (req, res) {
+  const body = req.body;
+  console.log('Received profile edit request ...', body);
+
+  const sql = `UPDATE 
+                    user 
+                SET
+                  fullName = '${body.fullName}',
+                  address = '${body.address}',
+                  phoneNumber = '${body.phoneNumber}',
+                  lastLoginDate = '${getTodayDate()}',
+                  dateOfBirth = '${body.dateOfBirth}'
+                WHERE
+                email = '${body.email}' `;
+
+  db.query(sql, (err, rows) => {
+    if (err) {
+      console.log(err.sqlMessage);
+      res.status(400).send(err.sqlMessage);
+    } else {
+      console.log(rows);
+      res.status(200).json(rows);
+    }   
+  });
+});

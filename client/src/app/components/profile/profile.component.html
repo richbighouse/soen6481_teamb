@@ -2,7 +2,7 @@
 
 <div class="centered">
     <mat-card class="user-info-card" layout-align="center center">
-        <form class="example-form">
+        <form class="example-form" [formGroup]="updateForm"> 
             
             <mat-card-header>
                 <mat-card-title class=".user-info-title">Your Profile</mat-card-title>
@@ -10,76 +10,112 @@
             
             
             <p></p>
-            <p>
-            <mat-form-field >
-                <label>
-                    <input
+            <div >
+                <mat-form-field  *ngIf="editModeFullName">
+                    <input formControlName="fullName"
                         matInput
                         placeholder="Full Name"
-                        value="{{currentUser.fullName}}" readonly>
-                </label>
-            </mat-form-field>
-            </p>
-            <p>
-            <mat-form-field >
-                <label>
-                    <input
-                        matInput
-                        placeholder="Email"
-                        value="{{currentUser.email}}" readonly>
-                </label>
-            </mat-form-field>
-            </p>
-
-            <p>
-                <mat-form-field >
-                    <label>
-                        <input 
-                            matInput
-                            placeholder="Address"
-                            value="{{currentUser.address}}" readonly>
-                    </label>
+                        value="{{currentUser.fullName}}"
+                        [(ngModel)]="currentUser.fullName">
                 </mat-form-field>
-                </p>
+                <span *ngIf="!editModeFullName">
+                    <b>Full Name :  </b> {{currentUser.fullName}}  
+                </span>
+                
+                <button *ngIf="!editModeFullName" (click)="editModeFullName = true" mat-icon-button>
+                    <span><mat-icon class="customIconSize" style="color: blue;">edit</mat-icon></span>
+                </button>
+                <button *ngIf="editModeFullName" (click)="onEditFullName(); editModeFullName = false" mat-icon-button>
+                    <mat-icon class="customIconSize" style="color: blue;" matSuffix>check</mat-icon>
+                </button>
+            </div>
 
-                <p>
-                    <mat-form-field >
-                        <label>
-                            <input
-                                matInput
-                                placeholder="Date of Birth"
-                                value="{{currentUser.dateOfBirth | date:'yyyy-MM-dd'}}" readonly>
-                        </label>
-                    </mat-form-field>
-                </p>
 
-                <p>
-                    <mat-form-field >
-                        <label>
-                            <input
-                                matInput
-                                placeholder="Phone Number"
-                                value="{{currentUser.phoneNumber}}" readonly>
-                        </label>
-                    </mat-form-field>
-                </p>
+            <div>
+                <b>Email :  </b> {{currentUser.email}}
+            </div>
 
-                <p>
-                    <mat-form-field *ngIf="!isPatient()">
-                        <label>
-                            <input 
-                                matInput
-                                placeholder="Registration Number"
-                                value="{{currentUser.registrationNumber}}" readonly>
-                        </label>
-                    </mat-form-field>
-                </p>
-            
-            <button mat-raised-button color="primary" type="edit">
-                <span>Save</span>
+
+            <div >
+                <mat-form-field  *ngIf="editModeAddress">
+                    <input formControlName="address"
+                        matInput
+                        placeholder="Address"
+                        value="{{currentUser.address}}"
+                        [(ngModel)]="currentUser.address">
+                </mat-form-field>
+                <span *ngIf="!editModeAddress">
+                    <b>Address :  </b> {{currentUser.address}}  
+                </span>
+                
+                <button *ngIf="!editModeAddress" (click)="editModeAddress = true" mat-icon-button>
+                    <span><mat-icon class="customIconSize" style="color: blue;">edit</mat-icon></span>
+                </button>
+                <button *ngIf="editModeAddress" (click)="onEditAddress(); editModeAddress = false" mat-icon-button>
+                    <mat-icon class="customIconSize" style="color: blue;" matSuffix>check</mat-icon>
+                </button>
+            </div>
+
+
+            <div >
+                <mat-form-field  *ngIf="editModeDateOfBirth">
+                    <input formControlName="dateOfBirth"
+                        type="date"
+                        matInput
+                        placeholder="Date of Birth"
+                        value="{{currentUser.dateOfBirth | date:'yyyy-MM-dd'}}"
+                        [(ngModel)]="currentUser.dateOfBirth ">
+                </mat-form-field>
+                <span *ngIf="!editModeDateOfBirth">
+                    <b>Date of Birth :  </b> {{currentUser.dateOfBirth | date:'yyyy-MM-dd'}}  
+                </span>
+                
+                <button *ngIf="!editModeDateOfBirth" (click)="editModeDateOfBirth = true" mat-icon-button>
+                    <span><mat-icon class="customIconSize" style="color: blue;">edit</mat-icon></span>
+                </button>
+                <button *ngIf="editModeDateOfBirth" (click)="onEditDateOfBirth(); editModeDateOfBirth = false" mat-icon-button>
+                    <mat-icon class="customIconSize" style="color: blue;" matSuffix>check</mat-icon>
+                </button>
+            </div>
+
+
+            <div >
+                <mat-form-field  *ngIf="editModePhoneNumber">
+                    <input formControlName="phoneNumber"
+                        type="number"
+                        matInput
+                        placeholder="Phone Number"
+                        value="{{currentUser.phoneNumber}}"
+                        [(ngModel)]="currentUser.phoneNumber">
+                </mat-form-field>
+                <span *ngIf="!editModePhoneNumber">
+                    <b>Phone Number :  </b> {{currentUser.phoneNumber}}  
+                </span>
+                
+                <button *ngIf="!editModePhoneNumber" (click)="editModePhoneNumber = true" mat-icon-button>
+                    <span><mat-icon class="customIconSize" style="color: blue;">edit</mat-icon></span>
+                </button>
+                <button *ngIf="editModePhoneNumber" (click)="onEditPhoneNumber(); editModePhoneNumber = false" mat-icon-button>
+                    <mat-icon class="customIconSize" style="color: blue;" matSuffix>check</mat-icon>
+                </button>
+            </div>
+
+
+            <div *ngIf="!isPatient()">
+                <b>Registration Number :  </b> {{currentUser.registrationNumber}}
+            </div>
+
+
+            <p><br></p>
+
+            <button mat-raised-button style="float: right;" color="primary" type="submit" (click)="goHome()">
+                Home
             </button>
+            
+
 
         </form>
         </mat-card>
 </div>
+
 

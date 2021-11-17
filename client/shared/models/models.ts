@@ -79,3 +79,19 @@ export class SelfAssessmentTest {
     appointmentTime!: Date;
     rejected!: number
   }
+  
+  export class EditProfileRequest {
+    email: string;
+    address: string;
+    fullName: string;
+    dateOfBirth: string;
+    phoneNumber: string;
+  
+    constructor(email: string, address: string, fullName: string, dateOfBirth: string, phoneNumber: string ) {
+      this.email = email;
+      this.fullName = fullName;
+      this.address = address;
+      this.dateOfBirth = dateOfBirth;
+      this.phoneNumber = phoneNumber;
+    }
+  }  

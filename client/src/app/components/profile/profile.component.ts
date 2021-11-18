@@ -3,6 +3,7 @@ import { User, EditProfileRequest } from 'shared/models/models';
 import { UserService } from 'src/app/services/user.service';
 import { NavigationService } from 'src/app/navigation.service';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 
 @Component({
@@ -29,7 +30,8 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private navigationService: NavigationService
+    private navigationService: NavigationService,
+    private snackBar: MatSnackBar
   ) { }
 
   editMode: boolean = false;
@@ -98,7 +100,12 @@ export class ProfileComponent implements OnInit {
     const currentUser = this.currentUser;
     console.log(currentUser);
 
-    if (this.fullName.value !== this.currentUser) {                
+    if (!this.fullName.value.length) {
+      console.error("Field Cannot be Empty!");
+            this.snackBar.open(
+              'Full Name Field Cannot be Empty! Try again.', 'Dismiss', { duration: 10000, panelClass: ['snackbar-error']});
+    }
+    else if (this.fullName.value !== this.currentUser) {                
       const editProfileRequest = new EditProfileRequest(
         currentUser.email,
         currentUser.address,
@@ -124,7 +131,12 @@ export class ProfileComponent implements OnInit {
     const currentUser = this.currentUser;
     console.log(currentUser);
 
-    if (this.address.value !== this.currentUser) {                
+    if (!this.address.value.length) {
+      console.error("Field Cannot be Empty!");
+            this.snackBar.open(
+              'Address Field Cannot be Empty! Try again.', 'Dismiss', { duration: 10000, panelClass: ['snackbar-error']});
+    }
+    else if (this.address.value !== this.currentUser) {                
       const editProfileRequest = new EditProfileRequest(
         currentUser.email,
         this.address.value,
@@ -150,7 +162,12 @@ export class ProfileComponent implements OnInit {
     const currentUser = this.currentUser;
     console.log(currentUser);
 
-    if (this.phoneNumber.value !== this.currentUser) {                
+    if (this.phoneNumber.value == null) {
+      console.error("Field Cannot be Empty!");
+            this.snackBar.open(
+              'Phone Number Field Cannot be Empty! Try again.', 'Dismiss', { duration: 10000, panelClass: ['snackbar-error']});
+    }
+    else if (this.phoneNumber.value !== this.currentUser) {                
       const editProfileRequest = new EditProfileRequest(
         currentUser.email,
         currentUser.address,

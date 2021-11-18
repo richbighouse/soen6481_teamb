@@ -21,6 +21,7 @@ export class UserService {
   }
 
   updateUser(editProfileRequest: EditProfileRequest): Observable<EditProfileRequest> {
+    editProfileRequest.dateOfBirth = new Date(editProfileRequest.dateOfBirth).toISOString().split('T')[0]
     return this.http.put<EditProfileRequest>('/api/users/editprofile', editProfileRequest);
   }
 

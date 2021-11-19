@@ -84,11 +84,11 @@ export class AssessmentListComponent implements OnInit {
     });
   }
 
-  yesOrNo(value: boolean): string {
+  yesOrNo(value: number): string {
     if (value === null) {
       return 'N/A';
     }
-    return value === true ? 'Yes' : 'No';
+    return value === 1 ? 'Yes' : 'No';
   }
 
   ageRange(value: string): string {

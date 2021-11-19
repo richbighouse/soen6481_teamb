@@ -113,12 +113,12 @@ app.post("/api/register", function (req, res) {
     active,
     approved,
     registrationNumber) VALUES (
-     '${request.fullName}',
-     '${request.address}',
+     '${sanitize(request.fullName)}',
+     '${sanitize(request.address)}',
      '${request.dateOfBirth}',
      '${request.phoneNumber}',
-     '${request.email}',
-     '${request.password}',
+     '${sanitize(request.email)}',
+     '${sanitize(request.password)}',
       ${userTypes[request.userType]},
       '${getTodayDate()}',
       null,
@@ -367,6 +367,10 @@ function getTodayDate() {
   return new Date().toISOString().split('T')[0];
 }
 
+function sanitize(value) {
+  return value.replace("'", "''");
+}
+
 // module.exports = app;
 
 
@@ -378,8 +382,8 @@ app.put("/api/users/editprofile", function (req, res) {
   const sql = `UPDATE 
                     user 
                 SET
-                  fullName = '${body.fullName}',
-                  address = '${body.address}',
+                  fullName = '${sanitize(body.fullName)}',
+                  address = '${sanitize(body.address)}',
                   phoneNumber = '${body.phoneNumber}',
                   lastLoginDate = '${getTodayDate()}',
                   dateOfBirth = '${body.dateOfBirth}'

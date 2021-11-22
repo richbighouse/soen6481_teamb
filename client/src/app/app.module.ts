@@ -38,6 +38,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ViewTestStatusComponent } from './components/view-test-status/view-test-status.component';
 import {MatBadgeModule} from '@angular/material/badge';
 import {MatChipsModule} from '@angular/material/chips';
+import { DialogConfirmComponent } from './components/dialog-confirm/dialog-confirm.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -59,7 +60,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     ScheduleComponent,
     AssessmentListComponent,
     ViewAssignedPatientsComponent,
-    ViewTestStatusComponent
+    ViewTestStatusComponent,
+    DialogConfirmComponent
   ],
   imports: [
     BrowserModule,

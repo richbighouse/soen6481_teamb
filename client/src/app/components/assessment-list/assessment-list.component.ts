@@ -9,6 +9,7 @@ import { SelfAssessmentTestService } from 'src/app/services/self-assessment-test
 import { UserService } from 'src/app/services/user.service';
 import { DialogChooseDoctorComponent } from '../view-self-assessments/dialog-choose-doctor/dialog-choose-doctor.component';
 import { RejectionService } from 'src/app/services/rejection.service';
+import { DialogConfirmComponent } from '../dialog-confirm/dialog-confirm.component';
 
 @Component({
   selector: 'app-assessment-list',
@@ -106,15 +107,25 @@ export class AssessmentListComponent implements OnInit {
   }
 
   rejectClicked(test: SelfAssessmentForTable) {
-    console.log('clicked!');
-    console.log(test)  
-	this.rejectionService.postRejectStatus(test).subscribe(
-      response => {
-        console.log("done")     
+    const dialogRef = this.dialog.open(DialogConfirmComponent, {
+      data: {
+        question: 'Do you really want to reject this self-assessement test?'
+      },
+    });
+
+    dialogRef.afterClosed().subscribe(res => {
+      if (res.isConfirm === true) {
+        this.rejectionService.postRejectStatus(test).subscribe(
+          response => {
+            this.snackBar.open(
+              'Patient succesfully rejected.', 'Dismiss', { duration: 10000});
+            console.log("done")     
+          }
+        )
+        this.refreshRows(test);
       }
-    )
-    this.refreshRows(test);
-  }
+    })
+  };
 
   referToDoctorClicked(test: SelfAssessmentForTable) {
     const dialogRef = this.dialog.open(DialogChooseDoctorComponent, {
@@ -126,7 +137,6 @@ export class AssessmentListComponent implements OnInit {
     dialogRef.afterClosed().subscribe(res => {
       this.selfAssessmentTestService.assignToDoctor(test, res.doctor)
       .subscribe(res => {
-
         this.snackBar.open(
           'Patient succesfully assigned to Doctor.', 'Dismiss', { duration: 10000});
 

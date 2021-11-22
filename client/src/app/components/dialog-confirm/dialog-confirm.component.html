@@ -1,0 +1,13 @@
+<div class=container>
+    <h1>Please confirm your selection</h1>
+    <h3>{{ data.question }}</h3>
+
+    <div class=buttons>
+        <button mat-raised-button 
+        color="primary"
+        (click)="confirm(true)">Confirm</button>
+        <button mat-raised-button (click)="confirm(false)">Cancel</button>
+    </div>
+
+    
+</div>

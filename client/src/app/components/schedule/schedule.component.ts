@@ -5,7 +5,6 @@ import { CalendarOptions } from '@fullcalendar/angular';
 import { ScheduleEvent, User } from 'shared/models/models';
 import { NavigationService } from 'src/app/navigation.service';
 import { ScheduleService } from 'src/app/services/schedule.service';
-import { UserService } from 'src/app/services/user.service';
 import * as moment from 'moment';
 
 @Component({
@@ -18,33 +17,23 @@ export class ScheduleComponent implements OnInit {
   userId!: number;
   scheduleEvents: ScheduleEvent[] = []
   displayEvents: any[] = [];
+  isLoading: boolean = false;
 
   calendarOptions: CalendarOptions = {
-    initialView: 'dayGridMonth',
+    initialView: 'timeGridWeek',
     contentHeight: '75vh',
-    dayMaxEventRows: true, // for all non-TimeGrid views
-    views: {
-      dayGridMonth: {
-        displayEventEnd: true
-      },
-      timeGrid: {
-        dayMaxEventRows: 4 // adjust to 6 only for timeGridWeek/timeGridDay
-      }
-    },
-    events: [this.displayEvents],
-    eventClick: function(eventClickInfo ) {
-      console.log(eventClickInfo.event);
-    }
+    allDaySlot: false,
+    events: this.displayEvents
   };
 
   constructor(
     private scheduleService: ScheduleService,
-    private userService: UserService,
     private navigationService: NavigationService,
     private snackBar: MatSnackBar,
     private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.activatedRoute.paramMap.subscribe(
       params => {
         this.userId = parseInt(params.get('userId')!);
@@ -59,31 +48,26 @@ export class ScheduleComponent implements OnInit {
               this.scheduleEvents.forEach(e => {
                 this.displayEvents.push(
                   {
-                    title: `${e.patientFullName}`,
-                    start: `${e.dateTime}`,
-                    end: `${moment(e.dateTime).add(1, 'hours').toISOString()}`,
+                    title: `${e.patientFullName}, ${e.location}`,
+                    start: `${e.startDateTime}`,
+                    end: `${e.endDateTime}`,
                     id: `${e.scheduleId}`
                   }
                 )
               }
               )
               this.calendarOptions = {
-                initialView: 'dayGridMonth',
+                initialView: 'timeGridWeek',
                 contentHeight: '75vh',
-                dayMaxEventRows: true, // for all non-TimeGrid views
-                views: {
-                  dayGridMonth: {
-                    displayEventEnd: true
-                  },
-                  timeGrid: {
-                    dayMaxEventRows: 4 // adjust to 6 only for timeGridWeek/timeGridDay
-                  }
-                },
-                events: this.displayEvents,
-                eventClick: function(eventClickInfo ) {
-                  console.log(eventClickInfo.event);
-                }
+                weekends: false,
+                allDaySlot: false,
+                nowIndicator: true,
+                slotMinTime: '06:00:00',
+                slotMaxTime: '23:00:00',
+                scrollTime: '07:00:00',
+                events: this.displayEvents
               };
+              this.isLoading = false;
             },
             err => {
               this.snackBar.open(

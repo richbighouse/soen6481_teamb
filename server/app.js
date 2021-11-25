@@ -270,7 +270,7 @@ app.get('/api/self-assessment-test/unviewed', function (req, res) {
   a.q_hasBeenCloseContact, a.q_hasBeenTested, a.q_hasTraveled
   FROM assessment a
   JOIN user ON user.id = a.fkPatientId
-  WHERE viewedByNurse = 0 AND user.fkUserType = 1 AND user.active = 1 AND rejected = 0
+  WHERE viewedByNurse = 0 AND user.fkUserType = 1 AND user.active = 1 AND rejected = 0 AND a.fkPatientId NOT IN (SELECT fkPatientId from appointment)
   ORDER BY a.date ASC;`
 
   db.query(sql, (err, rows) => {
@@ -289,7 +289,7 @@ app.get('/api/self-assessment-test/doctor/:doctorId',  function (req, res) {
   a.q_hasBeenCloseContact, a.q_hasBeenTested, a.q_hasTraveled
   FROM assessment a
   JOIN user ON user.id = a.fkPatientId
-  WHERE assignedDoctorId = ${req.params.doctorId} AND user.fkUserType = 1 AND user.active = 1 AND rejected = 0
+  WHERE assignedDoctorId = ${req.params.doctorId} AND user.fkUserType = 1 AND user.active = 1 AND rejected = 0 AND a.fkPatientId NOT IN (SELECT fkPatientId from appointment)
   ORDER BY a.date ASC;`
 
   console.log(sql);
@@ -332,7 +332,7 @@ app.post('/api/self-assessment-test/assign', function (req, res) {
 });
 
 app.get('/api/schedule/:userId', function (req, res) {
-  const sql = `SELECT a.id as scheduleId, a.location, a.dateTime, a.fkProfessionalId as professioanlId, u.id as patientId, u.fullName as patientFullName FROM appointment a JOIN user u ON u.id = a.fkPatientId WHERE a.fkProfessionalId = ${req.params.userId};`
+  const sql = `SELECT a.id as scheduleId, a.location, a.startDateTime, a.endDateTime, a.fkProfessionalId as professioanlId, u.id as patientId, u.fullName as patientFullName FROM appointment a JOIN user u ON u.id = a.fkPatientId WHERE a.fkProfessionalId = ${req.params.userId};`
   db.query(sql, (err, rows) => {
     if (err) {
       console.log(err);
@@ -360,19 +360,8 @@ app.get('/api/self-assessment-test/status/:patientId', function (req, res) {
       console.log(rows);
       res.status(200).json(rows);
     }
-  })
-})
-
-function getTodayDate() {
-  return new Date().toISOString().split('T')[0];
-}
-
-function sanitize(value) {
-  return value.replace("'", "''");
-}
-
-// module.exports = app;
-
+  });
+});
 
 //Edit User Profile 
 app.put("/api/users/editprofile", function (req, res) {
@@ -400,3 +389,31 @@ app.put("/api/users/editprofile", function (req, res) {
     }   
   });
 });
+
+app.post("/api/schedule", function (req, res) {
+  const body = req.body;
+  console.log('Received create appointment request ...', body);
+
+  const sql = `INSERT INTO appointment (location, startDateTime, endDateTime, fkPatientId, fkProfessionalId) VALUES (
+  '${body.location}', '${body.startDateTime}', '${body.endDateTime}', ${body.fkPatientId}, ${body.fkProfessionalId});`
+
+  db.query(sql, (err, rows) => {
+    if (err) {
+      console.log(err);
+      res.status("500").send(`Error while saving appoitment.`);
+    } else {
+      console.log(rows);
+      res.status(200).json(rows);
+    }
+  });
+});
+
+function getTodayDate() {
+  return new Date().toISOString().split('T')[0];
+}
+
+function sanitize(value) {
+  return value.replace("'", "''");
+}
+
+// module.exports = app;

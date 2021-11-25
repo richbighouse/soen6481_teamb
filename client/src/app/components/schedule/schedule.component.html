@@ -1,6 +1,9 @@
 <app-top-nav></app-top-nav>
 
-<div class="container">
+<div *ngIf="isLoading">
+    <mat-spinner></mat-spinner>
+</div>
+<div class="container" *ngIf="!isLoading">
     <h1 style="text-align: center;">Appointment Schedule</h1>
     <full-calendar [options]="calendarOptions"></full-calendar>
 </div>

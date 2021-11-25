@@ -55,7 +55,9 @@
                             <mat-icon style="color:red">cancel</mat-icon>
                         </button>
                         <button mat-icon-button
-                            matTooltip="Book an appoitment">
+                            matTooltip="Book an appoitment"
+                            (click)="bookAppointmentClicked(element)"
+                            >
                             <mat-icon style="color:rgb(61, 22, 153)">event</mat-icon>
                         </button>
                         <button mat-icon-button

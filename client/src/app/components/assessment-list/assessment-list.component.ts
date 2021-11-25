@@ -10,6 +10,7 @@ import { UserService } from 'src/app/services/user.service';
 import { DialogChooseDoctorComponent } from '../view-self-assessments/dialog-choose-doctor/dialog-choose-doctor.component';
 import { RejectionService } from 'src/app/services/rejection.service';
 import { DialogConfirmComponent } from '../dialog-confirm/dialog-confirm.component';
+import { DialogBookAppointmentComponent } from '../dialog-book-appointment/dialog-book-appointment.component';
 
 @Component({
   selector: 'app-assessment-list',
@@ -46,7 +47,7 @@ export class AssessmentListComponent implements OnInit {
     private navigationService: NavigationService
   ) { }
 
-  ngOnInit(): void {
+  refreshData() {
     this.userService.getCurrentUser().subscribe
     (res => {
       this.currentUser = res;
@@ -83,6 +84,10 @@ export class AssessmentListComponent implements OnInit {
     err => {
       this.navigationService.goLogin();
     });
+  }
+
+  ngOnInit(): void {
+    this.refreshData();
   }
 
   yesOrNo(value: number): string {
@@ -146,6 +151,20 @@ export class AssessmentListComponent implements OnInit {
         }
         this.table.renderRows();
       }})});
+  }
+
+  bookAppointmentClicked(test: SelfAssessmentForTable) {
+    let dialogRef = this.dialog.open(DialogBookAppointmentComponent, {
+      data: {
+        patientTest: test,
+        professional: this.currentUser
+      },
+    });
+
+    dialogRef.afterClosed().subscribe(x => {
+      dialogRef.close();
+      this.refreshData();
+   });
   }
 
   isNurse() {

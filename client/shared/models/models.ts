@@ -62,7 +62,8 @@ export class SelfAssessmentTest {
   export class ScheduleEvent {
     scheduleId!: number;
     location!: string;
-    dateTime!: Date;
+    startDateTime!: Date;
+    endDateTime!: Date;
     professioanlId!: number;
     patientId!: number;
     patientFullName!: string;

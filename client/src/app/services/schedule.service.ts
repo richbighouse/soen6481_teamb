@@ -13,4 +13,14 @@ export class ScheduleService {
   getSchedule(userId: number): Observable<ScheduleEvent[]> {
     return this.http.get<ScheduleEvent[]>(`/api/schedule/${userId}`);
   }
+
+  postAppoitment(location: string, startDateTime: string, endDateTime: string, fkPatientId: number, fkProfessionalId: number): Observable<any> {
+    return this.http.post<any>(`api/schedule`, {
+      location: location,
+      startDateTime: startDateTime,
+      endDateTime: endDateTime,
+      fkPatientId: fkPatientId,
+      fkProfessionalId: fkProfessionalId
+    })
+  }
 }

@@ -1,0 +1,21 @@
+<div *ngIf="isLoading">
+    <mat-spinner></mat-spinner>
+</div>
+<div class="container" *ngIf="!isLoading">
+    <h1 style="text-align: center;">Appointment Booking</h1>
+
+    <h3>Enter a location and select an empty time slot to book an appointment.</h3>
+
+
+    <!-- location -->
+    <mat-form-field class="example-form-field" appearance="fill">
+        <mat-label>Location</mat-label>
+        <input matInput type="text" [(ngModel)]="location" required="true">
+        <button *ngIf="location" matSuffix mat-icon-button aria-label="Clear" (click)="location=''">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <!-- calendar -->
+    <full-calendar #calendar [options]="calendarOptions"></full-calendar>  
+</div>

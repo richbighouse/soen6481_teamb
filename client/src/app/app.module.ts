@@ -30,6 +30,7 @@ import { MatListModule } from '@angular/material/list';
 import { FullCalendarModule } from '@fullcalendar/angular'; // must go before plugins
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import timeGridPlugin from '@fullcalendar/timegrid';
 import { ScheduleComponent } from './components/schedule/schedule.component';
 import { AssessmentListComponent } from './components/assessment-list/assessment-list.component';
 import { ViewAssignedPatientsComponent } from './components/view-assigned-patients/view-assigned-patients.component'; 
@@ -39,10 +40,12 @@ import { ViewTestStatusComponent } from './components/view-test-status/view-test
 import {MatBadgeModule} from '@angular/material/badge';
 import {MatChipsModule} from '@angular/material/chips';
 import { DialogConfirmComponent } from './components/dialog-confirm/dialog-confirm.component';
+import { DialogBookAppointmentComponent } from './components/dialog-book-appointment/dialog-book-appointment.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
-  interactionPlugin
+  interactionPlugin,
+  timeGridPlugin
 ]);
 
 @NgModule({
@@ -61,7 +64,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     AssessmentListComponent,
     ViewAssignedPatientsComponent,
     ViewTestStatusComponent,
-    DialogConfirmComponent
+    DialogConfirmComponent,
+    DialogBookAppointmentComponent
   ],
   imports: [
     BrowserModule,

@@ -408,6 +408,25 @@ app.post("/api/schedule", function (req, res) {
   });
 });
 
+app.get("/api/reports", function(req, res) {
+  console.log("Received request to get reports");
+  const sql = `SELECT 
+    SUM(CASE WHEN DATEDIFF(NOW(), date) < 1 THEN 1 ELSE 0 END) AS daily, 
+    SUM(CASE WHEN DATEDIFF(NOW(), date) <= 7 THEN 1 ELSE 0 END) AS weekly,
+    SUM(CASE WHEN DATEDIFF(NOW(), date) < 31 THEN 1 ELSE 0 END) AS monthly 
+   FROM assessment;`
+
+   db.query(sql, (err, rows) => {
+    if (err) {
+      console.log(err);
+      res.status("500").send(`Error while getting report values.`);
+    } else {
+      console.log(rows);
+      res.status(200).json(rows);
+    }
+  });
+});
+
 function getTodayDate() {
   return new Date().toISOString().split('T')[0];
 }

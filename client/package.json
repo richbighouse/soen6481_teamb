@@ -27,6 +27,7 @@
     "@fullcalendar/interaction": "^5.10.1",
     "@fullcalendar/resource-timegrid": "^5.10.1",
     "@fullcalendar/timegrid": "^5.10.1",
+    "angular-google-charts": "^2.2.2",
     "moment": "^2.29.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",

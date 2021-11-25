@@ -33,6 +33,14 @@
         <span class="action-label">Review Pending Registrations</span>
     </mat-card>
 
+    <!-- Manager: View reports -->
+    <mat-card class="action-card" *ngIf="isManager()"(click)="goToReports()">
+        <div class="action-icon">
+            <mat-icon [inline]="true">bar_chart</mat-icon>
+        </div>
+        <span class="action-label">View Usage Reports</span>
+    </mat-card>
+
     <!-- Doctor and Nurse: Schedule-->
     <mat-card class="action-card" *ngIf="isNurse() || isDoctor()"(click)="goToSchedule()">
         <div class="action-icon">

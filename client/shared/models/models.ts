@@ -96,3 +96,9 @@ export class SelfAssessmentTest {
       this.phoneNumber = phoneNumber;
     }
   }  
+
+  export class Report {
+    daily!: number;
+    weekly!: number;
+    monthly!: number;
+  }

@@ -52,6 +52,11 @@ export class HomeComponent implements OnInit {
     this.navigationService.goToSchedule(this.currentUser.id);
   }
 
+  goToReports() {
+    this.navigationService.goToReports();
+  }
+  
+
   // We should define these in some currentUserService
   isPatient() {
     return this.currentUser.fkUserType === 1;

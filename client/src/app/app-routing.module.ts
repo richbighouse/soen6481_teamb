@@ -10,6 +10,7 @@ import { ApprovalsComponent } from './components/approvals/approvals.component';
 import { ViewAssignedPatientsComponent } from './components/view-assigned-patients/view-assigned-patients.component';
 import { ScheduleComponent } from './components/schedule/schedule.component';
 import { ViewTestStatusComponent } from './components/view-test-status/view-test-status.component';
+import { ViewReportsComponent } from './components/view-reports/view-reports.component';
 
 
 const routes: Routes = [
@@ -57,6 +58,10 @@ const routes: Routes = [
   {
     path: 'view-appointment-status/:patientId',
     component: ViewTestStatusComponent
+  },
+  {
+    path: 'reports',
+    component: ViewReportsComponent
   }
 ];
 

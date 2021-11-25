@@ -41,6 +41,8 @@ import {MatBadgeModule} from '@angular/material/badge';
 import {MatChipsModule} from '@angular/material/chips';
 import { DialogConfirmComponent } from './components/dialog-confirm/dialog-confirm.component';
 import { DialogBookAppointmentComponent } from './components/dialog-book-appointment/dialog-book-appointment.component';
+import { ViewReportsComponent } from './components/view-reports/view-reports.component';
+import { GoogleChartsModule } from 'angular-google-charts';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -65,7 +67,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     ViewAssignedPatientsComponent,
     ViewTestStatusComponent,
     DialogConfirmComponent,
-    DialogBookAppointmentComponent
+    DialogBookAppointmentComponent,
+    ViewReportsComponent
   ],
   imports: [
     BrowserModule,
@@ -91,7 +94,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     MatProgressSpinnerModule,
     MatProgressBarModule,
     MatBadgeModule,
-    MatChipsModule
+    MatChipsModule,
+    GoogleChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

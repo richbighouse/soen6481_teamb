@@ -1,0 +1,20 @@
+<app-top-nav></app-top-nav>
+
+<div *ngIf="isLoading">
+    <mat-spinner></mat-spinner>
+</div>
+
+<div *ngIf="!isLoading" class='centered'>
+
+    <h1 style="padding-top: 5em;">Self-Assessment Usage Frequency Report</h1>
+
+    <google-chart #chart
+        [type]="type"
+        [data]="data"
+        [title]="title"
+        [options]="options"
+        [columns]="columnNames"
+        style="width: 60%; height: 45vh">
+        
+    </google-chart>
+</div>

@@ -427,6 +427,21 @@ app.get("/api/reports", function(req, res) {
   });
 });
 
+app.delete("/api/schedule/:appointmentId", function (req, res) {
+  console.log(`Received request to delete appointment #${req.params.appointmentId}`);
+  const sql = `DELETE FROM appointment WHERE id = ${req.params.appointmentId}`;
+
+  db.query(sql, (err, rows) => {
+    if (err) {
+      console.log(err);
+      res.status("500").send(`Error while deleting appointment.`);
+    } else {
+      console.log(rows);
+      res.status(200).json(rows);
+    }
+  });
+});
+
 function getTodayDate() {
   return new Date().toISOString().split('T')[0];
 }

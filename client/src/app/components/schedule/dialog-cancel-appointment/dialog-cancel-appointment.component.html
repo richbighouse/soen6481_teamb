@@ -1,0 +1,18 @@
+<div class=container>
+    <h1>Appointment details</h1>
+    <h3>
+        <ul>
+            <li>Patient: {{ patient }}</li>
+            <li>Location: {{ location }}</li>
+            <li>Time: {{ date }} from {{ start }} to {{ end }}</li>
+        </ul>
+    </h3>
+
+    <div class=buttons>
+        <button 
+        mat-raised-button 
+        color="primary"
+        (click)="cancelAppointment(true)">Cancel Appointment</button>
+        <button mat-raised-button (click)="cancelAppointment(false)">Close</button>
+    </div>  
+</div>

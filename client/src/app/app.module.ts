@@ -43,6 +43,7 @@ import { DialogConfirmComponent } from './components/dialog-confirm/dialog-confi
 import { DialogBookAppointmentComponent } from './components/dialog-book-appointment/dialog-book-appointment.component';
 import { ViewReportsComponent } from './components/view-reports/view-reports.component';
 import { GoogleChartsModule } from 'angular-google-charts';
+import { DialogCancelAppointmentComponent } from './components/schedule/dialog-cancel-appointment/dialog-cancel-appointment.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -68,7 +69,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     ViewTestStatusComponent,
     DialogConfirmComponent,
     DialogBookAppointmentComponent,
-    ViewReportsComponent
+    ViewReportsComponent,
+    DialogCancelAppointmentComponent
   ],
   imports: [
     BrowserModule,

@@ -6,6 +6,8 @@ import { ScheduleEvent, User } from 'shared/models/models';
 import { NavigationService } from 'src/app/navigation.service';
 import { ScheduleService } from 'src/app/services/schedule.service';
 import * as moment from 'moment';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogCancelAppointmentComponent } from './dialog-cancel-appointment/dialog-cancel-appointment.component';
 
 @Component({
   selector: 'app-schedule',
@@ -30,20 +32,19 @@ export class ScheduleComponent implements OnInit {
     private scheduleService: ScheduleService,
     private navigationService: NavigationService,
     private snackBar: MatSnackBar,
-    private activatedRoute: ActivatedRoute) { }
+    private activatedRoute: ActivatedRoute,
+    private dialog: MatDialog) { }
 
-  ngOnInit(): void {
+  refresh() {
     this.isLoading = true;
     this.activatedRoute.paramMap.subscribe(
       params => {
         this.userId = parseInt(params.get('userId')!);
 
-        console.log('path param:', this.userId);
-      
         this.scheduleService.getSchedule(this.userId)
           .subscribe(
             res => {
-              console.log(res);
+              this.displayEvents = [];
               this.scheduleEvents = res;
               this.scheduleEvents.forEach(e => {
                 this.displayEvents.push(
@@ -65,8 +66,18 @@ export class ScheduleComponent implements OnInit {
                 slotMinTime: '06:00:00',
                 slotMaxTime: '23:00:00',
                 scrollTime: '07:00:00',
-                events: this.displayEvents
-              };
+                events: this.displayEvents,
+                eventClick: (eventClickArg) => {
+                  console.log(eventClickArg.event.toJSON())
+                  const dialogRef = this.dialog.open(DialogCancelAppointmentComponent, {
+                    data: eventClickArg.event.toJSON()
+                  });
+
+                  dialogRef.afterClosed().subscribe(res => {
+                    this.refresh();
+                  });
+                }
+              };  
               this.isLoading = false;
             },
             err => {
@@ -79,6 +90,10 @@ export class ScheduleComponent implements OnInit {
     err => {
       this.navigationService.goLogin();
     });
+  }
+
+  ngOnInit(): void {
+    this.refresh();
   }
 
 }

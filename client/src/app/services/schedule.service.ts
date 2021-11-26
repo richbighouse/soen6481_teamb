@@ -15,12 +15,16 @@ export class ScheduleService {
   }
 
   postAppoitment(location: string, startDateTime: string, endDateTime: string, fkPatientId: number, fkProfessionalId: number): Observable<any> {
-    return this.http.post<any>(`api/schedule`, {
+    return this.http.post<any>(`/api/schedule`, {
       location: location,
       startDateTime: startDateTime,
       endDateTime: endDateTime,
       fkPatientId: fkPatientId,
       fkProfessionalId: fkProfessionalId
     })
+  }
+
+  cancelAppointment(appointmentId: number) {
+    return this.http.delete(`/api/schedule/${appointmentId}`);
   }
 }

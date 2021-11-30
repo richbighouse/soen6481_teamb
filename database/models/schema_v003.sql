@@ -153,3 +153,5 @@ INSERT INTO `covid`.`user` (`fullName`, `address`, `dateOfBirth`, `phoneNumber`,
 INSERT INTO `assessment` VALUES (1,'2021-11-11',0,1,'1','',NULL,NULL,NULL,1,1,1,NULL),(2,'2021-11-11',0,5,'0','18+',0,NULL,0,0,0,0,NULL),(3,'2021-11-11',0,6,'0','6-17',1,0,NULL,1,0,1,NULL),(4,'2021-11-11',0,7,'0','18+',0,0,1,0,1,1,NULL),(5,'2021-11-11',0,8,'0','5',1,0,NULL,0,0,0,NULL);
 COMMIT;
 
+1 6 7 8 9 = patients
+11

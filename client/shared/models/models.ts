@@ -78,7 +78,8 @@ export class SelfAssessmentTest {
     doctorFullName!: string;
     location!: string;
     appointmentTime!: Date;
-    rejected!: number
+    rejected!: number;
+    appointmentProfessionalFullName!: string;
   }
   
   export class EditProfileRequest {

@@ -10,26 +10,27 @@ import { SelfAssessmentTestService } from 'src/app/services/self-assessment-test
 })
 export class ViewTestStatusComponent implements OnInit {
   displayedColumns: string[] = ['assessmentId', 'assessmentDate', 'status', 'professional', 'date', 'location'];
-  patientId!: number;
   assessmentStatus!: AssessmentStatus[];
-  isLoading: boolean = true;
-  status!: string; 
+  status!: string;
+  isLoading = true;
 
   constructor(
      private selfAssessmentService: SelfAssessmentTestService,
      private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.activatedRoute.paramMap.subscribe(
       params => {
-        console.log(params.get('patientId'))
-        this.patientId = parseInt(params.get('patientId')!);
-        this.selfAssessmentService.getTestStatus(this.patientId)
+        const patientId = parseInt(params.get('patientId')!);
+        this.selfAssessmentService.getTestStatus(patientId)
         .subscribe(
           res => {
-            this.assessmentStatus = res
+            console.log(res)
+            this.assessmentStatus = res;
             this.isLoading = false;
-          })
+          }
+          )
         },
         err => {
         console.log(err);
@@ -60,6 +61,11 @@ export class ViewTestStatusComponent implements OnInit {
 
   getProfessional() {
     const test = this.assessmentStatus[0];
+    if (test.appointmentTime) {
+      return test.appointmentProfessionalFullName;
+    } else if (test.assignedDoctorId) {
+      return test.doctorFullName
+    }
     return test.doctorFullName ? test.doctorFullName : '-'
   }
 

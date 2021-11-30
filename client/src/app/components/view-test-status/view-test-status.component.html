@@ -5,55 +5,59 @@
     <h1 style="padding-top: 3em;">Your Self-Assessment Test Status</h1>
 
     <div style="padding-top: 6em;">
+      <div *ngIf="isLoading">
+        <mat-spinner></mat-spinner>
+      </div>
+      <div *ngIf="!isLoading">
         <table mat-table [dataSource]="assessmentStatus" class="mat-elevation-z8">
 
-            'assessmentId', 'assessmentDate', 'status', 'professional', 'date', 'location'
-    
-            <ng-container matColumnDef="assessmentId">
-                <th mat-header-cell *matHeaderCellDef class="w-10"> Test Id </th>
-                <td mat-cell *matCellDef="let element"> {{element.assessmentId}} </td>
-              </ng-container>
-            
-              <!-- Assessment Date -->
-              <ng-container matColumnDef="assessmentDate">
-                <th mat-header-cell *matHeaderCellDef class="w-15"> Test Date </th>
-                <td mat-cell *matCellDef="let element"> {{element.assessmentDate | date}} </td>
-              </ng-container>
-            
-              <!-- Status Column -->
-              <ng-container matColumnDef="status">
-                <th mat-header-cell *matHeaderCellDef class="w-20"> Status </th>
-                <td mat-cell *matCellDef="let element">
-                  <span style='font-weight: 550;' 
-                  [ngClass]="{ 'pending' : status === 'pending', 'rejected' : status === 'rejected', 'booked' : status === 'booked', 'assigned' : status === 'assigned'}">
-                    {{ getStatus() }}
-                  </span>
-                  
-                </td>
-              </ng-container>
-            
-              <!-- Porefessional Column -->
-              <ng-container matColumnDef="professional">
-                <th mat-header-cell *matHeaderCellDef class="w-20">Professional Name </th>
-                <td mat-cell *matCellDef="let element"> {{ getProfessional() }} </td>
-              </ng-container>
-    
-              <!-- Appointment Date Column -->
-              <ng-container matColumnDef="date" >
-                <th mat-header-cell *matHeaderCellDef class="w-20">Appointment Time </th>
-                <td mat-cell *matCellDef="let element"> {{ getDate() === '-' ? getDate() : getDate() | date :'medium' }} </td>
-              </ng-container>
-    
-              <!-- Location Column -->
-              <ng-container matColumnDef="location">
-                <th mat-header-cell *matHeaderCellDef class="w-20"> Location </th>
-                <td mat-cell *matCellDef="let element"> {{ getLocation() }} </td>
-              </ng-container>
-    
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
+          'assessmentId', 'assessmentDate', 'status', 'professional', 'date', 'location'
   
+          <ng-container matColumnDef="assessmentId">
+              <th mat-header-cell *matHeaderCellDef class="w-10"> Test Id </th>
+              <td mat-cell *matCellDef="let element"> {{element.assessmentId}} </td>
+            </ng-container>
+          
+            <!-- Assessment Date -->
+            <ng-container matColumnDef="assessmentDate">
+              <th mat-header-cell *matHeaderCellDef class="w-15"> Test Date </th>
+              <td mat-cell *matCellDef="let element"> {{element.assessmentDate | date}} </td>
+            </ng-container>
+          
+            <!-- Status Column -->
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef class="w-20"> Status </th>
+              <td mat-cell *matCellDef="let element">
+                <span style='font-weight: 550;' 
+                [ngClass]="{ 'pending' : status === 'pending', 'rejected' : status === 'rejected', 'booked' : status === 'booked', 'assigned' : status === 'assigned'}">
+                  {{ getStatus() }}
+                </span>
+                
+              </td>
+            </ng-container>
+          
+            <!-- Porefessional Column -->
+            <ng-container matColumnDef="professional">
+              <th mat-header-cell *matHeaderCellDef class="w-20">Professional Name </th>
+              <td mat-cell *matCellDef="let element"> {{ getProfessional() }} </td>
+            </ng-container>
+  
+            <!-- Appointment Date Column -->
+            <ng-container matColumnDef="date" >
+              <th mat-header-cell *matHeaderCellDef class="w-20">Appointment Time </th>
+              <td mat-cell *matCellDef="let element"> {{ getDate() === '-' ? getDate() : getDate() | date :'medium' }} </td>
+            </ng-container>
+  
+            <!-- Location Column -->
+            <ng-container matColumnDef="location">
+              <th mat-header-cell *matHeaderCellDef class="w-20"> Location </th>
+              <td mat-cell *matCellDef="let element"> {{ getLocation() }} </td>
+            </ng-container>
+  
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      </div>
         <div style='padding-top: 6em;'>
 
           <h3>Status Legend</h3>

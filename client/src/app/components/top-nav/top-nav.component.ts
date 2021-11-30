@@ -25,7 +25,6 @@ export class TopNavComponent implements OnInit {
     this.userService.getCurrentUser().subscribe
     (res => {
       this.currentUser = res;
-      console.log(this.currentUser);
     },
     err => {
       console.log(err);

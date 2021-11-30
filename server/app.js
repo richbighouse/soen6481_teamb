@@ -345,11 +345,12 @@ app.get('/api/schedule/:userId', function (req, res) {
 });
 
 app.get('/api/self-assessment-test/status/:patientId', function (req, res) {
-  const sql = `SELECT patient.id AS patientId, ass.id AS assessmentId, ass.date AS assessmentDate, ass.viewedByNurse, ass.assignedDoctorId, doctor.fullName AS doctorFullName, app.location, app.dateTime AS appointmentTime, ass.rejected
+  const sql = `SELECT patient.id AS patientId, ass.id AS assessmentId, ass.date AS assessmentDate, ass.viewedByNurse, ass.assignedDoctorId, doctor.fullName AS doctorFullName, app.location, app.startDateTime AS appointmentTime, ass.rejected, appointmentProfessional.fullName AS appointmentProfessionalFullName
   FROM assessment ass
   JOIN user patient ON patient.id = ass.fkPatientId
   LEFT JOIN user doctor ON ass.assignedDoctorId = doctor.id
   LEFT JOIN appointment app ON app.fkPatientId = patient.id
+  LEFT JOIN user appointmentProfessional ON app.fkProfessionalId = appointmentProfessional.id
   WHERE ass.id = (select max(id) from assessment where fkPatientId = ${req.params.patientId});`
 
   db.query(sql, (err, rows) => {
@@ -402,11 +403,22 @@ app.post("/api/schedule", function (req, res) {
       console.log(err);
       res.status("500").send(`Error while saving appoitment.`);
     } else {
-      console.log(rows);
-      res.status(200).json(rows);
+      const updateSql = `UPDATE assessment SET viewedByNurse=1 WHERE fkPatientId=${body.fkPatientId}`;
+      db.query(updateSql, (err, rows) => {
+        if (err) {
+          console.log(err);
+          res.status("500").send(`Error while saving appoitment.`);
+        } else {
+          console.log(rows);
+          res.status(200).json(rows);
+        }
+      });
     }
   });
+
+
 });
+
 
 app.get("/api/reports", function(req, res) {
   console.log("Received request to get reports");

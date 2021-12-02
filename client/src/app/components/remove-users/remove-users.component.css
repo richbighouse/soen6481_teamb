@@ -5,8 +5,21 @@
     align-items: center;
 }
 
+.example-container {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+  padding-top: 3em;
+  /* align-items: center; */
+}  
+
+.example-header {
+min-height: 64px;
+padding: 8px 24px 0;
+}
+
 table {
-    width: 80%;
+    width: 100%;
 }
 
 .th-center{
@@ -83,3 +96,4 @@ tr.example-detail-row {
   .test-details-answer {
     font-weight: bolder;
   }
+

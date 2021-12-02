@@ -11,6 +11,7 @@ import { ViewAssignedPatientsComponent } from './components/view-assigned-patien
 import { ScheduleComponent } from './components/schedule/schedule.component';
 import { ViewTestStatusComponent } from './components/view-test-status/view-test-status.component';
 import { ViewReportsComponent } from './components/view-reports/view-reports.component';
+import { RemoveUsersComponent } from './components/remove-users/remove-users.component';
 
 
 const routes: Routes = [
@@ -62,6 +63,10 @@ const routes: Routes = [
   {
     path: 'reports',
     component: ViewReportsComponent
+  },
+  {
+    path: 'remove-users',
+    component: RemoveUsersComponent
   }
 ];
 

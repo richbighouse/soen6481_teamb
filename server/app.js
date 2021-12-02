@@ -173,6 +173,36 @@ app.get("/api/users/current", function (req, res) {
   });}
 });
 
+// Getting all list of users
+app.get('/api/users/all-users', function (req, res) {
+  const sql = `SELECT * FROM user`;
+  db.query(sql, (err, rows) => {
+    if (err) {
+      console.log(err);
+      res.status("500").send("Error while fetching list users.");
+    } else {
+      console.log(rows);
+      res.status(200).json(rows);
+    }
+  })
+});
+
+// Deleting a user
+app.post("/api/users/delete-user", function (req, res) {
+  const body = req.body.user;
+  console.log('Received user deletion request ...', req.body);
+  const deleteUserSql = `DELETE FROM user WHERE email= '${body.email}'`;
+
+  db.query(deleteUserSql, (err, rows) => {
+    if (err) {
+      console.log(err);
+      res.status("500").send("Error while deleting a user.");
+    } else {
+      console.log('Delete successful');
+    }
+  })
+});
+
 
 app.post("/api/users/reject", function (req, res) {
   const body = req.body.user;

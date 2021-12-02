@@ -41,6 +41,14 @@
         <span class="action-label">View Usage Reports</span>
     </mat-card>
 
+    <!-- Manager: Remove Users -->
+    <mat-card class="action-card" *ngIf="isManager()"(click)="goToRemoveUsers()">
+        <div class="action-icon">
+            <mat-icon [inline]="true">people</mat-icon>
+        </div>
+        <span class="action-label">View/Remove Users</span>
+    </mat-card>
+
     <!-- Doctor and Nurse: Schedule-->
     <mat-card class="action-card" *ngIf="isNurse() || isDoctor()"(click)="goToSchedule()">
         <div class="action-icon">

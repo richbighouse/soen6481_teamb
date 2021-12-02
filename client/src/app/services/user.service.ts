@@ -25,4 +25,12 @@ export class UserService {
     return this.http.put<EditProfileRequest>('/api/users/editprofile', editProfileRequest);
   }
 
+  getAllUsers(): Observable<User[]> {
+    return this.http.get<User[]>('api/users/all-users');
+  }
+
+  postDeleteUser(user: User): Observable<any> {
+    return this.http.post('/api/users/delete-user', {user});
+  }
+
 }

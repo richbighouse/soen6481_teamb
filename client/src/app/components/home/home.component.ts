@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { User } from 'shared/models/models';
 import { NavigationService } from 'src/app/navigation.service';
 import { UserService } from 'src/app/services/user.service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-home',
@@ -14,7 +16,8 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private navigationService: NavigationService
+    private navigationService: NavigationService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -54,6 +57,11 @@ export class HomeComponent implements OnInit {
 
   goToReports() {
     this.navigationService.goToReports();
+  }
+
+  goToRemoveUsers() {
+    console.log("Routing to remove-users.");
+    this.router.navigate(['/remove-users']);
   }
   
 

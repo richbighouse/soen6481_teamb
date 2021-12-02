@@ -1,0 +1,55 @@
+<app-top-nav></app-top-nav>
+
+<div class="container">
+
+    <h1>List of Users</h1>
+
+    <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
+        <!-- ID Column -->
+        <ng-container matColumnDef="user-id">
+            <th mat-header-cell *matHeaderCellDef class="w-10">ID</th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+        <!-- User Name Column -->
+        <ng-container matColumnDef="user-name">
+            <th mat-header-cell *matHeaderCellDef class="w-20">Name</th>
+            <td mat-cell *matCellDef="let element"> {{element.fullName}} </td>
+        </ng-container>
+        <!-- User Type Column -->   
+        <ng-container matColumnDef="user-type">
+            <th mat-header-cell *matHeaderCellDef class="w-15">User Type</th>
+            <td mat-cell *matCellDef="let element"> {{ getUserType(element.fkUserType)}} </td>
+        </ng-container>
+
+        <!-- Test Date Column -->
+        <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef class="w-20">Email</th>
+            <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+        </ng-container> 
+
+        <ng-container matColumnDef="registrationnumber">
+            <th mat-header-cell *matHeaderCellDef class="w-15"> Registration Number </th>
+            <td mat-cell *matCellDef="let element"> {{element.registrationNumber}} </td>
+        </ng-container> 
+
+        <!-- Action Column -->
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef class="w-20">Actions</th>
+            <td mat-cell *matCellDef="let element">              
+                <button mat-icon-button
+                    matTooltip="Remove the user."
+                    (click)="onDelete(element)">
+                    <mat-icon style="color:red">delete</mat-icon>
+                </button> 
+            </td>
+        </ng-container>
+		        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let element; columns: displayedColumns;" ></tr>
+          <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+    </table>
+
+</div>
+
+
+

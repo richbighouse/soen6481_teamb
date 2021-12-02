@@ -4,6 +4,8 @@ import { AssessmentStatus } from 'shared/models/models';
 import { SelfAssessmentTestService } from 'src/app/services/self-assessment-test.service';
 import { ScheduleService } from 'src/app/services/schedule.service';
 import { MatTable } from '@angular/material/table';
+import { DialogConfirmComponent } from '../dialog-confirm/dialog-confirm.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 @Component({
@@ -22,6 +24,7 @@ export class ViewTestStatusComponent implements OnInit {
   constructor(
      private selfAssessmentService: SelfAssessmentTestService,
      private activatedRoute: ActivatedRoute,
+     public dialog: MatDialog,
      private scheduleService:ScheduleService) { }
 
   ngOnInit(): void {
@@ -84,21 +87,31 @@ export class ViewTestStatusComponent implements OnInit {
     const test = this.assessmentStatus[0];
     return test.appointmentTime ? test.appointmentTime : '-'
   }
-  cancelAppointment(assessmentStatus: AssessmentStatus)
-  {
-    console.log(assessmentStatus.patientId);
+  cancelAppointment(assessmentStatus: AssessmentStatus) {
+    const dialogRef = this.dialog.open(DialogConfirmComponent, {
+      data: {
+        question: 'Do you really want to reject this self-assessement test?'
+      },
+    });
+
+    dialogRef.afterClosed().subscribe(res => {
+      if (res.isConfirm === true) {
     this.scheduleService.cancelAppointmentByPatientID(assessmentStatus.patientId).subscribe(
       response => {
         console.log("done")     
       }
-    )  
+    ) 
     this.scheduleService.postAssessmentStatus(assessmentStatus.assessmentId).subscribe(
       response => {
         console.log("done")    
       }  
-    )    
-    this.refreshRows(assessmentStatus);
-  }  
+    ) 	
+        this.refreshRows(assessmentStatus);
+      }
+    })
+  };
+  
+    
 
   refreshRows(assessmentStatus: AssessmentStatus)
   {

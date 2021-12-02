@@ -90,7 +90,7 @@ export class ViewTestStatusComponent implements OnInit {
   cancelAppointment(assessmentStatus: AssessmentStatus) {
     const dialogRef = this.dialog.open(DialogConfirmComponent, {
       data: {
-        question: 'Do you really want to reject this self-assessement test?'
+        question: 'Do you really want to cancel this appointment?'
       },
     });
 

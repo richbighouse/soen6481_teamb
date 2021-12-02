@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AssessmentStatus, User } from 'shared/models/models';
+import { AssessmentStatus } from 'shared/models/models';
 import { SelfAssessmentTestService } from 'src/app/services/self-assessment-test.service';
+import { ScheduleService } from 'src/app/services/schedule.service';
+import { MatTable } from '@angular/material/table';
+
 
 @Component({
   selector: 'app-view-test-status',
@@ -9,14 +12,17 @@ import { SelfAssessmentTestService } from 'src/app/services/self-assessment-test
   styleUrls: ['./view-test-status.component.css']
 })
 export class ViewTestStatusComponent implements OnInit {
-  displayedColumns: string[] = ['assessmentId', 'assessmentDate', 'status', 'professional', 'date', 'location'];
+  displayedColumns: string[] = ['assessmentId', 'assessmentDate', 'status', 'professional', 'date', 'location', 'actions'];
   assessmentStatus!: AssessmentStatus[];
   status!: string;
   isLoading = true;
+  @ViewChild(MatTable) table!: MatTable<AssessmentStatus>;  
+  
 
   constructor(
      private selfAssessmentService: SelfAssessmentTestService,
-     private activatedRoute: ActivatedRoute) { }
+     private activatedRoute: ActivatedRoute,
+     private scheduleService:ScheduleService) { }
 
   ngOnInit(): void {
     this.isLoading = true;
@@ -77,5 +83,32 @@ export class ViewTestStatusComponent implements OnInit {
   getDate() {
     const test = this.assessmentStatus[0];
     return test.appointmentTime ? test.appointmentTime : '-'
+  }
+  cancelAppointment(assessmentStatus: AssessmentStatus)
+  {
+    console.log(assessmentStatus.patientId);
+    this.scheduleService.cancelAppointmentByPatientID(assessmentStatus.patientId).subscribe(
+      response => {
+        console.log("done")     
+      }
+    )  
+    this.scheduleService.postAssessmentStatus(assessmentStatus.assessmentId).subscribe(
+      response => {
+        console.log("done")    
+      }  
+    )    
+    this.refreshRows(assessmentStatus);
+  }  
+
+  refreshRows(assessmentStatus: AssessmentStatus)
+  {
+    for (let i = 0; i < this.assessmentStatus.length; i++) 
+    {
+      if(this.assessmentStatus[i].assessmentId == assessmentStatus.assessmentId) {
+        console.log(this.assessmentStatus[i].assessmentId)
+        this.assessmentStatus.splice(i, 1);
+      }
+    }
+    this.table.renderRows();
   }
 }

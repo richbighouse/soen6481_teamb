@@ -27,4 +27,13 @@ export class ScheduleService {
   cancelAppointment(appointmentId: number) {
     return this.http.delete(`/api/schedule/${appointmentId}`);
   }
+  cancelAppointmentByPatientID(patientId: number) {
+    console.log(patientId);
+    return this.http.delete(`/api/appointment/${patientId}`);
+  }  
+
+  postAssessmentStatus(assessmentId: number): Observable<any> {
+    console.log(assessmentId);
+    return this.http.post('/api/self-assessment-test/status', {assessmentId});
+  }  
 }

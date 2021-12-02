@@ -381,7 +381,7 @@ app.get('/api/self-assessment-test/status/:patientId', function (req, res) {
   LEFT JOIN user doctor ON ass.assignedDoctorId = doctor.id
   LEFT JOIN appointment app ON app.fkPatientId = patient.id
   LEFT JOIN user appointmentProfessional ON app.fkProfessionalId = appointmentProfessional.id
-  WHERE ass.id = (select max(id) from assessment where fkPatientId = ${req.params.patientId});`
+  WHERE ass.id = (select max(id) from assessment where fkPatientId = ${req.params.patientId}) and ass.viewedByNurse!=2;`
 
   db.query(sql, (err, rows) => {
     if (err) {
@@ -483,6 +483,38 @@ app.delete("/api/schedule/:appointmentId", function (req, res) {
     }
   });
 });
+
+app.delete("/api/appointment/:patientId", function (req, res) {
+  console.log(`Received request to delete appointment with patientId #${req.params.patientId}`);
+  const sql = `DELETE FROM appointment WHERE fkPatientId = ${req.params.patientId}`;
+
+  db.query(sql, (err, rows) => {
+    if (err) {
+      console.log(err);
+      res.status("500").send(`Error while deleting appointment.`);
+    } else {
+      console.log(rows);
+      res.status(200).json(rows);
+    }
+  });
+});
+
+app.post('/api/self-assessment-test/status', function (req, res) {
+  console.log(`Received request to update the assessement status...`);
+  console.log(req.body.assessmentId);
+  const sql = `UPDATE assessment SET viewedByNurse = 2 WHERE id = ${req.body.assessmentId}`;
+  db.query(sql, (err, rows) => {
+    if (err) {
+      console.log(err);
+      res.status("500").send("Error while updating assessement status.");
+    } else {
+      res.status(200).json(rows);
+    }
+  })
+});
+
+
+
 
 function getTodayDate() {
   return new Date().toISOString().split('T')[0];

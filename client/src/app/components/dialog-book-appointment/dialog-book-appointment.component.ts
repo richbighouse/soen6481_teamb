@@ -117,7 +117,8 @@ export class DialogBookAppointmentComponent implements OnInit, OnDestroy {
                       setTimeout(() => {
                         this.isLoading = false;
                         this.refreshCalendar();
-                      }, 200)               
+                      }, 200);
+                    this.dialogRef.close();       
                   }
                 )
               }

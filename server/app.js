@@ -450,13 +450,17 @@ app.post("/api/schedule", function (req, res) {
 });
 
 
-app.get("/api/reports", function(req, res) {
-  console.log("Received request to get reports");
+app.get("/api/reports/:baseDate", function(req, res) {
+  const date = req.params.baseDate;
+  console.log(`Received request to get reports for baseDate [${date}] `);
+  
   const sql = `SELECT 
-    SUM(CASE WHEN DATEDIFF(NOW(), date) < 1 THEN 1 ELSE 0 END) AS daily, 
-    SUM(CASE WHEN DATEDIFF(NOW(), date) <= 7 THEN 1 ELSE 0 END) AS weekly,
-    SUM(CASE WHEN DATEDIFF(NOW(), date) < 31 THEN 1 ELSE 0 END) AS monthly 
+    SUM(CASE WHEN (DATEDIFF('${date}', date) BETWEEN 0 AND 1) THEN 1 ELSE 0 END) AS daily, 
+    SUM(CASE WHEN (DATEDIFF('${date}', date) BETWEEN 0 AND 7) THEN 1 ELSE 0 END) AS weekly,
+    SUM(CASE WHEN (DATEDIFF('${date}', date) BETWEEN 0 AND 30) THEN 1 ELSE 0 END) AS monthly 
    FROM assessment;`
+
+   console.log(sql);
 
    db.query(sql, (err, rows) => {
     if (err) {

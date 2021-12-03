@@ -46,6 +46,8 @@ import { GoogleChartsModule } from 'angular-google-charts';
 import { DialogCancelAppointmentComponent } from './components/schedule/dialog-cancel-appointment/dialog-cancel-appointment.component';
 import { RemoveUsersComponent } from './components/remove-users/remove-users.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatSortModule} from '@angular/material/sort';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -101,7 +103,11 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     MatBadgeModule,
     MatChipsModule,
     GoogleChartsModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    GoogleChartsModule, 
+    MatPaginatorModule,
+    MatTableModule,
+    MatSortModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

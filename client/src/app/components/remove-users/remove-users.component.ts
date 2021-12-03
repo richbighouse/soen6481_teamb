@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatTable } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort, Sort } from '@angular/material/sort';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { User } from 'shared/models/models';
 import { UserService } from 'src/app/services/user.service';
 import { DialogConfirmComponent } from '../dialog-confirm/dialog-confirm.component';
@@ -11,41 +12,52 @@ import { DialogConfirmComponent } from '../dialog-confirm/dialog-confirm.compone
   templateUrl: './remove-users.component.html',
   styleUrls: ['./remove-users.component.css']
 })
-export class RemoveUsersComponent implements OnInit {
+export class RemoveUsersComponent implements OnInit, AfterViewInit{
 
-  dataSource!: User[];
+  dataSource = new MatTableDataSource<User>();
   displayedColumns: string[] = [ 'user-id', 'user-name', 'user-type','email', 'registrationnumber' , 'actions'];
 
-  @ViewChild(MatTable) table!: MatTable<User>;
+  @ViewChild(MatPaginator, { static: false }) paginator!: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort!: MatSort;
 
   constructor(
-    private snackBar: MatSnackBar,
     private dialog: MatDialog,
     private userService: UserService,
   ) { }
-
+  
   ngOnInit(): void {
     this.userService.getAllUsers().subscribe
     (res => {
       console.log(res);
       console.log("testing now");
-      this.dataSource = res;
+      this.dataSource.data = res;
     },
     err => {
       console.log(err);
     });
   }
 
-  refreshRows(user:User)
-  {
-    for (let i = 0; i < this.dataSource.length; i++) 
-    {
-      if(this.dataSource[i].email == user.email) {
-        console.log(this.dataSource[i].email)
-        this.dataSource.splice(i, 1);
-      }
-    }
-    this.table.renderRows();
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+
+  refreshRows(user:User) {
+    this.userService.getAllUsers().subscribe
+    (res => {
+      console.log(res);
+      console.log("testing now");
+      this.dataSource.data = res;
+    },
+    err => {
+      console.log(err);
+    });
   }
 
   onDelete(user:User) {
@@ -67,11 +79,11 @@ export class RemoveUsersComponent implements OnInit {
     })
   }
 
-  getUserType(userType: number)
+  getUserType(fkUserType: number)
   {
-    if (userType === 3) {
+    if (fkUserType === 3) {
       return 'Nurse'
-    } else if (userType === 2) {
+    } else if (fkUserType === 2) {
       return 'Doctor'
     } else {
       return 'Patient'

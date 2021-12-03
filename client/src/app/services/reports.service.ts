@@ -10,7 +10,7 @@ export class ReportsService {
 
   constructor(private http: HttpClient) { }
 
-  getReport(): Observable<any> {
-    return this.http.get<any>('/api/reports');
+  getReport(baseDate: string): Observable<any> {
+    return this.http.get<any>(`/api/reports/${baseDate}`);
   }
 }

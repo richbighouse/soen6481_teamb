@@ -1,12 +1,24 @@
 <app-top-nav></app-top-nav>
 
+
+<h1 class='centered' style="padding-top: 5em;">Self-Assessment Usage Frequency Report</h1>
+
+<div class='centered' style="padding-top: 1em; padding-right: 42em">
+    <h3>Select the base date for the report.</h3>
+    <mat-form-field appearance="fill" >
+        <mat-label>Report End Date</mat-label>
+        <input matInput [matDatepicker]="dp" [formControl]="baseDate" (dateChange)="changeDate($event)">
+        <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+        <mat-datepicker #dp></mat-datepicker>
+      </mat-form-field>
+</div>
+
+
 <div *ngIf="isLoading">
     <mat-spinner></mat-spinner>
 </div>
 
 <div *ngIf="!isLoading" class='centered'>
-
-    <h1 style="padding-top: 5em;">Self-Assessment Usage Frequency Report</h1>
 
     <google-chart #chart
         [type]="type"
@@ -14,6 +26,7 @@
         [title]="title"
         [options]="options"
         [columns]="columnNames"
+        [dynamicResize]="dynamicResize"
         style="width: 60%; height: 45vh">
         
     </google-chart>

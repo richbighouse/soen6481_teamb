@@ -193,6 +193,29 @@ app.post("/api/users/delete-user", function (req, res) {
   console.log('Received user deletion request ...', req.body);
   const deleteUserSql = `DELETE FROM user WHERE email= '${body.email}'`;
 
+  if (body.fkUserType == 1) {
+    // TODO handle patient case
+  } else {
+    // Deleting nurse or doctor
+    const resetAssementSql =  `UPDATE assessment
+    SET viewedByNurse = 0 AND assignedDoctorId = null
+    WHERE (active = 1 AND
+      fkPatientId IN (
+        SELECT fkPatientId
+        FROM appointment
+        WHERE fkProfessionalId = ${body.id})) OR assignedDoctorId = ${body.id};`
+
+        db.query(resetAssementSql, (err, rows) => {
+          if (err) {
+            console.log(err);
+            res.status("500").send("Error while updating existing tests for deleted professional.");
+          } else {
+            console.log('update successful');
+          }
+        })
+
+  }
+
   db.query(deleteUserSql, (err, rows) => {
     if (err) {
       console.log(err);
@@ -220,11 +243,12 @@ app.post("/api/users/reject", function (req, res) {
 });
 
 app.get("/api/users/unapproved", function (req, res) {
+  console.log('hello')
   const sql = `SELECT * FROM user WHERE approved is NULL;`;
   db.query(sql, (err, rows) => {
     if (err) throw err;
     if (rows.length === 0) {
-      res.status("404").send("Error while getting unApproved Users.");
+      res.status("500").send("Error while getting unApproved Users.");
     } else {
       res.json(rows);
     }    
@@ -255,7 +279,7 @@ app.post("/api/self-assessment-test", function (req, res) {
     console.log('/api/self-assessment-test body', body);
 
     // Set existing self-assessment for user to viewedByNurse ... we might want to have active flag instead.
-    const updateSql = `UPDATE assessment SET viewedByNurse=1, assignedDoctorId=null WHERE fkPatientId=${currentId}`;
+    const updateSql = `UPDATE assessment SET viewedByNurse=1, assignedDoctorId=null, active=0 WHERE fkPatientId=${currentId}`;
     db.query(updateSql, (err, rows) => {
       if (err) {
         console.log(err);
@@ -350,7 +374,7 @@ app.get('/api/users/doctors', function (req, res) {
 
 app.post('/api/self-assessment-test/assign', function (req, res) {
   console.log(`Received request to assign test ${req.body.assessment.testId} to doctor ${req.body.doctor.id} ...`);
-  const sql = `UPDATE assessment SET assignedDoctorId = ${req.body.doctor.id} WHERE id = ${req.body.assessment.testId}`;
+  const sql = `UPDATE assessment SET assignedDoctorId = ${req.body.doctor.id}, viewedByNurse = 1 WHERE id = ${req.body.assessment.testId}`;
   db.query(sql, (err, rows) => {
     if (err) {
       console.log(err);
@@ -381,7 +405,7 @@ app.get('/api/self-assessment-test/status/:patientId', function (req, res) {
   LEFT JOIN user doctor ON ass.assignedDoctorId = doctor.id
   LEFT JOIN appointment app ON app.fkPatientId = patient.id
   LEFT JOIN user appointmentProfessional ON app.fkProfessionalId = appointmentProfessional.id
-  WHERE ass.id = (select max(id) from assessment where fkPatientId = ${req.params.patientId}) and ass.viewedByNurse!=2;`
+  WHERE ass.id = (select max(id) from assessment where fkPatientId = ${req.params.patientId}) AND ass.active = 1;`
 
   db.query(sql, (err, rows) => {
     if (err) {
@@ -445,8 +469,6 @@ app.post("/api/schedule", function (req, res) {
       });
     }
   });
-
-
 });
 
 
@@ -455,7 +477,7 @@ app.get("/api/reports/:baseDate", function(req, res) {
   console.log(`Received request to get reports for baseDate [${date}] `);
   
   const sql = `SELECT 
-    SUM(CASE WHEN (DATEDIFF('${date}', date) BETWEEN 0 AND 1) THEN 1 ELSE 0 END) AS daily, 
+    SUM(CASE WHEN (DATEDIFF('${date}', date) = 0) THEN 1 ELSE 0 END) AS daily, 
     SUM(CASE WHEN (DATEDIFF('${date}', date) BETWEEN 0 AND 7) THEN 1 ELSE 0 END) AS weekly,
     SUM(CASE WHEN (DATEDIFF('${date}', date) BETWEEN 0 AND 30) THEN 1 ELSE 0 END) AS monthly 
    FROM assessment;`
@@ -506,7 +528,7 @@ app.delete("/api/appointment/:patientId", function (req, res) {
 app.post('/api/self-assessment-test/status', function (req, res) {
   console.log(`Received request to update the assessement status...`);
   console.log(req.body.assessmentId);
-  const sql = `UPDATE assessment SET viewedByNurse = 2 WHERE id = ${req.body.assessmentId}`;
+  const sql = `UPDATE assessment SET active = 0 WHERE id = ${req.body.assessmentId}`;
   db.query(sql, (err, rows) => {
     if (err) {
       console.log(err);
@@ -516,8 +538,6 @@ app.post('/api/self-assessment-test/status', function (req, res) {
     }
   })
 });
-
-
 
 
 function getTodayDate() {

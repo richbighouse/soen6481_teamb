@@ -21,6 +21,7 @@ export class ApprovalService {
   }
 
   getUnApprovedUsers(): Observable<User[]> {
+    console.log('hello')
     return this.http.get<User[]>('/api/users/unapproved')
   }
  }

@@ -63,6 +63,10 @@ app.post("/api/login", function (req, res) {
       console.log("Invalid Credentials");
       res.status("401");
       res.send("Invalid Credentials");
+    } else if (rows[0].approved === null) {
+      console.log("Unauthorized Access");
+      res.status("403");
+      res.send("Unauthorized Access");
     } else {
       currentUser = rows[0];
       var session=req.session;
@@ -135,7 +139,6 @@ app.post("/api/register", function (req, res) {
       res.status("500");
       res.send("Server Error during Registration.");
     } else {
-      console.log(request.userType);
       res.status(201).json(request.userType);
     }    
   });

@@ -96,16 +96,16 @@ export class ViewTestStatusComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(res => {
       if (res.isConfirm === true) {
-    this.scheduleService.cancelAppointmentByPatientID(assessmentStatus.patientId).subscribe(
-      response => {
-        console.log("done")     
-      }
-    ) 
-    this.scheduleService.postAssessmentStatus(assessmentStatus.assessmentId).subscribe(
+        this.scheduleService.cancelAppointmentByPatientID(assessmentStatus.patientId).subscribe(
+        response => {
+          console.log("done")     
+        }
+      ) 
+      this.scheduleService.postAssessmentStatus(assessmentStatus.assessmentId).subscribe(
       response => {
         console.log("done")    
       }  
-    ) 	
+      ) 	
         this.refreshRows(assessmentStatus);
       }
     })

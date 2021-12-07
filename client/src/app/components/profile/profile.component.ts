@@ -53,7 +53,6 @@ export class ProfileComponent implements OnInit {
   }
 
   isPatient() {
-    console.log(this.currentUser.fkUserType);
     return this.currentUser.fkUserType === 1;
   }
 
@@ -75,7 +74,6 @@ export class ProfileComponent implements OnInit {
 
   onEdit() {
     const currentUser = this.currentUser;
-    console.log(currentUser);
     const editProfileRequest = new EditProfileRequest(
       currentUser.email,
       this.address.value,
